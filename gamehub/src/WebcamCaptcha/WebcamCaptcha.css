@@ -1,0 +1,81 @@
+.captcha-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: #f0f0f0;
+  font-family: 'Roboto', Arial, sans-serif;
+}
+
+.captcha-box {
+  background: white;
+  width: 500px; /* Fixed width for the classic look */
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.captcha-header {
+  background-color: #4285f4;
+  color: white;
+  padding: 15px 20px;
+}
+
+.captcha-header h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.captcha-header p {
+  margin: 5px 0 0;
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.captcha-body {
+  padding: 10px;
+  background: white;
+  display: flex;
+  justify-content: center;
+}
+
+.captcha-canvas {
+  background: #eee;
+  /* Cursor handling will be done in JS, but fallback here */
+  cursor: grab;
+}
+
+.captcha-canvas:active {
+  cursor: grabbing;
+}
+
+.captcha-footer {
+  padding: 10px 20px 15px;
+  border-top: 1px solid #eee;
+  color: #555;
+  font-size: 13px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.captcha-icons {
+  display: flex;
+  gap: 15px;
+  color: #777;
+}
+
+.loading-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(255,255,255,0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #4285f4;
+  font-weight: bold;
+}

@@ -91,6 +91,12 @@ export class RoomManager {
       const next = room.state.turnOrder[0] || null;
       room.hostId = next;
     }
+    // Auto-end if only one player remains in turn order
+    if (room.state.started && room.state.turnOrder.length === 1) {
+      room.state.ended = true;
+      room.state.winnerId = room.state.turnOrder[0] || null;
+      room.state.started = false;
+    }
   }
 
   startGame(id: RoomID, requesterId: PlayerID) {

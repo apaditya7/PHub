@@ -1,7 +1,7 @@
 import { Server, Socket } from "socket.io";
 import { RoomManager } from "../game/rooms";
 import { ClientToServerEvents, ServerToClientEvents, RoomID } from "../types";
-import { handleBuyProperty, handleEndTurn, handleRoll, applyRoll, handlePayJailFine, handleUseGetOutOfJail } from "../game/engine";
+import { handleBuyProperty, handleEndTurn, handleRoll, applyRoll, handlePayJailFine, handleUseGetOutOfJail, handleDrawCard } from "../game/engine";
 
 type IOServer = Server<ClientToServerEvents, ServerToClientEvents>;
 
@@ -26,7 +26,8 @@ export function registerSocket(io: IOServer, rooms: RoomManager) {
           id: p.id, name: p.name, cash: p.cash, position: p.position, bankrupt: p.bankrupt, inJail: p.inJail
         })),
         currentTurn: state.turnOrder.length ? state.turnOrder[state.currentTurn] : null,
-        started: state.started
+        started: state.started,
+        hostId: room.hostId
       });
       io.to(roomId).emit("gameUpdate", state);
     };
@@ -121,6 +122,17 @@ export function registerSocket(io: IOServer, rooms: RoomManager) {
       try {
         const pid = getPlayerId(roomId) || sid;
         handleRoll(room.state, pid);
+        // Private events only for acting player
+        const s = room.state;
+        if (s.lastDrawnCard && s.lastDrawnCard.playerId === pid) {
+          socket.emit("privateCardDrawn", { deck: s.lastDrawnCard.deck, cardId: s.lastDrawnCard.cardId });
+        }
+        if (s.lastTaxCharged && s.lastTaxCharged.playerId === pid) {
+          socket.emit("privateTaxCharged", { amount: s.lastTaxCharged.amount, tileIndex: s.lastTaxCharged.tileIndex });
+        }
+        if (s.lastSentToJail && s.lastSentToJail.playerId === pid) {
+          socket.emit("privateJail", { reason: s.lastSentToJail.reason });
+        }
         broadcastRoom(roomId);
       } catch (err: any) {
         socket.emit("errorMessage", err?.message || "Roll failed");
@@ -166,10 +178,69 @@ export function registerSocket(io: IOServer, rooms: RoomManager) {
       if (!room) return socket.emit("errorMessage", "Room not found");
       try {
         const pid = getPlayerId(roomId) || sid;
+        if (room.state.pendingDraw && room.state.pendingDraw.playerId === pid) {
+          throw new Error("You must draw your card first");
+        }
         handleEndTurn(room.state, pid);
         broadcastRoom(roomId);
       } catch (err: any) {
         socket.emit("errorMessage", err?.message || "End turn failed");
+      }
+    });
+
+    socket.on("endGame", (roomId) => {
+      const room = rooms.getRoom(roomId);
+      if (!room) return socket.emit("errorMessage", "Room not found");
+      try {
+        const pid = getPlayerId(roomId) || sid;
+        if (room.hostId !== pid) throw new Error("Only host can end");
+        const s = room.state;
+        const active = s.turnOrder.slice();
+        let winner: string | null = null;
+        if (active.length <= 1) {
+          winner = active[0] || null;
+        } else {
+          // compute net worth: cash + property prices
+          const worth = (id: string) => {
+            const cash = s.players[id]?.cash || 0;
+            let props = 0;
+            for (const t of s.board) {
+              if (t.ownerId === id) props += t.price || 0;
+            }
+            return cash + props;
+          };
+          winner = active.sort((a,b) => worth(b) - worth(a))[0] || null;
+        }
+        s.ended = true;
+        s.winnerId = winner;
+        s.started = false;
+        broadcastRoom(roomId);
+      } catch (err: any) {
+        socket.emit("errorMessage", err?.message || "End game failed");
+      }
+    });
+
+    socket.on("drawCard", (roomId, which) => {
+      const room = rooms.getRoom(roomId);
+      if (!room) return socket.emit("errorMessage", "Room not found");
+      try {
+        const pid = getPlayerId(roomId) || sid;
+        const s = room.state;
+        const pd = s.pendingDraw;
+        if (!pd) throw new Error("No card to draw");
+        if (pd.playerId !== pid) throw new Error("Not your draw");
+        if (pd.deck !== which) throw new Error("Wrong deck");
+        handleDrawCard(s, pid, which);
+        // Private event to acting player
+        if (s.lastDrawnCard && s.lastDrawnCard.playerId === pid) {
+          socket.emit("privateCardDrawn", { deck: s.lastDrawnCard.deck, cardId: s.lastDrawnCard.cardId });
+        }
+        if (s.lastSentToJail && s.lastSentToJail.playerId === pid) {
+          socket.emit("privateJail", { reason: s.lastSentToJail.reason });
+        }
+        broadcastRoom(roomId);
+      } catch (err: any) {
+        socket.emit("errorMessage", err?.message || "Draw failed");
       }
     });
 
@@ -201,7 +272,8 @@ export function registerSocket(io: IOServer, rooms: RoomManager) {
             id: pl.id, name: pl.name, cash: pl.cash, position: pl.position, bankrupt: pl.bankrupt, inJail: pl.inJail
           })),
           currentTurn: room.state.turnOrder.length ? room.state.turnOrder[room.state.currentTurn] : null,
-          started: room.state.started
+          started: room.state.started,
+          hostId: room.hostId
         });
       });
 

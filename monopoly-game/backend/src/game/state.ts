@@ -11,7 +11,9 @@ export function createInitialState(): GameState {
     started: false,
     decks: buildDecks(),
     lastDrawnCard: null,
-    lastTaxCharged: null
+    lastTaxCharged: null,
+    pendingDraw: null,
+    lastSentToJail: null
   };
 }
 
@@ -50,4 +52,6 @@ export function advanceTurn(state: GameState) {
   state.lastRoll = undefined;
   state.lastDrawnCard = null;
   state.lastTaxCharged = null;
+  state.lastSentToJail = null;
+  state.pendingDraw = null;
 }

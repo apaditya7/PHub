@@ -8,6 +8,8 @@ import {
   emitRoll,
   emitStartGame,
   emitUseGOOJF,
+  emitDrawCard,
+  emitEndGame,
   getSocket,
   type GameState,
   type RoomUpdatePayload,
@@ -200,6 +202,8 @@ export default function App() {
   const [showTaxModal, setShowTaxModal] = useState(false);
   const [taxInfo, setTaxInfo] = useState<{ amount: number; tileIndex: number } | null>(null);
   const [playerName, setPlayerName] = useState<string>(() => (localStorage.getItem('playerName') || ''));
+  const [showFlyCard, setShowFlyCard] = useState<null | { deck: 'chance'|'community'; from: { leftPct: number; topPct: number } }>(null);
+  const lastPendingTileRef = useRef<number | null>(null);
 
   const currentPlayer = players[current];
   const cp = currentPlayer ?? { name: "...", cash: 0, position: 0, color: "#999", id: "-", token: "car" as const };
@@ -230,6 +234,12 @@ export default function App() {
       ...getTilePosition(index),
     }));
   }, [spaces]);
+
+  // Center deck placeholder positions (% of board). Adjust as needed to match image.
+  const deckCenters = {
+    chance: { leftPct: 70, topPct: 70 },
+    community: { leftPct: 30, topPct: 30 },
+  } as const;
 
   useEffect(() => {
     displayPositionsRef.current = displayPositions;
@@ -451,6 +461,9 @@ export default function App() {
       onRoomUpdate: (r: RoomUpdatePayload) => {
         // This is a lightweight summary; we map turn to index later using full state
         setCanEnd(false);
+        // Determine host on the client using socket id
+        const myId = meRef.current;
+        if (myId) setIsHost(r.hostId === myId);
       },
       onGameUpdate: (g: GameState) => {
         console.log("Received gameUpdate:", g);
@@ -547,13 +560,22 @@ export default function App() {
         const isMyTurn = myPid ? ids[g.currentTurn] === myPid : false;
         // canRoll: my turn, game started, and haven't rolled yet
         setCanRoll(Boolean(isMyTurn && g.started && !g.hasRolledThisTurn));
-        // canEnd: my turn, game started, and have rolled
-        setCanEnd(Boolean(isMyTurn && g.started && g.hasRolledThisTurn));
-        updateMovingFlag();
+        // canEnd: my turn, game started, have rolled, and no pending card draw
+        const hasPending = Boolean((g as any).pendingDraw && (g as any).pendingDraw.playerId === myPid);
+        setCanEnd(Boolean(isMyTurn && g.started && g.hasRolledThisTurn && !hasPending));
+        setMoving(false);
 
         // When game starts, close lobby and show game board
         if (g.started && showLobby) {
           setShowLobby(false);
+        }
+        // Track pending draw tile index for animation and interactivity
+        if ((g as any).pendingDraw) {
+          try {
+            lastPendingTileRef.current = (g as any).pendingDraw.tileIndex as number;
+          } catch {}
+        } else {
+          lastPendingTileRef.current = null;
         }
       },
       onError: (msg) => {
@@ -561,13 +583,30 @@ export default function App() {
         setLog((prev) => [String(msg), ...prev.slice(0, 6)]);
       },
       onPrivateCardDrawn: (p) => {
-        setLocalDrawnCard(p);
-        setShowCardModal(true);
+        // Animate from center deck placeholder to center, then open modal
+        const from = p.deck === 'chance' ? deckCenters.chance : deckCenters.community;
+        setShowFlyCard({ deck: p.deck, from });
+        setTimeout(() => {
+          setShowFlyCard(null);
+          setLocalDrawnCard(p);
+          setShowCardModal(true);
+        }, 650);
       },
       onPrivateTaxCharged: (p) => {
         setTaxInfo(p);
         setShowTaxModal(true);
         setTimeout(() => setShowTaxModal(false), 2000);
+      },
+      onPrivateJail: () => {
+        // Show brief jail popup for acting player
+        setTaxInfo(null);
+        setShowTaxModal(false);
+        // Reuse a lightweight modal styled as jail
+        const el = document.createElement('div');
+        el.className = 'fixed inset-0 z-50 flex items-center justify-center pointer-events-none';
+        el.innerHTML = `<div class="pointer-events-auto rounded-2xl border-2 border-black/20 bg-white px-6 py-4 shadow-2xl" style="background:#fff5f5"><div class="text-center text-lg font-bold">🚓 GOING TO JAIL</div></div>`;
+        document.body.appendChild(el);
+        setTimeout(() => { try { document.body.removeChild(el); } catch {} }, 2000);
       }
     });
 
@@ -700,6 +739,26 @@ export default function App() {
                   >
                     End Turn
                   </Button>
+                  {roomId && (
+                    isHost ? (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => emitEndGame(roomId)}
+                        disabled={!isStarted}
+                      >
+                        End Game (Host)
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => getSocket().emit('leaveRoom', roomId)}
+                      >
+                        Leave Game
+                      </Button>
+                    )
+                  )}
                 </div>
                 <p className="text-center text-xs text-muted-foreground">
                   {!isStarted
@@ -742,6 +801,31 @@ export default function App() {
                   className="space-highlight"
                   style={getTilePercent(displayPositions[cp.id] ?? 0)}
                 />
+              {/* Center deck placeholders */}
+              {(['chance','community'] as const).map((deck) => {
+                const pd = (state as any)?.pendingDraw as any;
+                const isMyPending = pd && pd.deck === deck && pd.playerId === meRef.current;
+                const clickable = Boolean(isStarted && isMyPending);
+                const pos = deck === 'chance' ? deckCenters.chance : deckCenters.community;
+                return (
+                  <div
+                    key={`center-deck-${deck}`}
+                    className={`deck ${deck} ${clickable ? 'clickable' : ''}`}
+                    style={{ left: `${pos.leftPct}%`, top: `${pos.topPct}%` }}
+                    onClick={() => clickable && roomId && emitDrawCard(roomId, deck)}
+                    title={deck.toUpperCase()}
+                  >
+                    {deck === 'chance' ? '🎲' : '🃏'}
+                  </div>
+                );
+              })}
+
+              {showFlyCard && (
+                <div
+                  className="fly-card"
+                  style={{ ["--from-left" as any]: `${showFlyCard.from.leftPct}%`, ["--from-top" as any]: `${showFlyCard.from.topPct}%` }}
+                />
+              )}
                 {players.map((player) => (
                   <span
                     key={player.id}
@@ -825,7 +909,7 @@ export default function App() {
                               className="rounded px-1.5 py-0.5 text-xs text-white"
                               style={{ backgroundColor: space.color ?? "#666" }}
                             >
-                              {space.name.split(" ")[0]}
+                              {space.name}
                             </span>
                           ))}
                         </div>
@@ -1053,6 +1137,47 @@ export default function App() {
               >
                 Continue
               </Button>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
+      {/* Game Ended Overlay with standings */}
+      {state?.ended && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+          <Card className="w-full max-w-md">
+            <CardHeader className="text-center">
+              <CardTitle>Game Over</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <p className="text-center text-sm text-muted-foreground">
+                Winner: <span className="font-semibold">{state.winnerId ? (players.find(p => p.id === state.winnerId)?.name || state.winnerId) : '—'}</span>
+              </p>
+              {(() => {
+                if (!state) return null;
+                const worthOf = (pid: string) => {
+                  const cash = state.players[pid]?.cash ?? 0;
+                  let props = 0;
+                  for (const t of state.board) {
+                    if (t.ownerId === pid) props += t.price ?? 0;
+                  }
+                  return { cash, props, total: cash + props };
+                };
+                const entries = Object.keys(state.players)
+                  .map(pid => ({ pid, name: state.players[pid]?.name || pid, ...worthOf(pid) }))
+                  .sort((a, b) => b.total - a.total);
+                return (
+                  <div className="space-y-2">
+                    {entries.map((e, idx) => (
+                      <div key={e.pid} className="flex items-center justify-between text-sm">
+                        <span className="font-medium">{idx + 1}. {e.name}</span>
+                        <span className="text-muted-foreground">${e.total} <span className="text-xs">(cash ${e.cash} + props ${e.props})</span></span>
+                      </div>
+                    ))}
+                  </div>
+                );
+              })()}
+              <Button className="w-full" onClick={() => window.location.reload()}>New Game</Button>
             </CardContent>
           </Card>
         </div>
