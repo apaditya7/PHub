@@ -1,0 +1,25 @@
+                                                                                
+╭─── Claude Code v2.1.11 ──────────────────────────────────────────────────────╮
+│                                                    │ Tips for getting        │
+│                Welcome back Pratham!               │ started                 │
+│                                                    │ Run /init to create a … │
+│                       ▐▛███▜▌                      │ ─────────────────────── │
+│                      ▝▜█████▛▘                     │ Recent activity         │
+│                        ▘▘ ▝▝                       │ No recent activity      │
+│                                                    │                         │
+│       Sonnet 4.5 · Claude Pro ·                    │                         │
+│       prathamranjann@gmail.com's Organization      │                         │
+│           ~/PHub/frontend/nextjs-showcase          │                         │
+╰──────────────────────────────────────────────────────────────────────────────╯
+══════════════════ Conversation compacted · ctrl+o for history ═════════════════
+  ⎿  Read app/jigsaw-button/page.tsx (337 lines)                                
+  ⎿  Referenced file app/real-dark/page.tsx                                     
+  ⎿  Read app/text-hate-mouse/page.tsx (382 lines)                              
+  ⎿  Read app/limit-username/page.tsx (166 lines)                               
+  ⎿  Read app/wrapper-brittle/page.tsx (61 lines)                               
+  ⎿  Todo list read (8 items)                                                   
+  ⎿  You've hit your limit · resets 1am (Asia/Singapore)                        
+     /upgrade to increase your usage limit.                                     
+                                                                                
+✻ Worked for 8m 42s                                                             
+
