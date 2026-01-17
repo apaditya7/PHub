@@ -39,6 +39,8 @@ export interface GameState {
   turnOrder: PlayerID[];
   currentTurn: number; // index into turnOrder
   started: boolean;
+  ended?: boolean;
+  winnerId?: PlayerID | null;
   lastRoll?: [number, number];
   hasRolledThisTurn?: boolean; // true if current player has rolled this turn
   lastDrawnCard?: {
@@ -49,6 +51,16 @@ export interface GameState {
   lastTaxCharged?: {
     playerId: PlayerID;
     amount: number;
+    tileIndex: number;
+  } | null;
+  lastSentToJail?: {
+    playerId: PlayerID;
+    reason: 'tile' | 'card';
+    tileIndex?: number;
+  } | null;
+  pendingDraw?: {
+    deck: 'chance' | 'community';
+    playerId: PlayerID;
     tileIndex: number;
   } | null;
   // Card decks by ID; order is draw order (shift/pop based on policy)
@@ -99,6 +111,8 @@ export interface ClientToServerEvents {
   buyProperty: (roomId: RoomID) => void;
   endTurn: (roomId: RoomID) => void;
   leaveRoom: (roomId: RoomID) => void;
+  drawCard: (roomId: RoomID, which: 'chance' | 'community') => void;
+  endGame: (roomId: RoomID) => void;
   // Dev-only helpers (enabled when DEV_TOOLS=true)
   dev_forcePosition?: (roomId: RoomID, playerId: PlayerID, position: number) => void;
   dev_forceRoll?: (roomId: RoomID, playerId: PlayerID, d1: number, d2: number) => void;
@@ -115,8 +129,10 @@ export interface ServerToClientEvents {
     players: Array<Pick<PlayerInfo, "id" | "name" | "cash" | "position" | "bankrupt" | "inJail">>;
     currentTurn: PlayerID | null;
     started: boolean;
+    hostId: PlayerID | null;
   }) => void;
   gameUpdate: (state: GameState) => void;
   privateCardDrawn?: (payload: { deck: 'chance' | 'community'; cardId: string }) => void;
   privateTaxCharged?: (payload: { amount: number; tileIndex: number }) => void;
+  privateJail?: (payload: { reason: 'tile' | 'card' }) => void;
 }

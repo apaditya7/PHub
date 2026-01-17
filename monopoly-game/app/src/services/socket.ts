@@ -32,11 +32,18 @@ export type GameState = {
   turnOrder: PlayerID[];
   currentTurn: number;
   started: boolean;
+  ended?: boolean;
+  winnerId?: PlayerID | null;
   lastRoll?: [number, number];
   hasRolledThisTurn?: boolean;
   lastDrawnCard?: {
     deck: 'chance' | 'community';
     cardId: string;
+  } | null;
+  pendingDraw?: {
+    deck: 'chance' | 'community';
+    playerId: PlayerID;
+    tileIndex: number;
   } | null;
 };
 
@@ -102,6 +109,7 @@ export type RoomUpdatePayload = {
   players: Array<Pick<PlayerInfo, "id" | "name" | "cash" | "position" | "bankrupt" | "inJail">>;
   currentTurn: PlayerID | null;
   started: boolean;
+  hostId: PlayerID | null;
 };
 
 export function connectSocket(
@@ -112,6 +120,7 @@ export function connectSocket(
     onConnect?: (id: string) => void;
     onPrivateCardDrawn?: (p: { deck: 'chance' | 'community'; cardId: string }) => void;
     onPrivateTaxCharged?: (p: { amount: number; tileIndex: number }) => void;
+    onPrivateJail?: (p: { reason: 'tile' | 'card' }) => void;
   }
 ) {
   const s = getSocket();
@@ -121,6 +130,7 @@ export function connectSocket(
   if (handlers.onError) s.on("errorMessage", handlers.onError);
   if (handlers.onPrivateCardDrawn) s.on("privateCardDrawn", handlers.onPrivateCardDrawn);
   if (handlers.onPrivateTaxCharged) s.on("privateTaxCharged", handlers.onPrivateTaxCharged);
+  if (handlers.onPrivateJail) s.on("privateJail", handlers.onPrivateJail);
   return s;
 }
 
@@ -153,7 +163,13 @@ export function emitPayJailFine(roomId: RoomID) {
 export function emitUseGOOJF(roomId: RoomID) {
   getSocket().emit("useGetOutOfJailCard", roomId);
 }
+export function emitDrawCard(roomId: RoomID, which: 'chance' | 'community') {
+  getSocket().emit("drawCard", roomId, which);
+}
 
 export function emitStartGame(roomId: RoomID) {
   getSocket().emit("startGame", roomId);
+}
+export function emitEndGame(roomId: RoomID) {
+  getSocket().emit("endGame", roomId);
 }
