@@ -1,0 +1,896 @@
+{
+  "run_id": "1cbea29a861d4764bddf39a37cb77d65",
+  "started_at": "2026-01-17T19:42:07.042047Z",
+  "finished_at": "2026-01-17T19:43:18.189096Z",
+  "status": "complete",
+  "config": {
+    "mock_mode": false,
+    "deterministic": false,
+    "seed": null,
+    "question": "Should I go for class?"
+  },
+  "stages": [
+    {
+      "level": "trial",
+      "decision": {
+        "level": "trial",
+        "protocol": "majority vote",
+        "verdict_number": 1,
+        "shortlist": [
+          1
+        ],
+        "vote_tally": {
+          "1": 1
+        },
+        "dissents": [
+          {
+            "role": "Bailiff",
+            "proposed_number": null
+          },
+          {
+            "role": "Defense Advocate A",
+            "proposed_number": null
+          },
+          {
+            "role": "Expert Witness",
+            "proposed_number": null
+          },
+          {
+            "role": "trial",
+            "proposed_number": null
+          }
+        ],
+        "timestamp": "2026-01-17T19:42:32.925219Z"
+      },
+      "transcripts": [
+        {
+          "role": "Bailiff",
+          "level": "trial",
+          "message_type": "opening",
+          "proposed_number": null,
+          "vote": null,
+          "claims": [
+            "ANSWER: Yes"
+          ],
+          "evidence": [
+            "Attendance improves academic performance.",
+            "Class participation enhances understanding.",
+            "Networking opportunities with peers."
+          ],
+          "critiques": [
+            "Classes can be time-consuming.",
+            "May compete with personal commitments.",
+            "Not all classes are engaging."
+          ],
+          "counterarguments": [
+            "Education is an investment in future opportunities.",
+            "Engagement in class can lead to better grades.",
+            "Missing class can lead to information gaps."
+          ],
+          "confidence": 0.95,
+          "transcript_text": "The court finds that attending class is beneficial based on multiple sources supporting academic success.",
+          "exhibits": [
+            "University studies on attendance impact.",
+            "Student testimonials on class benefits.",
+            "Educational research on engagement."
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o-mini",
+            "timestamp": "2023-10-01T12:00:00Z"
+          }
+        },
+        {
+          "role": "Prosecution Advocate A",
+          "level": "trial",
+          "message_type": "opening",
+          "proposed_number": 1,
+          "vote": {
+            "decision": "approve",
+            "rationale": "Attending class is vital for your academic success and future opportunities."
+          },
+          "claims": [
+            "ANSWER: 1",
+            "Attending class increases your understanding of the material.",
+            "Class participation can improve your grades."
+          ],
+          "evidence": [
+            "Studies show students who attend classes regularly achieve higher GPAs.",
+            "Class attendance correlates with better retention of information."
+          ],
+          "critiques": [
+            "Some may argue online materials suffice, but they lack engagement.",
+            "Skipping class can lead to gaps in knowledge."
+          ],
+          "counterarguments": [
+            "You might have access to recorded lectures, but they don't replace classroom interaction.",
+            "Self-study can\u2019t replicate the immediate feedback from instructors."
+          ],
+          "confidence": 0.95,
+          "transcript_text": "Ladies and gentlemen, I urge you to consider the overwhelming evidence: attending class is not just a choice; it's a necessity. The number is clear\u20141. You must go for class to secure your future.",
+          "exhibits": [
+            "Attendance statistics from local universities.",
+            "Testimonials from successful alumni."
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o-mini",
+            "timestamp": "2023-10-01T12:00:00Z"
+          }
+        },
+        {
+          "role": "Defense Advocate A",
+          "level": "trial",
+          "message_type": "opening",
+          "proposed_number": null,
+          "vote": null,
+          "claims": [
+            "ANSWER: It depends on the value of the class. Consider attendance as essential for understanding."
+          ],
+          "evidence": [
+            "Research indicates that regular class attendance correlates with higher academic performance.",
+            "Many institutions have attendance policies affecting grades.",
+            "Peer discussions in class often clarify complex topics."
+          ],
+          "critiques": [
+            "The prosecution may overstate the necessity of attendance without evidence of individual learning preferences.",
+            "Attendance does not guarantee engagement or comprehension in the material presented.",
+            "Potential alternative learning methods or resources may be overlooked."
+          ],
+          "counterarguments": [
+            "Some students thrive through independent study and may find class attendance less beneficial.",
+            "Real-world applications and experiences can sometimes substitute for formal classroom settings.",
+            "Flexibility in learning can lead to equally valid educational outcomes."
+          ],
+          "confidence": 0.8,
+          "transcript_text": "In considering the necessity of attending class, we must scrutinize the underlying value of such attendance in relation to individual learning styles and institutional policies.",
+          "exhibits": [
+            "Attendance policy documents from local educational institutions.",
+            "Statistical data on student performance linked to attendance rates.",
+            "Surveys highlighting student preferences for learning environments."
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o-mini",
+            "timestamp": "2023-10-05T12:00:00Z"
+          }
+        },
+        {
+          "role": "Expert Witness",
+          "level": "trial",
+          "message_type": "opening",
+          "proposed_number": null,
+          "vote": null,
+          "claims": [
+            "ANSWER: Yes, you should go for class."
+          ],
+          "evidence": [
+            "Attendance can increase knowledge retention by 20-30%.",
+            "Regular class participation correlates with higher academic performance, typically by 15% or more.",
+            "Engaging with peers during class can enhance understanding and memory, statistically improving outcomes."
+          ],
+          "critiques": [
+            "Potential distractions may arise in a classroom setting.",
+            "Not all instructors provide valuable content.",
+            "Travel time may detract from study hours."
+          ],
+          "counterarguments": [
+            "In-person engagement fosters deeper learning, outweighing potential distractions.",
+            "The benefits of increased academic performance justify attendance.",
+            "Social interactions in class can lead to collaborative opportunities."
+          ],
+          "confidence": 0.95,
+          "transcript_text": "The evidence clearly suggests that attending class is statistically beneficial for educational outcomes, thus I assert one should prioritize attendance.",
+          "exhibits": [
+            "Studies on learning retention rates",
+            "Surveys on academic performance versus attendance",
+            "Research on collaborative learning benefits"
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o-mini",
+            "timestamp": "2023-10-01T12:00:00Z"
+          }
+        },
+        {
+          "role": "trial",
+          "level": "trial",
+          "message_type": "opening",
+          "proposed_number": null,
+          "vote": null,
+          "claims": [
+            "ANSWER: Yes, attending class is generally beneficial."
+          ],
+          "evidence": [
+            "Class attendance often correlates with better academic performance.",
+            "Direct interaction with instructors and peers can enhance understanding.",
+            "Some institutions have attendance policies affecting grades."
+          ],
+          "critiques": [
+            "Class may not always align with personal learning styles.",
+            "External factors such as health or emergencies may affect attendance."
+          ],
+          "counterarguments": [
+            "Online resources can supplement learning if unable to attend.",
+            "Recorded lectures provide flexibility."
+          ],
+          "confidence": 0.9,
+          "transcript_text": "Opening arguments focus on the merits of class attendance for educational success.",
+          "exhibits": [
+            "Study on academic performance and attendance",
+            "University attendance policy"
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2023-10-18T12:00:00"
+          }
+        }
+      ],
+      "exhibits": [
+        "University studies on attendance impact.",
+        "Student testimonials on class benefits.",
+        "Educational research on engagement.",
+        "Attendance statistics from local universities.",
+        "Testimonials from successful alumni.",
+        "Attendance policy documents from local educational institutions.",
+        "Statistical data on student performance linked to attendance rates.",
+        "Surveys highlighting student preferences for learning environments.",
+        "Studies on learning retention rates",
+        "Surveys on academic performance versus attendance",
+        "Research on collaborative learning benefits",
+        "Study on academic performance and attendance",
+        "University attendance policy"
+      ]
+    },
+    {
+      "level": "appeals",
+      "decision": {
+        "level": "appeals",
+        "protocol": "critique + panel vote",
+        "holding": "affirm",
+        "majority_number": 1,
+        "dissents": [
+          {
+            "role": "Appellate Judge B",
+            "vote": {
+              "decision": "remand",
+              "rationale": "The trial record shows a single vote with multiple dissents and lacks clarity in decision-making."
+            }
+          },
+          {
+            "role": "Appellate Judge C",
+            "vote": {
+              "decision": "reverse",
+              "rationale": "The trial verdict lacks sufficient detail and dissent rationale."
+            }
+          }
+        ],
+        "timestamp": "2026-01-17T19:42:45.726867Z"
+      },
+      "transcripts": [
+        {
+          "role": "Appellate Judge A",
+          "level": "appeals",
+          "message_type": "ruling",
+          "proposed_number": 1,
+          "vote": {
+            "decision": "affirm",
+            "rationale": "The trial verdict was reached by a legitimate majority vote, and no procedural errors were evident."
+          },
+          "claims": [
+            "ANSWER: Yes, affirm the trial verdict."
+          ],
+          "evidence": [
+            "The trial's majority vote resulted in a verdict number of 1.",
+            "The vote tally shows unanimity with one vote for the verdict.",
+            "No procedural errors or irregularities are documented."
+          ],
+          "critiques": [
+            "The dissenting roles did not propose alternative numbers.",
+            "The trial record lacks comprehensive justification for the vote."
+          ],
+          "counterarguments": [
+            "The trial followed the proper protocol for reaching a verdict.",
+            "The absence of alternative proposals supports the majority decision."
+          ],
+          "confidence": 0.95,
+          "transcript_text": "Upon review, the trial's majority decision stands as procedurally valid, warranting affirmation.",
+          "exhibits": [
+            "Vote tally documentation",
+            "Trial procedure records"
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2023-10-20T14:12:00Z"
+          }
+        },
+        {
+          "role": "Appellate Judge B",
+          "level": "appeals",
+          "message_type": "holding",
+          "proposed_number": null,
+          "vote": {
+            "decision": "remand",
+            "rationale": "The trial record shows a single vote with multiple dissents and lacks clarity in decision-making."
+          },
+          "claims": [
+            "ANSWER: Remand."
+          ],
+          "evidence": [
+            "Single vote in favor of verdict.",
+            "Multiple dissents recorded.",
+            "Lack of comprehensive protocol adherence."
+          ],
+          "critiques": [
+            "The trial verdict lacks sufficient voting detail.",
+            "Dissents need clarification.",
+            "The protocol applied is unclear."
+          ],
+          "counterarguments": [
+            "The single vote may reflect a clear decision.",
+            "Dissents might not impact the outcome."
+          ],
+          "confidence": 0.85,
+          "transcript_text": "Upon review, the trial's single vote and multiple dissents necessitate a remand for clarity and procedural adherence.",
+          "exhibits": [],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2026-01-17T19:50:00Z"
+          }
+        },
+        {
+          "role": "Appellate Judge C",
+          "level": "appeals",
+          "message_type": "opinion",
+          "proposed_number": 0,
+          "vote": {
+            "decision": "reverse",
+            "rationale": "The trial verdict lacks sufficient detail and dissent rationale."
+          },
+          "claims": [
+            "ANSWER: No, the trial verdict's consensus is weak."
+          ],
+          "evidence": [
+            "Only one vote in favor of the verdict number.",
+            "Multiple dissents with no proposed alternatives."
+          ],
+          "critiques": [
+            "The trial verdict is insufficiently supported with just one vote.",
+            "Dissents fail to provide alternative numbers, reducing clarity."
+          ],
+          "counterarguments": [
+            "A single vote may be sufficient if uncontested.",
+            "Dissents without alternatives might indicate agreement with the number, not process."
+          ],
+          "confidence": 0.2,
+          "transcript_text": "The trial's decision rests on a singular vote, failing to justify its majority claim.",
+          "exhibits": [],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2023-10-01T12:00:00.000Z"
+          }
+        }
+      ],
+      "exhibits": [
+        "Vote tally documentation",
+        "Trial procedure records"
+      ]
+    },
+    {
+      "level": "supreme",
+      "decision": {
+        "level": "supreme",
+        "protocol": "consensus + authored opinion",
+        "final_number": 1,
+        "opinion": {
+          "syllabus": "The Court consolidates the record and affirms procedural legitimacy.",
+          "majority": "The majority synthesizes the trial and appellate record into a single number.",
+          "dissents": [
+            {
+              "against": "remand",
+              "reason": "Some may argue the appellate affirmation indicates trial correctness."
+            },
+            {
+              "against": "affirm",
+              "reason": "The trial's lack of clarity and multiple dissents necessitate remand for justice."
+            },
+            {
+              "against": "affirm",
+              "reason": "Decision-making lacks clarity, warranting remand or reversal."
+            },
+            {
+              "against": "affirm",
+              "reason": "The lack of clarity in the trial record and detailed dissent rationale at the appeals level."
+            }
+          ],
+          "writer": "Chief Justice"
+        },
+        "timestamp": "2026-01-17T19:43:03.031686Z"
+      },
+      "transcripts": [
+        {
+          "role": "Chief Justice",
+          "level": "supreme",
+          "message_type": "holding",
+          "proposed_number": null,
+          "vote": {
+            "decision": "remand",
+            "rationale": "The appellate decision to affirm lacks consensus with notable dissents highlighting deficiencies in the trial record."
+          },
+          "claims": [
+            "ANSWER: Remand for further clarification and detail."
+          ],
+          "evidence": [
+            "The trial record shows a single vote with multiple dissents.",
+            "Lacks clarity in decision-making.",
+            "Insufficient detail in trial verdict dissent rationales."
+          ],
+          "critiques": [
+            "Appellate holding lacks a unified decision.",
+            "Dissents highlight critical flaws in the original trial record."
+          ],
+          "counterarguments": [
+            "Affirmation suggests some evidence of correctness in the trial verdict.",
+            "Appellate majority may have seen sufficient detail."
+          ],
+          "confidence": 0.85,
+          "transcript_text": "In light of the appellate decision and noted dissents, it is the judgment of this Court that the matter requires further examination. Thus, we remand the case for additional clarity and detail.",
+          "exhibits": [
+            "Appellate decision document",
+            "Trial record excerpts"
+          ],
+          "dissent": {
+            "against": "remand",
+            "reason": "Some may argue the appellate affirmation indicates trial correctness."
+          },
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2026-01-17T19:45:00Z"
+          }
+        },
+        {
+          "role": "Justice Originalist",
+          "level": "supreme",
+          "message_type": "opinion",
+          "proposed_number": null,
+          "vote": {
+            "decision": "remand",
+            "rationale": "The appeals holding is based on a singular majority number with significant dissent, indicating a lack of consensus and clarity."
+          },
+          "claims": [
+            "ANSWER: Remand"
+          ],
+          "evidence": [
+            "The appeals holding presents a divided opinion with a single affirming vote.",
+            "Dissenting opinions highlight the lack of detail and clarity in the trial record.",
+            "The protocol suggests an absence of consensus."
+          ],
+          "critiques": [
+            "The decision-making process lacks transparency.",
+            "Multiple dissents suggest unresolved issues.",
+            "A single majority number indicates potential error or oversight."
+          ],
+          "counterarguments": [
+            "An affirm decision could streamline proceedings.",
+            "Remanding may lead to delays.",
+            "The majority decision might reflect a sound judgment after debate."
+          ],
+          "confidence": 0.85,
+          "transcript_text": "Given the divided opinions and lack of clarity in the trial record, remanding the case for further consideration is prudent.",
+          "exhibits": [
+            "Appeals holding document",
+            "Dissenting opinions"
+          ],
+          "dissent": {
+            "against": "affirm",
+            "reason": "The trial's lack of clarity and multiple dissents necessitate remand for justice."
+          },
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2026-01-17T20:00:00Z"
+          }
+        },
+        {
+          "role": "Justice Utilitarian",
+          "level": "supreme",
+          "message_type": "holding",
+          "proposed_number": null,
+          "vote": {
+            "decision": "affirm",
+            "rationale": "The decision to attend class maximizes educational utility, aligning with the affirm decision."
+          },
+          "claims": [
+            "ANSWER: Yes, attend class to maximize educational utility."
+          ],
+          "evidence": [
+            "Educational benefits from attending class reinforce the affirm decision.",
+            "The appeals holding supports attending class with a majority vote.",
+            "Class attendance may provide long-term benefits in knowledge and career."
+          ],
+          "critiques": [
+            "The trial record lacks detail, leading to dissenting opinions.",
+            "The initial trial decision was not sufficiently justified."
+          ],
+          "counterarguments": [
+            "Dissenters argue for remand or reverse due to decision-making clarity issues.",
+            "Attending class may not suit individual circumstances."
+          ],
+          "confidence": 0.85,
+          "transcript_text": "The balance of evidence supports affirming the decision to attend class.",
+          "exhibits": [
+            "Appeals holding document with majority number and dissents."
+          ],
+          "dissent": {
+            "against": "affirm",
+            "reason": "Decision-making lacks clarity, warranting remand or reversal."
+          },
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2026-01-17T19:43:45.726867Z"
+          }
+        },
+        {
+          "role": "Justice Empiricist",
+          "level": "supreme",
+          "message_type": "opinion",
+          "proposed_number": 1,
+          "vote": {
+            "decision": "affirm",
+            "rationale": "The majority opinion at the appeals level supports attending class based on protocol and voting results."
+          },
+          "claims": [
+            "ANSWER: Yes"
+          ],
+          "evidence": [
+            "Appeals decision to affirm attending class.",
+            "Majority number at appeals level was 1."
+          ],
+          "critiques": [
+            "Lack of clarity in trial record.",
+            "Dissents at appeals level highlight decision-making issues."
+          ],
+          "counterarguments": [
+            "The majority decision at appeals was clear and supported by protocol."
+          ],
+          "confidence": 0.85,
+          "transcript_text": "The court finds it appropriate to affirm the appeals decision, suggesting attendance.",
+          "exhibits": [
+            "Appeals holding showing majority decision and dissents."
+          ],
+          "dissent": {
+            "against": "affirm",
+            "reason": "The lack of clarity in the trial record and detailed dissent rationale at the appeals level."
+          },
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2026-01-17T20:00:00.000000Z"
+          }
+        }
+      ],
+      "exhibits": [
+        "Appellate decision document",
+        "Trial record excerpts",
+        "Appeals holding document",
+        "Dissenting opinions",
+        "Appeals holding document with majority number and dissents.",
+        "Appeals holding showing majority decision and dissents."
+      ]
+    },
+    {
+      "level": "senate",
+      "decision": {
+        "level": "senate",
+        "protocol": "political override vote",
+        "statute_number": 1,
+        "amendments": [
+          "ANSWER: Proceed with the statute-number 1 as affirmed by the Supreme Court.",
+          "ANSWER: The proposed statute-number should be reconsidered given the supreme court's decision.",
+          "ANSWER: Approve the amendment."
+        ],
+        "roll_call": [
+          {
+            "senator": "Majority Leader",
+            "decision": "adopt",
+            "proposed_number": 1
+          },
+          {
+            "senator": "Minority Leader",
+            "decision": "tabled",
+            "proposed_number": 2
+          },
+          {
+            "senator": "Senator 1",
+            "decision": "approve",
+            "proposed_number": 1
+          }
+        ],
+        "result": "passed",
+        "timestamp": "2026-01-17T19:43:18.188078Z"
+      },
+      "transcripts": [
+        {
+          "role": "Majority Leader",
+          "level": "senate",
+          "message_type": "summary",
+          "proposed_number": 1,
+          "vote": {
+            "decision": "adopt",
+            "rationale": "The Supreme Court's decision to consolidate and affirm procedural legitimacy with a single number is compelling."
+          },
+          "claims": [
+            "ANSWER: Proceed with the statute-number 1 as affirmed by the Supreme Court."
+          ],
+          "evidence": [
+            "The Supreme Court has synthesized the trial and appellate records into a single statute-number.",
+            "The Court's syllabus affirms procedural legitimacy.",
+            "The majority opinion consolidates the record."
+          ],
+          "critiques": [
+            "Multiple dissents argue for remand or reversal due to lack of clarity."
+          ],
+          "counterarguments": [
+            "The Supreme Court's affirmation suggests a clear procedural pathway."
+          ],
+          "confidence": 0.95,
+          "transcript_text": "The Supreme Court has affirmed the procedural legitimacy with statute-number 1. We should proceed with this number.",
+          "exhibits": [
+            "Supreme Court's syllabus and majority opinion."
+          ],
+          "dissent": {
+            "against": "affirm",
+            "reason": "Decision-making lacks clarity, warranting remand or reversal."
+          },
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2026-01-17T19:43:03.031686Z"
+          }
+        },
+        {
+          "role": "Minority Leader",
+          "level": "senate",
+          "message_type": "amendment",
+          "proposed_number": 2,
+          "vote": {
+            "decision": "tabled",
+            "rationale": "The supreme decision lacks clarity and coherence in dissenting opinions."
+          },
+          "claims": [
+            "ANSWER: The proposed statute-number should be reconsidered given the supreme court's decision."
+          ],
+          "evidence": [
+            "The supreme court's decision was marred by multiple dissents questioning clarity.",
+            "The majority opinion failed to address all procedural concerns raised."
+          ],
+          "critiques": [
+            "The decision-making process is ambiguous and calls for further scrutiny.",
+            "There is a significant divide in the opinion about procedural legitimacy."
+          ],
+          "counterarguments": [
+            "Some may argue that the supreme decision consolidates previous records effectively."
+          ],
+          "confidence": 0.6,
+          "transcript_text": "The procedural legitimacy is in question, and a roll-call vote is essential to ensure clarity.",
+          "exhibits": [],
+          "dissent": {
+            "against": "affirm",
+            "reason": "The supreme court's decision lacks sufficient clarity and coherence."
+          },
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2026-01-17T19:45:00.123456Z"
+          }
+        },
+        {
+          "role": "Senator 1",
+          "level": "senate",
+          "message_type": "amendment",
+          "proposed_number": 1,
+          "vote": {
+            "decision": "approve",
+            "rationale": "The proposal consolidates clarity and procedural integrity."
+          },
+          "claims": [
+            "ANSWER: Approve the amendment."
+          ],
+          "evidence": [
+            "The Supreme Court affirms procedural legitimacy with the final number.",
+            "The consolidation into a single number enhances understanding of the record.",
+            "The majority opinion reinforces the need for clarity."
+          ],
+          "critiques": [
+            "Some dissenters argue for remand due to clarity issues.",
+            "The trial's ambiguity creates potential for misinterpretation.",
+            "Reversal could complicate future proceedings."
+          ],
+          "counterarguments": [
+            "The decision's clarity outweighs dissenting views.",
+            "Consolidation promotes efficient legislative action.",
+            "Affirmation by the Supreme Court lends credibility."
+          ],
+          "confidence": 0.9,
+          "transcript_text": "As we deliberate on the proposed amendment, we must recognize the Supreme Court's affirmation with a clear number\u2014one\u2014serving as the bedrock for procedural integrity. Thus, I urge my colleagues to lend their support.",
+          "exhibits": [
+            "Supreme Court's authored opinion",
+            "Trial and appellate records",
+            "Dissenting opinions"
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o-mini",
+            "timestamp": "2026-01-17T19:43:03.031686Z"
+          }
+        }
+      ],
+      "exhibits": [
+        "Supreme Court's syllabus and majority opinion.",
+        "Supreme Court's authored opinion",
+        "Trial and appellate records",
+        "Dissenting opinions"
+      ]
+    }
+  ],
+  "record_on_appeal": [
+    {
+      "level": "trial",
+      "decision": {
+        "level": "trial",
+        "protocol": "majority vote",
+        "verdict_number": 1,
+        "shortlist": [
+          1
+        ],
+        "vote_tally": {
+          "1": 1
+        },
+        "dissents": [
+          {
+            "role": "Bailiff",
+            "proposed_number": null
+          },
+          {
+            "role": "Defense Advocate A",
+            "proposed_number": null
+          },
+          {
+            "role": "Expert Witness",
+            "proposed_number": null
+          },
+          {
+            "role": "trial",
+            "proposed_number": null
+          }
+        ],
+        "timestamp": "2026-01-17T19:42:32.925219Z"
+      },
+      "exhibits": [
+        "University studies on attendance impact.",
+        "Student testimonials on class benefits.",
+        "Educational research on engagement.",
+        "Attendance statistics from local universities.",
+        "Testimonials from successful alumni.",
+        "Attendance policy documents from local educational institutions.",
+        "Statistical data on student performance linked to attendance rates.",
+        "Surveys highlighting student preferences for learning environments.",
+        "Studies on learning retention rates",
+        "Surveys on academic performance versus attendance",
+        "Research on collaborative learning benefits",
+        "Study on academic performance and attendance",
+        "University attendance policy"
+      ]
+    },
+    {
+      "level": "appeals",
+      "decision": {
+        "level": "appeals",
+        "protocol": "critique + panel vote",
+        "holding": "affirm",
+        "majority_number": 1,
+        "dissents": [
+          {
+            "role": "Appellate Judge B",
+            "vote": {
+              "decision": "remand",
+              "rationale": "The trial record shows a single vote with multiple dissents and lacks clarity in decision-making."
+            }
+          },
+          {
+            "role": "Appellate Judge C",
+            "vote": {
+              "decision": "reverse",
+              "rationale": "The trial verdict lacks sufficient detail and dissent rationale."
+            }
+          }
+        ],
+        "timestamp": "2026-01-17T19:42:45.726867Z"
+      },
+      "exhibits": [
+        "Vote tally documentation",
+        "Trial procedure records"
+      ]
+    },
+    {
+      "level": "supreme",
+      "decision": {
+        "level": "supreme",
+        "protocol": "consensus + authored opinion",
+        "final_number": 1,
+        "opinion": {
+          "syllabus": "The Court consolidates the record and affirms procedural legitimacy.",
+          "majority": "The majority synthesizes the trial and appellate record into a single number.",
+          "dissents": [
+            {
+              "against": "remand",
+              "reason": "Some may argue the appellate affirmation indicates trial correctness."
+            },
+            {
+              "against": "affirm",
+              "reason": "The trial's lack of clarity and multiple dissents necessitate remand for justice."
+            },
+            {
+              "against": "affirm",
+              "reason": "Decision-making lacks clarity, warranting remand or reversal."
+            },
+            {
+              "against": "affirm",
+              "reason": "The lack of clarity in the trial record and detailed dissent rationale at the appeals level."
+            }
+          ],
+          "writer": "Chief Justice"
+        },
+        "timestamp": "2026-01-17T19:43:03.031686Z"
+      },
+      "exhibits": [
+        "Appellate decision document",
+        "Trial record excerpts",
+        "Appeals holding document",
+        "Dissenting opinions",
+        "Appeals holding document with majority number and dissents.",
+        "Appeals holding showing majority decision and dissents."
+      ]
+    },
+    {
+      "level": "senate",
+      "decision": {
+        "level": "senate",
+        "protocol": "political override vote",
+        "statute_number": 1,
+        "amendments": [
+          "ANSWER: Proceed with the statute-number 1 as affirmed by the Supreme Court.",
+          "ANSWER: The proposed statute-number should be reconsidered given the supreme court's decision.",
+          "ANSWER: Approve the amendment."
+        ],
+        "roll_call": [
+          {
+            "senator": "Majority Leader",
+            "decision": "adopt",
+            "proposed_number": 1
+          },
+          {
+            "senator": "Minority Leader",
+            "decision": "tabled",
+            "proposed_number": 2
+          },
+          {
+            "senator": "Senator 1",
+            "decision": "approve",
+            "proposed_number": 1
+          }
+        ],
+        "result": "passed",
+        "timestamp": "2026-01-17T19:43:18.188078Z"
+      },
+      "exhibits": [
+        "Supreme Court's syllabus and majority opinion.",
+        "Supreme Court's authored opinion",
+        "Trial and appellate records",
+        "Dissenting opinions"
+      ]
+    }
+  ],
+  "final_number": 1,
+  "final_answer": "Approve the amendment."
+}
