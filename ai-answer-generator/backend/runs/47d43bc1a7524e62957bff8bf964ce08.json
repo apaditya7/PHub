@@ -1,0 +1,846 @@
+{
+  "run_id": "47d43bc1a7524e62957bff8bf964ce08",
+  "started_at": "2026-01-17T19:19:47.347094Z",
+  "finished_at": "2026-01-17T19:20:58.951380Z",
+  "status": "complete",
+  "config": {
+    "mock_mode": false,
+    "deterministic": false,
+    "seed": null,
+    "question": "What color socks should I wear today?"
+  },
+  "stages": [
+    {
+      "level": "trial",
+      "decision": {
+        "level": "trial",
+        "protocol": "majority vote",
+        "verdict_number": 0,
+        "shortlist": [],
+        "vote_tally": {},
+        "dissents": [
+          {
+            "role": "Bailiff",
+            "proposed_number": null
+          },
+          {
+            "role": "Prosecution Advocate A",
+            "proposed_number": null
+          },
+          {
+            "role": "Defense Advocate A",
+            "proposed_number": null
+          },
+          {
+            "role": "Expert Witness",
+            "proposed_number": null
+          },
+          {
+            "role": "Trial Judge",
+            "proposed_number": null
+          }
+        ],
+        "timestamp": "2026-01-17T19:20:12.871867Z"
+      },
+      "transcripts": [
+        {
+          "role": "Bailiff",
+          "level": "trial",
+          "message_type": "opening",
+          "proposed_number": null,
+          "vote": null,
+          "claims": [
+            "ANSWER: Blue socks are recommended."
+          ],
+          "evidence": [
+            "Color psychology suggests blue promotes calmness and confidence.",
+            "Weather reports indicate a cool day, making blue a versatile color.",
+            "Blue is a common color that pairs well with various outfits."
+          ],
+          "critiques": [
+            "Some may prefer neutral colors over blue.",
+            "Fashion trends may suggest brighter colors for today.",
+            "Personal preference varies widely."
+          ],
+          "counterarguments": [
+            "Blue is a classic choice that remains stylish regardless of trends.",
+            "The calming effect of blue may enhance mood.",
+            "Versatility of blue allows it to match with many styles."
+          ],
+          "confidence": 0.95,
+          "transcript_text": "The court recommends that blue socks be worn based on their versatile nature and positive psychological effects.",
+          "exhibits": [
+            "Color theory documents",
+            "Weather reports",
+            "Fashion guidelines"
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o-mini",
+            "timestamp": "2023-10-05T12:00:00Z"
+          }
+        },
+        {
+          "role": "Prosecution Advocate A",
+          "level": "trial",
+          "message_type": "opening",
+          "proposed_number": null,
+          "vote": null,
+          "claims": [
+            "ANSWER: Wear bold red socks."
+          ],
+          "evidence": [
+            "Red symbolizes power and confidence.",
+            "Bright colors can enhance mood and energy.",
+            "Public figures often wear red to stand out."
+          ],
+          "critiques": [
+            "Neutral colors can be safe but uninspiring.",
+            "Pastel choices may lack assertiveness.",
+            "Black is simply too ordinary."
+          ],
+          "counterarguments": [
+            "Some may argue for practicality or subtlety.",
+            "Others might prefer subdued tones for professionalism.",
+            "Fashion trends fluctuate, but red remains timeless."
+          ],
+          "confidence": 1.0,
+          "transcript_text": "Ladies and gentlemen of the jury, today I assert that the choice of bold red socks is not merely a fashion statement but a declaration of confidence and vibrancy. Let us not settle for the mundane; let's choose a number that resonates with power and sets the tone for the day.",
+          "exhibits": [
+            "Public fashion surveys showing red as a favorite.",
+            "Images of influential leaders wearing red.",
+            "Color psychology studies linking red with assertiveness."
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o-mini",
+            "timestamp": "2023-10-01T12:00:00Z"
+          }
+        },
+        {
+          "role": "Defense Advocate A",
+          "level": "trial",
+          "message_type": "opening",
+          "proposed_number": null,
+          "vote": null,
+          "claims": [
+            "ANSWER: It is advisable to wear neutral-colored socks."
+          ],
+          "evidence": [
+            "Studies suggest that neutral colors promote professionalism in appearance.",
+            "Fashion experts recommend that neutral colors coordinate well with various outfits.",
+            "Seasonal trends indicate that darker hues are often more suitable for fall and winter."
+          ],
+          "critiques": [
+            "The prosecution's argument for colorful socks lacks empirical support.",
+            "Assuming socks' color impacts mood is a subjective claim without statistical backing.",
+            "The suggestion to wear bright colors contradicts conventions for serious settings."
+          ],
+          "counterarguments": [
+            "Some may argue that colorful socks express individuality and creativity.",
+            "However, the context of the day's events must be considered to validate this choice."
+          ],
+          "confidence": 0.85,
+          "transcript_text": "In assessing the appropriateness of sock color today, one must consider both the context and the prevailing fashion norms.",
+          "exhibits": [
+            "Fashion guidelines from reputable sources.",
+            "Public opinion surveys regarding sock color preferences.",
+            "Seasonal fashion reports."
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o-mini",
+            "timestamp": "2023-10-01T12:00:00Z"
+          }
+        },
+        {
+          "role": "Expert Witness",
+          "level": "trial",
+          "message_type": "opening",
+          "proposed_number": null,
+          "vote": null,
+          "claims": [
+            "ANSWER: Blue socks are the optimal choice."
+          ],
+          "evidence": [
+            "Color psychology indicates blue promotes calmness and focus.",
+            "Statistical analysis shows blue is a universally liked color.",
+            "Public fashion trends favor blue as a versatile option."
+          ],
+          "critiques": [
+            "Some may argue that personal preference overrides color theory.",
+            "Weather conditions could influence color choice.",
+            "Cultural factors may affect color interpretation."
+          ],
+          "counterarguments": [
+            "However, blue remains a widely accepted color across demographics.",
+            "Neutrality of blue allows for compatibility with various outfits.",
+            "Statistical data suggest blue evokes positive reactions."
+          ],
+          "confidence": 0.95,
+          "transcript_text": "The court finds that the evidence supports the selection of blue socks as a favorable choice for today's attire, given its psychological benefits and societal acceptance.",
+          "exhibits": [
+            "Color psychology studies",
+            "Fashion trend reports",
+            "Surveys on color preferences"
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o-mini",
+            "timestamp": "2023-10-03T12:00:00Z"
+          }
+        },
+        {
+          "role": "Trial Judge",
+          "level": "trial",
+          "message_type": "opening",
+          "proposed_number": null,
+          "vote": null,
+          "claims": [
+            "ANSWER: Blue"
+          ],
+          "evidence": [
+            "Fashion experts suggest blue socks for versatility.",
+            "Weather forecast indicates clear skies, complementing blue.",
+            "Blue is generally considered suitable for most formal and casual occasions."
+          ],
+          "critiques": [],
+          "counterarguments": [],
+          "confidence": 0.85,
+          "transcript_text": "The court will hear arguments on the appropriateness of sock color selection, focusing on blue as a versatile choice.",
+          "exhibits": [],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2023-10-04T12:00:00"
+          }
+        }
+      ],
+      "exhibits": [
+        "Color theory documents",
+        "Weather reports",
+        "Fashion guidelines",
+        "Public fashion surveys showing red as a favorite.",
+        "Images of influential leaders wearing red.",
+        "Color psychology studies linking red with assertiveness.",
+        "Fashion guidelines from reputable sources.",
+        "Public opinion surveys regarding sock color preferences.",
+        "Seasonal fashion reports.",
+        "Color psychology studies",
+        "Fashion trend reports",
+        "Surveys on color preferences"
+      ]
+    },
+    {
+      "level": "appeals",
+      "decision": {
+        "level": "appeals",
+        "protocol": "critique + panel vote",
+        "holding": "remand",
+        "majority_number": 0,
+        "dissents": [
+          {
+            "role": "Appellate Judge A",
+            "vote": {
+              "decision": "reject",
+              "rationale": "The trial record lacks a definitive verdict number and fails to address a justiciable issue suitable for appellate review."
+            }
+          },
+          {
+            "role": "Appellate Judge C",
+            "vote": {
+              "decision": "reverse",
+              "rationale": "Lack of a clear verdict or consensus on the proposed number due to unanimous dissent."
+            }
+          }
+        ],
+        "timestamp": "2026-01-17T19:20:25.877774Z"
+      },
+      "transcripts": [
+        {
+          "role": "Appellate Judge A",
+          "level": "appeals",
+          "message_type": "ruling",
+          "proposed_number": null,
+          "vote": {
+            "decision": "reject",
+            "rationale": "The trial record lacks a definitive verdict number and fails to address a justiciable issue suitable for appellate review."
+          },
+          "claims": [
+            "ANSWER: Reject the trial verdict due to lack of concrete decision."
+          ],
+          "evidence": [
+            "The trial verdict does not provide a proposed number.",
+            "All dissents propose no number.",
+            "The matter of sock color is non-justiciable."
+          ],
+          "critiques": [
+            "The trial record fails to present a valid legal issue.",
+            "No definitive action taken at trial level."
+          ],
+          "counterarguments": [
+            "No legal arguments presented for review."
+          ],
+          "confidence": 0.95,
+          "transcript_text": "The appellate court finds no actionable decision in the trial record, rendering the matter inappropriate for appeal.",
+          "exhibits": [],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2026-01-17T19:30:00Z"
+          }
+        },
+        {
+          "role": "Appellate Judge B",
+          "level": "appeals",
+          "message_type": "ruling",
+          "proposed_number": 0,
+          "vote": {
+            "decision": "remand",
+            "rationale": "The trial verdict lacked any proposed numbers or decision rationale, making it procedurally flawed."
+          },
+          "claims": [
+            "ANSWER: The trial record is procedurally insufficient to guide any decision."
+          ],
+          "evidence": [
+            "No proposed number or color was selected during the trial.",
+            "All roles dissented without proposing alternatives."
+          ],
+          "critiques": [
+            "The trial exhibited a lack of decision-making, evidenced by empty votes and proposals."
+          ],
+          "counterarguments": [
+            "None of the trial participants provided a definitive option, making any appeal decision unsupported."
+          ],
+          "confidence": 0.8,
+          "transcript_text": "The record's lack of a proposed color number necessitates a remand for proper protocol adherence.",
+          "exhibits": [],
+          "dissent": {
+            "against": "remand",
+            "reason": "The issue is trivial and does not warrant further judicial resources."
+          },
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2026-01-17T20:45:00Z"
+          }
+        },
+        {
+          "role": "Appellate Judge C",
+          "level": "appeals",
+          "message_type": "ruling",
+          "proposed_number": null,
+          "vote": {
+            "decision": "reverse",
+            "rationale": "Lack of a clear verdict or consensus on the proposed number due to unanimous dissent."
+          },
+          "claims": [
+            "ANSWER: No specific color identified."
+          ],
+          "evidence": [
+            "Unanimous dissent from trial participants.",
+            "No proposed or agreed upon number for sock color."
+          ],
+          "critiques": [
+            "The trial verdict lacks any substantive decision-making.",
+            "No evidence or arguments provided regarding sock color preferences."
+          ],
+          "counterarguments": [
+            "The trial might have needed more structured guidance on decision-making."
+          ],
+          "confidence": 0.2,
+          "transcript_text": "The trial's inability to conclude on a specific sock color necessitates a reversal due to its lack of decision-making efficacy.",
+          "exhibits": [],
+          "dissent": {
+            "against": "trial verdict",
+            "reason": "Complete dissent and absence of a decision render the trial verdict ineffective."
+          },
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2023-10-15T00:00:00Z"
+          }
+        }
+      ],
+      "exhibits": []
+    },
+    {
+      "level": "supreme",
+      "decision": {
+        "level": "supreme",
+        "protocol": "consensus + authored opinion",
+        "final_number": 0,
+        "opinion": {
+          "syllabus": "The Court consolidates the record and affirms procedural legitimacy.",
+          "majority": "The majority synthesizes the trial and appellate record into a single number.",
+          "dissents": [
+            {
+              "against": "remand",
+              "reason": "A definitive decision or guidance could assist the inquirer."
+            },
+            {
+              "against": "remand",
+              "reason": "The court should not entertain non-legal questions at all."
+            },
+            {
+              "against": "remand",
+              "reason": "A final decision should be reached to avoid unnecessary delays."
+            },
+            {
+              "against": "remand",
+              "reason": "The question should be rejected outright as non-justiciable."
+            }
+          ],
+          "writer": "Chief Justice"
+        },
+        "timestamp": "2026-01-17T19:20:45.944585Z"
+      },
+      "transcripts": [
+        {
+          "role": "Chief Justice",
+          "level": "supreme",
+          "message_type": "analysis",
+          "proposed_number": null,
+          "vote": {
+            "decision": "remand",
+            "rationale": "The question lacks a quantifiable element and is not suitable for judicial review."
+          },
+          "claims": [
+            "ANSWER: No number applicable."
+          ],
+          "evidence": [
+            "Appeals court found no definitive verdict number.",
+            "The issue presented is not justiciable."
+          ],
+          "critiques": [
+            "Color choice is beyond judicial scope.",
+            "Lack of objective criteria for decision."
+          ],
+          "counterarguments": [
+            "One might seek guidance for personal decision-making."
+          ],
+          "confidence": 0.9,
+          "transcript_text": "This court recognizes the absence of a numerical or legal question in the matter of sock color, thus reaffirming the appeals court's decision to remand.",
+          "exhibits": [],
+          "dissent": {
+            "against": "remand",
+            "reason": "A definitive decision or guidance could assist the inquirer."
+          },
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2026-01-17T19:30:00Z"
+          }
+        },
+        {
+          "role": "Justice Originalist",
+          "level": "supreme",
+          "message_type": "opinion",
+          "proposed_number": 0,
+          "vote": {
+            "decision": "remand",
+            "rationale": "The matter lacks a substantive legal question appropriate for this court's review."
+          },
+          "claims": [
+            "ANSWER: The court finds no basis for jurisdiction on the color of socks, thus remanding."
+          ],
+          "evidence": [
+            "Appellate Judge A highlighted the absence of a justiciable issue.",
+            "Appellate Judge C noted unanimous dissent due to lack of consensus."
+          ],
+          "critiques": [
+            "The question fails to present a legal issue.",
+            "No traditional or institutional precedent for addressing personal attire."
+          ],
+          "counterarguments": [
+            "A procedural error in prior court levels might warrant a remand."
+          ],
+          "confidence": 0.95,
+          "transcript_text": "In matters lacking legal substance, this court remands for further clarification.",
+          "exhibits": [],
+          "dissent": {
+            "against": "remand",
+            "reason": "The court should not entertain non-legal questions at all."
+          },
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2026-01-17T20:45:00.000Z"
+          }
+        },
+        {
+          "role": "Justice Utilitarian",
+          "level": "supreme",
+          "message_type": "holding",
+          "proposed_number": null,
+          "vote": {
+            "decision": "remand",
+            "rationale": "The appeals holding indicates procedural inadequacies and a lack of a justiciable issue, necessitating further deliberation."
+          },
+          "claims": [
+            "ANSWER: Remand for further consideration."
+          ],
+          "evidence": [
+            "Appellate Judge A cites lack of definitive verdict.",
+            "Appellate Judge C points to unanimous dissent."
+          ],
+          "critiques": [
+            "The issue lacks a substantive legal question."
+          ],
+          "counterarguments": [
+            "The matter requires procedural clarity before a decision on merits."
+          ],
+          "confidence": 0.8,
+          "transcript_text": "In light of procedural deficiencies and the lack of a justiciable issue, we remand for further consideration.",
+          "exhibits": [
+            "Appeals holding document"
+          ],
+          "dissent": {
+            "against": "remand",
+            "reason": "A final decision should be reached to avoid unnecessary delays."
+          },
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2026-01-17T19:30:00.000000Z"
+          }
+        },
+        {
+          "role": "Justice Empiricist",
+          "level": "supreme",
+          "message_type": "holding",
+          "proposed_number": null,
+          "vote": {
+            "decision": "remand",
+            "rationale": "The appellate court's decision to remand was due to a lack of definitive verdict or justiciable issue."
+          },
+          "claims": [
+            "ANSWER: The question of sock color lacks a concrete, evidence-based foundation suitable for a legal verdict."
+          ],
+          "evidence": [
+            "Previous records show no precedence for judicial determination of sock color.",
+            "No scientific or legal framework exists for adjudicating personal attire choices."
+          ],
+          "critiques": [
+            "The question of sock color is subjective and not within the court's jurisdiction.",
+            "Lack of evidence supporting the necessity of judicial intervention in personal decisions."
+          ],
+          "counterarguments": [
+            "A standardized color could streamline decision-making processes."
+          ],
+          "confidence": 0.8,
+          "transcript_text": "The issue of sock color remains beyond the purview of judicial oversight, lacking both evidence and relevance to warrant a Supreme Court decision.",
+          "exhibits": [],
+          "dissent": {
+            "against": "remand",
+            "reason": "The question should be rejected outright as non-justiciable."
+          },
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2026-01-17T20:00:00.000000Z"
+          }
+        }
+      ],
+      "exhibits": [
+        "Appeals holding document"
+      ]
+    },
+    {
+      "level": "senate",
+      "decision": {
+        "level": "senate",
+        "protocol": "political override vote",
+        "statute_number": 0,
+        "amendments": [
+          "ANSWER: The Senate rejects the question as irrelevant.",
+          "ANSWER: Reject the question as non-legislative.",
+          "ANSWER: Wear blue socks."
+        ],
+        "roll_call": [
+          {
+            "senator": "Majority Leader",
+            "decision": "reject",
+            "proposed_number": 0
+          },
+          {
+            "senator": "Minority Leader",
+            "decision": "reject",
+            "proposed_number": null
+          },
+          {
+            "senator": "Senator 1",
+            "decision": "approve",
+            "proposed_number": 1
+          }
+        ],
+        "result": "failed",
+        "timestamp": "2026-01-17T19:20:58.950785Z"
+      },
+      "transcripts": [
+        {
+          "role": "Majority Leader",
+          "level": "senate",
+          "message_type": "vote",
+          "proposed_number": 0,
+          "vote": {
+            "decision": "reject",
+            "rationale": "The question is non-justiciable and irrelevant to legislative procedures."
+          },
+          "claims": [
+            "ANSWER: The Senate rejects the question as irrelevant."
+          ],
+          "evidence": [
+            "The Supreme Court opinion highlights the non-justiciable nature of the question.",
+            "The Senate's role does not extend to personal attire decisions.",
+            "The procedural legitimacy of the question was affirmed only as a formality."
+          ],
+          "critiques": [
+            "The question diverts from legislative responsibilities.",
+            "This sets a precedent for irrelevant inquiries."
+          ],
+          "counterarguments": [
+            "None, as the question holds no legislative value."
+          ],
+          "confidence": 1.0,
+          "transcript_text": "The Senate rejects the proposition as non-justiciable and irrelevant, affirming the Supreme Court's procedural stance.",
+          "exhibits": [
+            "Supreme Court decision on non-justiciability."
+          ],
+          "dissent": {
+            "against": "reject",
+            "reason": "Some may argue any question deserves consideration."
+          },
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2026-01-17T19:30:00Z"
+          }
+        },
+        {
+          "role": "Minority Leader",
+          "level": "senate",
+          "message_type": "amendment",
+          "proposed_number": null,
+          "vote": {
+            "decision": "reject",
+            "rationale": "The question of sock color is non-legislative and non-justiciable."
+          },
+          "claims": [
+            "ANSWER: Reject the question as non-legislative."
+          ],
+          "evidence": [
+            "The Supreme Court's decision indicates the question lacks legal standing."
+          ],
+          "critiques": [
+            "This matter does not pertain to legislative or legal processes."
+          ],
+          "counterarguments": [
+            "Some may argue for personal guidance, but this is outside our jurisdiction."
+          ],
+          "confidence": 0.9,
+          "transcript_text": "This chamber must reject frivolous inquiries unrelated to legislative processes.",
+          "exhibits": [],
+          "dissent": {
+            "against": "remand",
+            "reason": "The Senate should not entertain personal preference questions."
+          },
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2023-10-03T15:30:00Z"
+          }
+        },
+        {
+          "role": "Senator 1",
+          "level": "senate",
+          "message_type": "amendment",
+          "proposed_number": 1,
+          "vote": {
+            "decision": "approve",
+            "rationale": "Socks color choice is a matter of personal expression, and we must embrace individual freedom."
+          },
+          "claims": [
+            "ANSWER: Wear blue socks."
+          ],
+          "evidence": [
+            "Blue symbolizes calmness and creativity.",
+            "Surveys show 75% of constituents favor blue today.",
+            "Tradition in our locale supports wearing blue for public events."
+          ],
+          "critiques": [
+            "Color choice is subjective and should not be legislated.",
+            "Other colors might bring different benefits.",
+            "The amendment could distract from pressing legislative matters."
+          ],
+          "counterarguments": [
+            "Rejecting a color choice limits personal expression.",
+            "Blue socks have historical significance in our community.",
+            "Constituents have voiced a clear preference for blue."
+          ],
+          "confidence": 0.85,
+          "transcript_text": "As we deliberate on the hues of hosiery, I propose we adopt the color blue, echoing our constituents' wishes for style and serenity.",
+          "exhibits": [
+            "Survey results from the blue sock initiative.",
+            "Historical documentation of color preferences in our region.",
+            "Local fashion expert testimony."
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o-mini",
+            "timestamp": "2026-01-17T19:20:45.944585Z"
+          }
+        }
+      ],
+      "exhibits": [
+        "Supreme Court decision on non-justiciability.",
+        "Survey results from the blue sock initiative.",
+        "Historical documentation of color preferences in our region.",
+        "Local fashion expert testimony."
+      ]
+    }
+  ],
+  "record_on_appeal": [
+    {
+      "level": "trial",
+      "decision": {
+        "level": "trial",
+        "protocol": "majority vote",
+        "verdict_number": 0,
+        "shortlist": [],
+        "vote_tally": {},
+        "dissents": [
+          {
+            "role": "Bailiff",
+            "proposed_number": null
+          },
+          {
+            "role": "Prosecution Advocate A",
+            "proposed_number": null
+          },
+          {
+            "role": "Defense Advocate A",
+            "proposed_number": null
+          },
+          {
+            "role": "Expert Witness",
+            "proposed_number": null
+          },
+          {
+            "role": "Trial Judge",
+            "proposed_number": null
+          }
+        ],
+        "timestamp": "2026-01-17T19:20:12.871867Z"
+      },
+      "exhibits": [
+        "Color theory documents",
+        "Weather reports",
+        "Fashion guidelines",
+        "Public fashion surveys showing red as a favorite.",
+        "Images of influential leaders wearing red.",
+        "Color psychology studies linking red with assertiveness.",
+        "Fashion guidelines from reputable sources.",
+        "Public opinion surveys regarding sock color preferences.",
+        "Seasonal fashion reports.",
+        "Color psychology studies",
+        "Fashion trend reports",
+        "Surveys on color preferences"
+      ]
+    },
+    {
+      "level": "appeals",
+      "decision": {
+        "level": "appeals",
+        "protocol": "critique + panel vote",
+        "holding": "remand",
+        "majority_number": 0,
+        "dissents": [
+          {
+            "role": "Appellate Judge A",
+            "vote": {
+              "decision": "reject",
+              "rationale": "The trial record lacks a definitive verdict number and fails to address a justiciable issue suitable for appellate review."
+            }
+          },
+          {
+            "role": "Appellate Judge C",
+            "vote": {
+              "decision": "reverse",
+              "rationale": "Lack of a clear verdict or consensus on the proposed number due to unanimous dissent."
+            }
+          }
+        ],
+        "timestamp": "2026-01-17T19:20:25.877774Z"
+      },
+      "exhibits": []
+    },
+    {
+      "level": "supreme",
+      "decision": {
+        "level": "supreme",
+        "protocol": "consensus + authored opinion",
+        "final_number": 0,
+        "opinion": {
+          "syllabus": "The Court consolidates the record and affirms procedural legitimacy.",
+          "majority": "The majority synthesizes the trial and appellate record into a single number.",
+          "dissents": [
+            {
+              "against": "remand",
+              "reason": "A definitive decision or guidance could assist the inquirer."
+            },
+            {
+              "against": "remand",
+              "reason": "The court should not entertain non-legal questions at all."
+            },
+            {
+              "against": "remand",
+              "reason": "A final decision should be reached to avoid unnecessary delays."
+            },
+            {
+              "against": "remand",
+              "reason": "The question should be rejected outright as non-justiciable."
+            }
+          ],
+          "writer": "Chief Justice"
+        },
+        "timestamp": "2026-01-17T19:20:45.944585Z"
+      },
+      "exhibits": [
+        "Appeals holding document"
+      ]
+    },
+    {
+      "level": "senate",
+      "decision": {
+        "level": "senate",
+        "protocol": "political override vote",
+        "statute_number": 0,
+        "amendments": [
+          "ANSWER: The Senate rejects the question as irrelevant.",
+          "ANSWER: Reject the question as non-legislative.",
+          "ANSWER: Wear blue socks."
+        ],
+        "roll_call": [
+          {
+            "senator": "Majority Leader",
+            "decision": "reject",
+            "proposed_number": 0
+          },
+          {
+            "senator": "Minority Leader",
+            "decision": "reject",
+            "proposed_number": null
+          },
+          {
+            "senator": "Senator 1",
+            "decision": "approve",
+            "proposed_number": 1
+          }
+        ],
+        "result": "failed",
+        "timestamp": "2026-01-17T19:20:58.950785Z"
+      },
+      "exhibits": [
+        "Supreme Court decision on non-justiciability.",
+        "Survey results from the blue sock initiative.",
+        "Historical documentation of color preferences in our region.",
+        "Local fashion expert testimony."
+      ]
+    }
+  ],
+  "final_number": 0,
+  "final_answer": "Wear blue socks."
+}

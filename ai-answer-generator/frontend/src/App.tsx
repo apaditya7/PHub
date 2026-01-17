@@ -240,21 +240,22 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 p-6">
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-5 p-6">
         <Nav title="Stupid Question Courtroom" />
 
+        {/* Input Section */}
         <Card>
-          <CardHeader>
+          <CardHeader className="pb-3">
             <CardTitle>Ask the Court</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-3">
             <Input
               value={question}
               onChange={(event) => setQuestion(event.target.value)}
               placeholder="What should I do today?"
-              className="h-12 text-base"
+              className="h-11 text-base"
             />
-            <div className="flex flex-wrap items-center gap-4">
+            <div className="flex flex-wrap items-center gap-3">
               <Button onClick={handleRun} disabled={isRunning}>
                 {isRunning ? "Running Court..." : "Run Trial"}
               </Button>
@@ -263,61 +264,74 @@ export default function App() {
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Final Court Answer</CardTitle>
-          </CardHeader>
-          <CardContent className="flex flex-wrap items-center justify-between gap-4">
-            <div className="text-2xl font-semibold">
-              {run?.final_answer ?? run?.final_number ?? "--"}
-            </div>
-            {run ? (
-              <span className="text-sm text-muted-foreground">
-                Run {run.run_id.slice(0, 8)} · {formatTime(run.finished_at)}
-              </span>
-            ) : null}
-          </CardContent>
-        </Card>
-
-        <div className="flex flex-wrap items-center gap-4">
-          {STAGES.map((stage, index) => {
-            const done = stageMap.has(stage.id);
-            return (
-              <div key={stage.id} className="flex items-center gap-3">
-                <span
-                  className={`flex h-8 w-8 items-center justify-center rounded-full border border-border/50 text-xs ${
-                    done ? "bg-primary text-primary-foreground" : "bg-background"
-                  }`}
-                >
-                  {index + 1}
-                </span>
-                <div className="text-sm">
-                  <p className="font-medium">{stage.label}</p>
-                  <p className="text-xs text-muted-foreground">
-                    {done ? "Completed" : "Pending"}
-                  </p>
-                </div>
-                {index < STAGES.length - 1 ? (
-                  <span className="hidden h-px w-8 bg-border/50 md:block" />
-                ) : null}
+        {/* Final Answer + Stage Progress Row */}
+        <div className="grid gap-4 md:grid-cols-[1fr_2fr]">
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-base">Final Court Answer</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-semibold">
+                {run?.final_answer ?? run?.final_number ?? "--"}
               </div>
-            );
-          })}
+              {run?.finished_at ? (
+                <p className="mt-1 text-xs text-muted-foreground">
+                  {formatTime(run.finished_at)}
+                </p>
+              ) : null}
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-base">Stage Progress</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex flex-wrap items-center gap-4">
+                {STAGES.map((stage, index) => {
+                  const done = stageMap.has(stage.id);
+                  return (
+                    <div key={stage.id} className="flex items-center gap-2">
+                      <span
+                        className={`flex h-7 w-7 items-center justify-center rounded-full border text-xs font-medium ${
+                          done
+                            ? "border-primary bg-primary text-primary-foreground"
+                            : "border-border bg-muted text-muted-foreground"
+                        }`}
+                      >
+                        {index + 1}
+                      </span>
+                      <div className="text-sm">
+                        <p className={done ? "font-medium" : "text-muted-foreground"}>
+                          {stage.label}
+                        </p>
+                      </div>
+                      {index < STAGES.length - 1 ? (
+                        <span className="hidden h-px w-6 bg-border md:block" />
+                      ) : null}
+                    </div>
+                  );
+                })}
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-[2fr_1fr]">
-          <Card className="h-full">
-            <CardHeader>
+        {/* Main Content Grid */}
+        <div className="grid items-start gap-5 lg:grid-cols-[3fr_2fr]">
+          {/* Transcript Feed */}
+          <Card className="lg:sticky lg:top-6">
+            <CardHeader className="pb-3">
               <CardTitle>Transcript Feed</CardTitle>
             </CardHeader>
             <CardContent>
               {transcripts.length === 0 ? (
                 <p className="text-sm text-muted-foreground">No transcript yet.</p>
               ) : (
-                <div className="space-y-4">
+                <div className="space-y-3 lg:max-h-[calc(100vh-220px)] lg:overflow-y-auto lg:pr-2">
                   {transcripts.map((entry, index) => (
                     <Card key={`${entry.role}-${index}`} className="border-border/50">
-                      <CardContent className="space-y-3 p-4">
+                      <CardContent className="space-y-2 p-3">
                         <div className="flex flex-wrap items-center justify-between gap-2">
                           <div>
                             <p className="text-sm font-semibold">{entry.role}</p>
@@ -333,7 +347,7 @@ export default function App() {
                         <p className="text-sm text-foreground">
                           <TypewriterText text={entry.transcript_text} speedMs={30} />
                         </p>
-                        <div className="flex flex-wrap gap-4 text-xs text-muted-foreground">
+                        <div className="flex flex-wrap gap-3 text-xs text-muted-foreground">
                           <span>Proposed: {entry.proposed_number ?? "-"}</span>
                           <span>Confidence: {entry.confidence.toFixed(2)}</span>
                         </div>
@@ -341,7 +355,7 @@ export default function App() {
                           <summary className="cursor-pointer text-sm text-foreground">
                             Reasoning artifacts
                           </summary>
-                          <div className="mt-3 grid gap-3 md:grid-cols-2">
+                          <div className="mt-2 grid gap-2 md:grid-cols-2">
                             <div>
                               <p className="font-semibold text-foreground">Claims</p>
                               <ul className="list-disc pl-4">
@@ -384,72 +398,55 @@ export default function App() {
             </CardContent>
           </Card>
 
-          <div className="flex flex-col gap-6">
+          {/* Right Sidebar */}
+          <div className="flex flex-col gap-4 lg:max-h-[calc(100vh-220px)] lg:overflow-y-auto lg:pr-1">
+            {/* Decision Ledger */}
             <Card>
-              <CardHeader>
-                <CardTitle>Decision Ledger</CardTitle>
+              <CardHeader className="pb-2">
+                <CardTitle className="text-base">Decision Ledger</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                {run ? (
+              <CardContent className="space-y-3">
+                {run && run.stages.length > 0 ? (
                   run.stages.map((stage) => (
-                    <div key={stage.level} className="space-y-1 border-b border-border/50 pb-3">
-                      <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                    <div key={stage.level} className="border-b border-border/30 pb-2 last:border-0">
+                      <p className="text-xs uppercase tracking-wider text-muted-foreground">
                         {stage.level}
                       </p>
-                      <p className="text-sm font-semibold">{stageAnswer(stage) ?? "-"}</p>
-                      <p className="text-xs text-muted-foreground">
-                        {formatTime(stage.decision.timestamp)}
-                      </p>
+                      <p className="text-sm font-medium">{stageAnswer(stage) ?? "-"}</p>
                     </div>
                   ))
                 ) : (
                   <p className="text-sm text-muted-foreground">No decisions yet.</p>
                 )}
-                <Button variant="outline" onClick={handleExport} disabled={!run}>
+                <Button variant="outline" size="sm" onClick={handleExport} disabled={!run}>
                   Export Record
                 </Button>
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle>Record on Appeal</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4 text-sm text-muted-foreground">
-                {run ? (
-                  run.record_on_appeal.map((entry, index) => (
-                    <div key={`${entry.level}-${index}`} className="space-y-1">
-                      <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                        {String(entry.level)}
-                      </p>
-                      <p className="text-sm text-foreground">{entry.decision?.protocol}</p>
-                      <p className="text-xs">Exhibits: {entry.exhibits?.length ?? 0}</p>
-                    </div>
-                  ))
-                ) : (
-                  <p>Pending.</p>
-                )}
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Supreme Opinion</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4 text-sm text-muted-foreground">
-                {stageMap.get("supreme")?.decision.opinion ? (
-                  <>
+            {/* Supreme Opinion - Only show if available */}
+            {stageMap.get("supreme")?.decision.opinion && (
+              <Card>
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-base">Supreme Opinion</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3 text-sm">
+                  <div>
+                    <p className="font-medium text-foreground">Syllabus</p>
+                    <p className="text-muted-foreground">
+                      {stageMap.get("supreme")?.decision.opinion?.syllabus}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="font-medium text-foreground">Majority</p>
+                    <p className="text-muted-foreground">
+                      {stageMap.get("supreme")?.decision.opinion?.majority}
+                    </p>
+                  </div>
+                  {stageMap.get("supreme")?.decision.opinion?.dissents?.length ? (
                     <div>
-                      <p className="text-sm font-semibold text-foreground">Syllabus</p>
-                      <p>{stageMap.get("supreme")?.decision.opinion?.syllabus}</p>
-                    </div>
-                    <div>
-                      <p className="text-sm font-semibold text-foreground">Majority</p>
-                      <p>{stageMap.get("supreme")?.decision.opinion?.majority}</p>
-                    </div>
-                    <div>
-                      <p className="text-sm font-semibold text-foreground">Dissents</p>
-                      <ul className="list-disc pl-4">
+                      <p className="font-medium text-foreground">Dissents</p>
+                      <ul className="list-disc pl-4 text-muted-foreground">
                         {stageMap
                           .get("supreme")
                           ?.decision.opinion?.dissents.map((dissent, index) => (
@@ -459,23 +456,22 @@ export default function App() {
                           ))}
                       </ul>
                     </div>
-                  </>
-                ) : (
-                  <p>Pending.</p>
-                )}
-              </CardContent>
-            </Card>
+                  ) : null}
+                </CardContent>
+              </Card>
+            )}
 
-            <Card>
-              <CardHeader>
-                <CardTitle>Senate Roll Call</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4 text-sm text-muted-foreground">
-                {stageMap.get("senate")?.decision.roll_call ? (
-                  <>
+            {/* Senate Roll Call - Only show if available */}
+            {stageMap.get("senate")?.decision.roll_call && (
+              <Card>
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-base">Senate Roll Call</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3 text-sm">
+                  {stageMap.get("senate")?.decision.amendments?.length ? (
                     <div>
-                      <p className="text-sm font-semibold text-foreground">Amendments</p>
-                      <ul className="list-disc pl-4">
+                      <p className="font-medium text-foreground">Amendments</p>
+                      <ul className="list-disc pl-4 text-muted-foreground">
                         {stageMap
                           .get("senate")
                           ?.decision.amendments?.map((item, index) => (
@@ -483,53 +479,54 @@ export default function App() {
                           ))}
                       </ul>
                     </div>
-                    <div className="space-y-2">
-                      {stageMap
-                        .get("senate")
-                        ?.decision.roll_call?.map((vote, index) => (
-                          <div
-                            key={`vote-${index}`}
-                            className="flex items-center justify-between border-b border-border/50 pb-2 text-xs"
-                          >
-                            <span>{vote.senator}</span>
-                            <span>{vote.decision}</span>
-                            <span>{vote.proposed_number ?? "-"}</span>
-                          </div>
-                        ))}
-                    </div>
-                  </>
-                ) : (
-                  <p>Pending.</p>
-                )}
-              </CardContent>
-            </Card>
+                  ) : null}
+                  <div className="space-y-1">
+                    {stageMap
+                      .get("senate")
+                      ?.decision.roll_call?.map((vote, index) => (
+                        <div
+                          key={`vote-${index}`}
+                          className="flex items-center justify-between border-b border-border/30 py-1 text-xs last:border-0"
+                        >
+                          <span className="font-medium">{vote.senator}</span>
+                          <span className="text-muted-foreground">{vote.decision}</span>
+                          <span>{vote.proposed_number ?? "-"}</span>
+                        </div>
+                      ))}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
 
+            {/* Past Runs */}
             <Card>
-              <CardHeader>
-                <CardTitle>Replay Past Runs</CardTitle>
+              <CardHeader className="pb-2">
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-base">Past Runs</CardTitle>
+                  <Button variant="ghost" size="sm" onClick={loadRuns}>
+                    Refresh
+                  </Button>
+                </div>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <Button variant="outline" onClick={loadRuns}>
-                  Refresh
-                </Button>
-                <div className="space-y-2 text-sm text-muted-foreground">
-                  {runs.length === 0 ? (
-                    <p>No runs yet.</p>
-                  ) : (
-                    runs.map((item) => (
+              <CardContent>
+                {runs.length === 0 ? (
+                  <p className="text-sm text-muted-foreground">No runs yet.</p>
+                ) : (
+                  <div className="max-h-48 space-y-1 overflow-y-auto">
+                    {runs.map((item) => (
                       <button
                         key={item.run_id}
                         type="button"
-                        className="flex w-full items-center justify-between rounded-lg border border-border/50 px-3 py-2 text-sm transition-colors hover:bg-muted"
+                        className="flex w-full items-center justify-between rounded px-2 py-1.5 text-xs transition-colors hover:bg-muted"
                         onClick={() => handleReplay(item.run_id)}
                       >
-                        <span>{item.run_id.slice(0, 6)}</span>
-                        <span>{formatTime(item.started_at)}</span>
-                        <span>{item.final_number ?? "-"}</span>
+                        <span className="font-mono">{item.run_id.slice(0, 6)}</span>
+                        <span className="text-muted-foreground">{formatTime(item.started_at)}</span>
+                        <span className="font-medium">{item.final_number ?? "-"}</span>
                       </button>
-                    ))
-                  )}
-                </div>
+                    ))}
+                  </div>
+                )}
               </CardContent>
             </Card>
           </div>
