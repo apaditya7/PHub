@@ -187,6 +187,7 @@ export default function App() {
   const [moving, setMoving] = useState(false);
   const [canRoll, setCanRoll] = useState(false);
   const [canEnd, setCanEnd] = useState(false);
+  const [pendingDrawDeck, setPendingDrawDeck] = useState<'chance' | 'community' | null>(null);
   const [roomId, setRoomId] = useState<string | null>(null);
   const roomIdRef = useRef<string | null>(null);
   const [meId, setMeId] = useState<string | null>(null);
@@ -591,8 +592,22 @@ export default function App() {
         // canRoll: my turn, game started, and haven't rolled yet
         setCanRoll(Boolean(isMyTurn && g.started && !g.hasRolledThisTurn));
         // canEnd: my turn, game started, have rolled, and no pending card draw
-        const hasPending = Boolean((g as any).pendingDraw && (g as any).pendingDraw.playerId === myPid);
+        const pd = (g as any).pendingDraw;
+        const hasPending = Boolean(pd && pd.playerId === myPid);
+        
+        // Debug logging for pendingDraw
+        if (pd) {
+          console.log("[DEBUG] pendingDraw:", pd);
+          console.log("[DEBUG] meRef.current:", meRef.current);
+          console.log("[DEBUG] myPid:", myPid);
+          console.log("[DEBUG] pd.playerId:", pd.playerId);
+          console.log("[DEBUG] hasPending:", hasPending);
+          console.log("[DEBUG] g.players keys:", Object.keys(g.players));
+        }
+        
         setCanEnd(Boolean(isMyTurn && g.started && g.hasRolledThisTurn && !hasPending));
+        // Track pending draw for "Draw Card" button
+        setPendingDrawDeck(hasPending ? pd.deck : null);
         setMoving(false);
 
         // When game starts, close lobby and show game board
@@ -771,6 +786,18 @@ export default function App() {
                   >
                     Roll Dice
                   </Button>
+                  {/* Draw Card Button - appears when player lands on Chance/Community Chest */}
+                  {pendingDrawDeck && roomId && (
+                    <Button
+                      size="sm"
+                      onClick={() => emitDrawCard(roomId, pendingDrawDeck)}
+                      className={pendingDrawDeck === 'chance' 
+                        ? "bg-orange-500 hover:bg-orange-600 text-white animate-pulse" 
+                        : "bg-blue-500 hover:bg-blue-600 text-white animate-pulse"}
+                    >
+                      {pendingDrawDeck === 'chance' ? '🎲 Draw Chance Card' : '🃏 Draw Community Chest'}
+                    </Button>
+                  )}
                   <Button
                     variant="outline"
                     size="sm"
@@ -818,6 +845,8 @@ export default function App() {
                     ? "Moving token..."
                     : canRoll
                     ? "Roll the dice to start."
+                    : pendingDrawDeck
+                    ? `Draw your ${pendingDrawDeck === 'chance' ? 'Chance' : 'Community Chest'} card!`
                     : "Resolve the turn, then end it."}
                 </p>
               </CardContent>

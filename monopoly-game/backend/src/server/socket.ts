@@ -124,6 +124,12 @@ export function registerSocket(io: IOServer, rooms: RoomManager) {
         handleRoll(room.state, pid);
         // Private events only for acting player
         const s = room.state;
+        
+        // Debug: Log pendingDraw
+        if (s.pendingDraw) {
+          console.log("[ROLL] pendingDraw set:", s.pendingDraw);
+        }
+        
         if (s.lastDrawnCard && s.lastDrawnCard.playerId === pid) {
           socket.emit("privateCardDrawn", { deck: s.lastDrawnCard.deck, cardId: s.lastDrawnCard.cardId });
         }
