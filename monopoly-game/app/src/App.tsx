@@ -12,6 +12,10 @@ import {
   type GameState,
   type RoomUpdatePayload,
 } from "./services/socket";
+import Nav from "./components/Nav";
+import { Button } from "./components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "./components/ui/card";
+import { Input } from "./components/ui/input";
 
 type SpaceType =
   | "go"
@@ -529,372 +533,385 @@ export default function App() {
   }, [players]);
 
   return (
-    <div className="page">
-      <header className="header">
-        <div>
-          <h1>Monopoly Frontend Prototype</h1>
-          <p className="subtitle">
-            Board rendering, turn flow, dice feedback, and Socket.IO wiring.
-          </p>
-        </div>
-        <div className="turn-card">
-          {isStarted && (
-            <button
-              type="button"
-              className="start-button"
-              onClick={() => window.location.reload()}
-            >
-              New Game
-            </button>
-          )}
-          <span className="label">Current turn</span>
-          <p className="player">
-            <span className="player-chip" style={{ background: cp.color }} />
-            {cp.name}
-          </p>
-          <p className="cash">${cp.cash}</p>
-        </div>
-      </header>
+    <div className="min-h-screen bg-background text-foreground">
+      <div className="mx-auto flex w-full flex-col gap-5 px-8 py-6">
+        <Nav title="Monopoly" />
 
-      <main className="layout">
-        <section className="panel-card control-panel">
-          <h3>Turn controls</h3>
-          <div className={`dice ${rolling ? "rolling" : ""}`}>
-            <span>{dice[0]}</span>
-            <span>{dice[1]}</span>
-          </div>
-          <div className="actions">
-            <button
-              type="button"
-              onClick={rollDice}
-              disabled={!isStarted || !canRoll}
-            >
-              Roll Dice
-            </button>
-            <button
-              type="button"
-              onClick={endTurn}
-              disabled={!isStarted || !canEnd}
-            >
-              End Turn
-            </button>
-          </div>
-          <p className="status">
-            {!isStarted
-              ? "Start a new game to begin."
-              : moving
-              ? "Moving token..."
-              : canRoll
-              ? "Roll the dice to start."
-              : "Resolve the turn, then end it."}
-          </p>
-        </section>
-
-        <section className="panel-card players-panel">
-          <h3>Players</h3>
-          <div className="players">
-            {players.map((player) => (
-              <div key={player.id} className="player-row">
-                <span
-                  className={`token token-${player.token}`}
-                  style={{ backgroundColor: player.color }}
-                />
-                <div>
-                  <p>{player.name}</p>
-                  <p className="cash">${player.cash}</p>
-                </div>
+        <div className="grid gap-5 lg:grid-cols-[260px_1fr_260px]">
+          {/* Left Panel */}
+          <div className="flex flex-col gap-4">
+            {/* Current Turn Header */}
+            <div className="flex flex-wrap items-center gap-3">
+              <span
+                className="h-4 w-4 rounded-full shadow-sm"
+                style={{ background: cp.color }}
+              />
+              <div>
+                <p className="font-medium">{cp.name}'s Turn</p>
+                <p className="text-sm text-muted-foreground">${cp.cash}</p>
               </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="board-panel layout-board">
-          <div className="board">
-            <div className="token-layer">
-              <span className="space-highlight" style={getTilePercent(cp.position)} />
-              {players.map((player) => (
-                <span
-                  key={player.id}
-                  className={`token token-${player.token}`}
-                  style={{
-                    backgroundColor: player.color,
-                    ...getTilePercent(player.position),
-                    ["--token-offset-x" as any]: `${
-                      tokenOffsets.get(player.id)?.x ?? 0
-                    }px`,
-                    ["--token-offset-y" as any]: `${
-                      tokenOffsets.get(player.id)?.y ?? 0
-                    }px`,
-                  }}
-                  title={player.name}
-                />
-              ))}
+              {isStarted && (
+                <Button variant="outline" size="sm" className="ml-auto" onClick={() => window.location.reload()}>
+                  New Game
+                </Button>
+              )}
             </div>
-          </div>
-        </section>
 
-        <section className="panel-card current-space-panel">
-          <h3>Current space</h3>
-          <div className="space-details">
-            <p className="space-name">{currentSpace.name}</p>
-            <p className="space-type">{currentSpace.type}</p>
-            {currentSpace.price && (
-              <p className="space-cost">
-                Price: ${currentSpace.price} · Rent: ${currentSpace.rent ?? 0}
-              </p>
-            )}
-            {currentSpace.tax && (
-              <p className="space-cost">Fee: ${currentSpace.tax}</p>
-            )}
-            {currentSpace.ownerId != null && (
-              <p className="space-owner">
-                Owner:{" "}
-                {players.find((p) => p.id === currentSpace.ownerId)?.name ??
-                  "Unknown"}
-              </p>
-            )}
-          </div>
-          <div className="space-actions">
-            {canBuyCurrent && (
-              <button type="button" onClick={handleBuy}>
-                Buy property
-              </button>
-            )}
-            {canDrawChance && (
-              <button type="button" onClick={handleDrawChance}>
-                Draw chance
-              </button>
-            )}
-            {canDrawCommunity && (
-              <button type="button" onClick={handleDrawCommunity}>
-                Draw community
-              </button>
-            )}
-          </div>
-        </section>
-
-        <section className="panel-card property-panel">
-          <h3>Property ownership</h3>
-          <div className="ownership-list">
-            {players.map((player) => {
-              const properties = ownedByPlayer.get(player.id) ?? [];
-              return (
-                <div key={player.id} className="ownership-row">
-                  <span
-                    className={`token token-${player.token}`}
-                    style={{ backgroundColor: player.color }}
-                  />
-                  <div className="ownership-details">
-                    <p>{player.name}</p>
-                    {properties.length === 0 ? (
-                      <p className="ownership-empty">No assets yet.</p>
-                    ) : (
-                      <div className="ownership-cards">
-                        {properties.map((space) => (
-                          <span
-                            key={space.name}
-                            className={`property-pill property-pill-${space.type}`}
-                            style={{
-                              backgroundColor: space.color ?? undefined,
-                            }}
-                          >
-                            {space.name}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-                  </div>
+            <Card>
+              <CardHeader>
+                <CardTitle>Turn Controls</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex items-center justify-center gap-3">
+                  <span className={`flex h-12 w-12 items-center justify-center rounded-lg bg-muted text-xl font-bold ${rolling ? "animate-pulse" : ""}`}>
+                    {dice[0]}
+                  </span>
+                  <span className={`flex h-12 w-12 items-center justify-center rounded-lg bg-muted text-xl font-bold ${rolling ? "animate-pulse" : ""}`}>
+                    {dice[1]}
+                  </span>
                 </div>
-              );
-            })}
-          </div>
-        </section>
+                <div className="flex flex-col gap-2">
+                  <Button
+                    size="sm"
+                    onClick={rollDice}
+                    disabled={!isStarted || !canRoll}
+                  >
+                    Roll Dice
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={endTurn}
+                    disabled={!isStarted || !canEnd}
+                  >
+                    End Turn
+                  </Button>
+                </div>
+                <p className="text-center text-xs text-muted-foreground">
+                  {!isStarted
+                    ? "Start a new game to begin."
+                    : moving
+                    ? "Moving token..."
+                    : canRoll
+                    ? "Roll the dice to start."
+                    : "Resolve the turn, then end it."}
+                </p>
+              </CardContent>
+            </Card>
 
-        <section className="panel-card log-panel">
-          <h3>Activity log</h3>
-          <ul className="log">
-            {log.map((entry, index) => (
-              <li key={`${entry}-${index}`}>{entry}</li>
-            ))}
-          </ul>
-        </section>
-      </main>
+            <Card>
+              <CardHeader>
+                <CardTitle>Players</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                {players.map((player) => (
+                  <div key={player.id} className="flex items-center gap-3">
+                    <span
+                      className={`token token-${player.token}`}
+                      style={{ backgroundColor: player.color }}
+                    />
+                    <div className="flex-1">
+                      <p className="text-sm font-medium">{player.name}</p>
+                      <p className="text-xs text-muted-foreground">${player.cash}</p>
+                    </div>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Board */}
+          <section className="board-panel mt-4">
+            <div className="board">
+              <div className="token-layer">
+                <span className="space-highlight" style={getTilePercent(cp.position)} />
+                {players.map((player) => (
+                  <span
+                    key={player.id}
+                    className={`token token-${player.token}`}
+                    style={{
+                      backgroundColor: player.color,
+                      ...getTilePercent(player.position),
+                      ["--token-offset-x" as any]: `${
+                        tokenOffsets.get(player.id)?.x ?? 0
+                      }px`,
+                      ["--token-offset-y" as any]: `${
+                        tokenOffsets.get(player.id)?.y ?? 0
+                      }px`,
+                    }}
+                    title={player.name}
+                  />
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Right Panel */}
+          <div className="flex flex-col gap-4">
+            <Card>
+              <CardHeader>
+                <CardTitle>Current Space</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div>
+                  <p className="font-medium">{currentSpace.name}</p>
+                  <p className="text-xs uppercase tracking-wide text-muted-foreground">
+                    {currentSpace.type}
+                  </p>
+                </div>
+                {currentSpace.price && (
+                  <p className="text-xs text-muted-foreground">
+                    Price: ${currentSpace.price} · Rent: ${currentSpace.rent ?? 0}
+                  </p>
+                )}
+                {currentSpace.tax && (
+                  <p className="text-xs text-muted-foreground">Fee: ${currentSpace.tax}</p>
+                )}
+                {currentSpace.ownerId != null && (
+                  <p className="text-xs text-muted-foreground">
+                    Owner: {players.find((p) => p.id === currentSpace.ownerId)?.name ?? "Unknown"}
+                  </p>
+                )}
+                <div className="flex flex-col gap-2">
+                  {canBuyCurrent && (
+                    <Button size="sm" onClick={handleBuy}>
+                      Buy property
+                    </Button>
+                  )}
+                  {canDrawChance && (
+                    <Button size="sm" variant="outline" onClick={handleDrawChance}>
+                      Draw chance
+                    </Button>
+                  )}
+                  {canDrawCommunity && (
+                    <Button size="sm" variant="outline" onClick={handleDrawCommunity}>
+                      Draw community
+                    </Button>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Property Ownership</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                {players.map((player) => {
+                  const properties = ownedByPlayer.get(player.id) ?? [];
+                  return (
+                    <div key={player.id} className="space-y-1">
+                      <div className="flex items-center gap-2">
+                        <span
+                          className={`token token-${player.token}`}
+                          style={{ backgroundColor: player.color, width: 14, height: 14 }}
+                        />
+                        <span className="text-sm font-medium">{player.name}</span>
+                      </div>
+                      {properties.length === 0 ? (
+                        <p className="text-xs text-muted-foreground pl-5">No assets yet.</p>
+                      ) : (
+                        <div className="flex flex-wrap gap-1 pl-5">
+                          {properties.map((space) => (
+                            <span
+                              key={space.name}
+                              className="rounded px-1.5 py-0.5 text-xs text-white"
+                              style={{ backgroundColor: space.color ?? "#666" }}
+                            >
+                              {space.name.split(" ")[0]}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Activity Log</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="max-h-40 space-y-1 overflow-y-auto text-xs text-muted-foreground">
+                  {log.map((entry, index) => (
+                    <p key={`${entry}-${index}`}>{entry}</p>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
       {/* Loading Screen */}
       {isConnecting && (
-        <div className="modal-backdrop">
-          <div className="modal">
-            <h2>Connecting...</h2>
-            <p className="modal-subtitle">Please wait</p>
-          </div>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+          <Card className="w-full max-w-md">
+            <CardHeader className="text-center">
+              <CardTitle>Connecting...</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-center text-sm text-muted-foreground">Please wait</p>
+            </CardContent>
+          </Card>
         </div>
       )}
 
       {/* Landing Screen - Create or Join */}
       {showLanding && !isConnecting && (
-        <div className="modal-backdrop">
-          <div className="modal">
-            <h2>Monopoly Game</h2>
-            {connectionError ? (
-              <>
-                <p className="modal-subtitle" style={{ color: "#d9534f", fontWeight: "bold" }}>
-                  ⚠️ {connectionError}
-                </p>
-                <p style={{ fontSize: "0.875rem", margin: "1rem 0", color: "#666" }}>
-                  Make sure the backend server is running:
-                  <br />
-                  <code style={{ background: "#f5f5f5", padding: "0.25rem 0.5rem", borderRadius: "4px" }}>
-                    cd backend && npm run dev
-                  </code>
-                </p>
-                <button
-                  type="button"
-                  onClick={() => window.location.reload()}
-                  style={{ width: "100%", marginTop: "1rem" }}
-                >
-                  Retry Connection
-                </button>
-              </>
-            ) : (
-              <>
-                <p className="modal-subtitle">
-                  {!isSocketConnected ? "🔄 Connecting to server..." : "Choose an option to begin"}
-                </p>
-                <div className="modal-actions" style={{ flexDirection: "column", gap: "1rem" }}>
-                  <button
-                    type="button"
-                    onClick={handleCreateGame}
-                    disabled={!isSocketConnected}
-                    style={{ width: "100%" }}
-                  >
-                    Create New Game
-                  </button>
-                  <button
-                    type="button"
-                    onClick={handleShowJoinInput}
-                    disabled={!isSocketConnected}
-                    className="secondary"
-                    style={{ width: "100%" }}
-                  >
-                    Join Existing Game
-                  </button>
-                </div>
-              </>
-            )}
-          </div>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+          <Card className="w-full max-w-md">
+            <CardHeader className="text-center">
+              <CardTitle className="text-2xl">Monopoly Game</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {connectionError ? (
+                <>
+                  <p className="text-center text-sm font-medium text-red-600">
+                    ⚠️ {connectionError}
+                  </p>
+                  <p className="text-center text-sm text-muted-foreground">
+                    Make sure the backend server is running:
+                    <br />
+                    <code className="mt-1 inline-block rounded bg-muted px-2 py-1 text-xs">
+                      cd backend && npm run dev
+                    </code>
+                  </p>
+                  <Button className="w-full" onClick={() => window.location.reload()}>
+                    Retry Connection
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <p className="text-center text-sm text-muted-foreground">
+                    {!isSocketConnected ? "🔄 Connecting to server..." : "Choose an option to begin"}
+                  </p>
+                  <div className="flex flex-col gap-3">
+                    <Button
+                      className="w-full"
+                      onClick={handleCreateGame}
+                      disabled={!isSocketConnected}
+                    >
+                      Create New Game
+                    </Button>
+                    <Button
+                      variant="outline"
+                      className="w-full"
+                      onClick={handleShowJoinInput}
+                      disabled={!isSocketConnected}
+                    >
+                      Join Existing Game
+                    </Button>
+                  </div>
+                </>
+              )}
+            </CardContent>
+          </Card>
         </div>
       )}
 
       {/* Join Game - Enter Room Code */}
       {showJoinInput && (
-        <div className="modal-backdrop">
-          <div className="modal">
-            <h2>Join Game</h2>
-            <p className="modal-subtitle">Enter the room code to join</p>
-            <input
-              type="text"
-              value={joinRoomCode}
-              onChange={(e) => setJoinRoomCode(e.target.value.toUpperCase())}
-              placeholder="Enter room code (e.g. ABC12)"
-              maxLength={5}
-              style={{
-                width: "100%",
-                padding: "0.75rem",
-                fontSize: "1.25rem",
-                textAlign: "center",
-                textTransform: "uppercase",
-                letterSpacing: "0.2em",
-                border: "2px solid #ccc",
-                borderRadius: "4px",
-                marginBottom: "1rem"
-              }}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" && joinRoomCode.trim()) {
-                  handleJoinGame();
-                }
-              }}
-              autoFocus
-            />
-            <div className="modal-actions">
-              <button
-                type="button"
-                onClick={handleBackToLanding}
-                className="secondary"
-              >
-                Back
-              </button>
-              <button
-                type="button"
-                onClick={handleJoinGame}
-                disabled={isConnecting || !joinRoomCode.trim()}
-              >
-                {isConnecting ? "Joining..." : "Join Game"}
-              </button>
-            </div>
-          </div>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+          <Card className="w-full max-w-md">
+            <CardHeader className="text-center">
+              <CardTitle>Join Game</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <p className="text-center text-sm text-muted-foreground">
+                Enter the room code to join
+              </p>
+              <Input
+                value={joinRoomCode}
+                onChange={(e) => setJoinRoomCode(e.target.value.toUpperCase())}
+                placeholder="Enter room code (e.g. ABC12)"
+                maxLength={5}
+                className="text-center text-lg uppercase tracking-widest"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && joinRoomCode.trim()) {
+                    handleJoinGame();
+                  }
+                }}
+                autoFocus
+              />
+              <div className="flex gap-3">
+                <Button variant="outline" className="flex-1" onClick={handleBackToLanding}>
+                  Back
+                </Button>
+                <Button
+                  className="flex-1"
+                  onClick={handleJoinGame}
+                  disabled={isConnecting || !joinRoomCode.trim()}
+                >
+                  {isConnecting ? "Joining..." : "Join Game"}
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       )}
 
       {/* Lobby - Wait for Players */}
       {showLobby && !isStarted && !isConnecting && (
-        <div className="modal-backdrop">
-          <div className="modal">
-            <h2>Game Lobby</h2>
-            <p className="modal-subtitle" style={{ fontSize: "1.5rem", margin: "1rem 0" }}>
-              Room Code: <strong style={{ letterSpacing: "0.2em" }}>{roomId}</strong>
-            </p>
-            <p className="modal-subtitle">Share this code with other players!</p>
-
-            <div style={{ margin: "2rem 0" }}>
-              <h3 style={{ marginBottom: "1rem" }}>
-                Players ({state?.turnOrder.length || 0})
-              </h3>
-              <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                {players.map((player, idx) => (
-                  <div
-                    key={player.id}
-                    style={{
-                      padding: "0.75rem",
-                      background: "#f5f5f5",
-                      borderRadius: "4px",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "0.5rem"
-                    }}
-                  >
-                    <span
-                      className={`token token-${player.token}`}
-                      style={{ backgroundColor: player.color }}
-                    />
-                    <span>{player.name}</span>
-                    {idx === 0 && <span style={{ marginLeft: "auto", fontSize: "0.875rem", color: "#666" }}>(Host)</span>}
-                  </div>
-                ))}
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+          <Card className="w-full max-w-md">
+            <CardHeader className="text-center">
+              <CardTitle>Game Lobby</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="rounded-lg bg-muted p-4 text-center">
+                <p className="text-sm text-muted-foreground">Room Code</p>
+                <p className="text-2xl font-bold tracking-widest">{roomId}</p>
               </div>
-            </div>
-
-            {state && state.turnOrder.length < 2 && (
-              <p style={{ color: "#666", fontSize: "0.875rem", marginBottom: "1rem" }}>
-                Waiting for at least 2 players to start...
+              <p className="text-center text-sm text-muted-foreground">
+                Share this code with other players!
               </p>
-            )}
 
-            <div className="modal-actions">
+              <div className="space-y-2">
+                <p className="text-sm font-medium">
+                  Players ({state?.turnOrder.length || 0})
+                </p>
+                <div className="space-y-2">
+                  {players.map((player, idx) => (
+                    <div
+                      key={player.id}
+                      className="flex items-center gap-3 rounded-lg bg-muted p-3"
+                    >
+                      <span
+                        className={`token token-${player.token}`}
+                        style={{ backgroundColor: player.color }}
+                      />
+                      <span className="text-sm">{player.name}</span>
+                      {idx === 0 && (
+                        <span className="ml-auto text-xs text-muted-foreground">(Host)</span>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {state && state.turnOrder.length < 2 && (
+                <p className="text-center text-sm text-muted-foreground">
+                  Waiting for at least 2 players to start...
+                </p>
+              )}
+
               {isHost ? (
-                <button
-                  type="button"
+                <Button
+                  className="w-full"
                   onClick={handleStartGame}
                   disabled={!state || state.turnOrder.length < 2}
-                  style={{ width: "100%" }}
                 >
                   Start Game
-                </button>
+                </Button>
               ) : (
-                <p style={{ textAlign: "center", color: "#666" }}>
+                <p className="text-center text-sm text-muted-foreground">
                   Waiting for host to start the game...
                 </p>
               )}
-            </div>
-          </div>
+            </CardContent>
+          </Card>
         </div>
       )}
     </div>
