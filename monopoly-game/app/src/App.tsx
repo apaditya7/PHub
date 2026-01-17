@@ -621,7 +621,7 @@ export default function App() {
           </div>
 
           {/* Board */}
-          <section className="board-panel mt-4">
+          <section className="board-panel">
             <div className="board">
               <div className="token-layer">
                 <span className="space-highlight" style={getTilePercent(cp.position)} />
