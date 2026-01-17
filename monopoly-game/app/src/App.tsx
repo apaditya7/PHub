@@ -10,6 +10,7 @@ import {
   emitUseGOOJF,
   emitDrawCard,
   emitEndGame,
+  emitStartDemo,
   getSocket,
   type GameState,
   type RoomUpdatePayload,
@@ -148,22 +149,25 @@ const MIN_TRACK = CORNER_UNITS / 2;
 const MAX_TRACK = BOARD_UNITS - CORNER_UNITS / 2;
 const EDGE_START = CORNER_UNITS;
 const EDGE_END = BOARD_UNITS - CORNER_UNITS;
+const TRACK_OFFSET = 0.6; // Increased to move tokens closer to board edges
 
 const getTilePosition = (index: number) => {
-  if (index === 0) return { x: MAX_TRACK, y: MAX_TRACK };
+  const minEdge = MIN_TRACK - TRACK_OFFSET;
+  const maxEdge = MAX_TRACK + TRACK_OFFSET;
+  if (index === 0) return { x: maxEdge, y: maxEdge };
   if (index > 0 && index < 10) {
-    return { x: EDGE_END - (index - 0.5) * EDGE_UNITS, y: MAX_TRACK };
+    return { x: EDGE_END - (index - 0.5) * EDGE_UNITS, y: maxEdge };
   }
-  if (index === 10) return { x: MIN_TRACK, y: MAX_TRACK };
+  if (index === 10) return { x: minEdge, y: maxEdge };
   if (index > 10 && index < 20) {
-    return { x: MIN_TRACK, y: EDGE_END - (index - 10 - 0.5) * EDGE_UNITS };
+    return { x: minEdge, y: EDGE_END - (index - 10 - 0.5) * EDGE_UNITS };
   }
-  if (index === 20) return { x: MIN_TRACK, y: MIN_TRACK };
+  if (index === 20) return { x: minEdge, y: minEdge };
   if (index > 20 && index < 30) {
-    return { x: EDGE_START + (index - 20 - 0.5) * EDGE_UNITS, y: MIN_TRACK };
+    return { x: EDGE_START + (index - 20 - 0.5) * EDGE_UNITS, y: minEdge };
   }
-  if (index === 30) return { x: MAX_TRACK, y: MIN_TRACK };
-  return { x: MAX_TRACK, y: EDGE_START + (index - 30 - 0.5) * EDGE_UNITS };
+  if (index === 30) return { x: maxEdge, y: minEdge };
+  return { x: maxEdge, y: EDGE_START + (index - 30 - 0.5) * EDGE_UNITS };
 };
 
 export default function App() {
@@ -201,6 +205,8 @@ export default function App() {
   const [localDrawnCard, setLocalDrawnCard] = useState<{ deck: 'chance' | 'community'; cardId: string } | null>(null);
   const [showTaxModal, setShowTaxModal] = useState(false);
   const [taxInfo, setTaxInfo] = useState<{ amount: number; tileIndex: number } | null>(null);
+  const [showRentModal, setShowRentModal] = useState(false);
+  const [rentInfo, setRentInfo] = useState<{ amount: number; ownerName?: string; payerName?: string; propertyName: string; type: 'paid' | 'received' } | null>(null);
   const [playerName, setPlayerName] = useState<string>(() => (localStorage.getItem('playerName') || ''));
   const [showFlyCard, setShowFlyCard] = useState<null | { deck: 'chance'|'community'; from: { leftPct: number; topPct: number } }>(null);
   const lastPendingTileRef = useRef<number | null>(null);
@@ -414,6 +420,7 @@ export default function App() {
   const startStepAnimation = (playerId: string, from: number, to: number, total: number) => {
     const steps = (to - from + total) % total;
     if (steps === 0) {
+      displayPositionsRef.current = { ...displayPositionsRef.current, [playerId]: to };
       setDisplayPositions((prev) => ({ ...prev, [playerId]: to }));
       return;
     }
@@ -428,6 +435,8 @@ export default function App() {
     const tick = () => {
       step += 1;
       const nextPos = (from + step) % total;
+      // Update ref immediately so rapid state updates have correct current position
+      displayPositionsRef.current = { ...displayPositionsRef.current, [playerId]: nextPos };
       setDisplayPositions((prev) => ({ ...prev, [playerId]: nextPos }));
 
       if (step < steps) {
@@ -519,26 +528,44 @@ export default function App() {
         ids.forEach((pid) => {
           const nextPos = nextPositions[pid];
           const prevPos = prevPositions[pid];
+          const currentDisplay = currentDisplays[pid];
           const isAnimating = activeAnimationIdsRef.current.has(pid);
+          
+          // If currently animating and position unchanged, keep animating from current display
           if (isAnimating) {
             if (prevPos !== undefined && nextPos === prevPos) {
-              nextDisplayPositions[pid] = currentDisplays[pid] ?? prevPos;
+              nextDisplayPositions[pid] = currentDisplay ?? prevPos;
               return;
             }
+            // Position changed mid-animation - let animation complete to new target
             if (prevPos !== undefined && nextPos !== prevPos) {
               cancelAnimation(pid);
-              nextDisplayPositions[pid] = nextPos;
+              // Start new animation from current display position to new target
+              const fromPos = currentDisplay ?? prevPos;
+              const steps = (nextPos - fromPos + totalSpaces) % totalSpaces;
+              if (steps > 0 && steps <= 12) {
+                nextDisplayPositions[pid] = fromPos;
+                startStepAnimation(pid, fromPos, nextPos, totalSpaces);
+              } else {
+                nextDisplayPositions[pid] = nextPos;
+              }
               return;
             }
           }
+          
+          // First update - no previous position, just set directly
           if (!hasPrev || prevPos === undefined) {
             nextDisplayPositions[pid] = nextPos;
             return;
           }
+          
+          // Position hasn't changed, keep current
           if (prevPos === nextPos) {
-            nextDisplayPositions[pid] = nextPos;
+            nextDisplayPositions[pid] = currentDisplay ?? nextPos;
             return;
           }
+          
+          // Calculate steps for animation
           const steps = (nextPos - prevPos + totalSpaces) % totalSpaces;
           if (steps > 0 && steps <= 12) {
             nextDisplayPositions[pid] = prevPos;
@@ -549,6 +576,9 @@ export default function App() {
           }
         });
 
+        // Update ref immediately (before React's async state update) so subsequent 
+        // rapid updates have the correct current display positions
+        displayPositionsRef.current = nextDisplayPositions;
         setDisplayPositions(nextDisplayPositions);
         prevPositionsRef.current = nextPositions;
         // Who's turn index
@@ -607,6 +637,16 @@ export default function App() {
         el.innerHTML = `<div class="pointer-events-auto rounded-2xl border-2 border-black/20 bg-white px-6 py-4 shadow-2xl" style="background:#fff5f5"><div class="text-center text-lg font-bold">🚓 GOING TO JAIL</div></div>`;
         document.body.appendChild(el);
         setTimeout(() => { try { document.body.removeChild(el); } catch {} }, 2000);
+      },
+      onPrivateRentPaid: (p) => {
+        setRentInfo({ ...p, type: 'paid' });
+        setShowRentModal(true);
+        setTimeout(() => setShowRentModal(false), 2500);
+      },
+      onPrivateRentReceived: (p) => {
+        setRentInfo({ ...p, type: 'received' });
+        setShowRentModal(true);
+        setTimeout(() => setShowRentModal(false), 2500);
       }
     });
 
@@ -651,7 +691,7 @@ export default function App() {
     const map = new Map<any, { x: number; y: number }>();
     const byPos = new Map<number, typeof players>();
     for (const p of players) {
-      const displayPos = displayPositions[p.id] ?? p.position;
+      const displayPos = displayPositions[p.id] ?? p.position ?? 0;
       const arr = byPos.get(displayPos) || [];
       arr.push(p);
       byPos.set(displayPos, arr);
@@ -739,6 +779,17 @@ export default function App() {
                   >
                     End Turn
                   </Button>
+                  {/* Demo Mode Button */}
+                  {roomId && isStarted && (
+                    <Button
+                      variant="secondary"
+                      size="sm"
+                      onClick={() => emitStartDemo(roomId)}
+                      className="bg-amber-100 hover:bg-amber-200 text-amber-900 border border-amber-300"
+                    >
+                      🎬 Demo Mode
+                    </Button>
+                  )}
                   {roomId && (
                     isHost ? (
                       <Button
@@ -797,10 +848,6 @@ export default function App() {
           <section className="board-panel">
             <div className="board">
               <div className="token-layer">
-                <span
-                  className="space-highlight"
-                  style={getTilePercent(displayPositions[cp.id] ?? 0)}
-                />
               {/* Center deck placeholders */}
               {(['chance','community'] as const).map((deck) => {
                 const pd = (state as any)?.pendingDraw as any;
@@ -832,7 +879,7 @@ export default function App() {
                     className={`token token-${player.token}`}
                     style={{
                       backgroundColor: player.color,
-                      ...getTilePercent(displayPositions[player.id] ?? 0),
+                      ...getTilePercent(displayPositions[player.id] ?? player.position ?? 0),
                       ["--token-offset-x" as any]: `${
                         tokenOffsets.get(player.id)?.x ?? 0
                       }px`,
@@ -1192,6 +1239,26 @@ export default function App() {
             </CardHeader>
             <CardContent>
               <p className="text-center text-lg">You paid ${taxInfo.amount}.</p>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
+      {/* Rent popup (payer or receiver) */}
+      {showRentModal && rentInfo && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
+          <Card className="w-full max-w-sm pointer-events-auto" style={{ background: rentInfo.type === 'paid' ? '#fff5f5' : '#f0fff4' }}>
+            <CardHeader className="text-center">
+              <CardTitle>{rentInfo.type === 'paid' ? '🏠 RENT PAID' : '💵 RENT RECEIVED'}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-center text-lg font-semibold">${rentInfo.amount}</p>
+              <p className="text-center text-sm text-muted-foreground mt-1">
+                {rentInfo.type === 'paid' 
+                  ? `Paid to ${rentInfo.ownerName} for ${rentInfo.propertyName}`
+                  : `${rentInfo.payerName} landed on ${rentInfo.propertyName}`
+                }
+              </p>
             </CardContent>
           </Card>
         </div>

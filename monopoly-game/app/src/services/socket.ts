@@ -121,6 +121,8 @@ export function connectSocket(
     onPrivateCardDrawn?: (p: { deck: 'chance' | 'community'; cardId: string }) => void;
     onPrivateTaxCharged?: (p: { amount: number; tileIndex: number }) => void;
     onPrivateJail?: (p: { reason: 'tile' | 'card' }) => void;
+    onPrivateRentPaid?: (p: { amount: number; ownerName: string; propertyName: string }) => void;
+    onPrivateRentReceived?: (p: { amount: number; payerName: string; propertyName: string }) => void;
   }
 ) {
   const s = getSocket();
@@ -131,6 +133,8 @@ export function connectSocket(
   if (handlers.onPrivateCardDrawn) s.on("privateCardDrawn", handlers.onPrivateCardDrawn);
   if (handlers.onPrivateTaxCharged) s.on("privateTaxCharged", handlers.onPrivateTaxCharged);
   if (handlers.onPrivateJail) s.on("privateJail", handlers.onPrivateJail);
+  if (handlers.onPrivateRentPaid) s.on("privateRentPaid", handlers.onPrivateRentPaid);
+  if (handlers.onPrivateRentReceived) s.on("privateRentReceived", handlers.onPrivateRentReceived);
   return s;
 }
 
@@ -172,4 +176,8 @@ export function emitStartGame(roomId: RoomID) {
 }
 export function emitEndGame(roomId: RoomID) {
   getSocket().emit("endGame", roomId);
+}
+
+export function emitStartDemo(roomId: RoomID) {
+  getSocket().emit("startDemo", roomId);
 }

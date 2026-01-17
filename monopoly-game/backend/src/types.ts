@@ -58,6 +58,13 @@ export interface GameState {
     reason: 'tile' | 'card';
     tileIndex?: number;
   } | null;
+  lastRentPaid?: {
+    payerId: PlayerID;
+    ownerId: PlayerID;
+    amount: number;
+    propertyName: string;
+    tileIndex: number;
+  } | null;
   pendingDraw?: {
     deck: 'chance' | 'community';
     playerId: PlayerID;
@@ -113,6 +120,7 @@ export interface ClientToServerEvents {
   leaveRoom: (roomId: RoomID) => void;
   drawCard: (roomId: RoomID, which: 'chance' | 'community') => void;
   endGame: (roomId: RoomID) => void;
+  startDemo: (roomId: RoomID) => void;
   // Dev-only helpers (enabled when DEV_TOOLS=true)
   dev_forcePosition?: (roomId: RoomID, playerId: PlayerID, position: number) => void;
   dev_forceRoll?: (roomId: RoomID, playerId: PlayerID, d1: number, d2: number) => void;

@@ -134,6 +134,16 @@ function applyTileEffect(state: GameState, playerId: PlayerID, tile: Tile) {
         const rent = tile.rent;
         debit(state, playerId, rent);
         if (owner) credit(state, tile.ownerId, rent);
+        // Track rent payment for notification
+        state.lastRentPaid = {
+          payerId: playerId,
+          ownerId: tile.ownerId,
+          amount: rent,
+          propertyName: tile.name,
+          tileIndex: tile.index,
+        };
+      } else {
+        state.lastRentPaid = null;
       }
       return;
     default:

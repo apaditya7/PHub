@@ -56,7 +56,7 @@ h1, h2, h3, h4, h5, h6 {
   border: 6px solid hsl(var(--border));
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
   width: 100%;
-  max-width: 750px;
+  max-width: 820px;
   aspect-ratio: 1;
   margin: 0 auto;
   overflow: hidden;
@@ -197,7 +197,8 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.5);
   --token-offset-x: 0px;
   --token-offset-y: 0px;
-  transform: translate(calc(-50% + var(--token-offset-x)), calc(-50% + var(--token-offset-y)));
+  /* Center the token perfectly - same as highlight circle */
+  transform: translate(-50%, -50%) translate(var(--token-offset-x), var(--token-offset-y));
 }
 
 .space-highlight {
@@ -206,6 +207,7 @@ h1, h2, h3, h4, h5, h6 {
   height: 36px;
   border-radius: 50%;
   border: 2px dashed rgba(177, 42, 47, 0.7);
+  /* Exact same centering as tokens */
   transform: translate(-50%, -50%);
   pointer-events: none;
 }
