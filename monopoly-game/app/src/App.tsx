@@ -188,6 +188,11 @@ export default function App() {
   const [isHost, setIsHost] = useState(false);
   const [isSocketConnected, setIsSocketConnected] = useState(false);
   const [connectionError, setConnectionError] = useState<string | null>(null);
+  const [displayPositions, setDisplayPositions] = useState<Record<string, number>>({});
+  const animationTimersRef = useRef<Record<string, number>>({});
+  const activeAnimationIdsRef = useRef<Set<string>>(new Set());
+  const prevPositionsRef = useRef<Record<string, number>>({});
+  const displayPositionsRef = useRef<Record<string, number>>({});
 
   const currentPlayer = players[current];
   const cp = currentPlayer ?? { name: "...", cash: 0, position: 0, color: "#999", id: "-", token: "car" as const };
@@ -218,6 +223,10 @@ export default function App() {
       ...getTilePosition(index),
     }));
   }, [spaces]);
+
+  useEffect(() => {
+    displayPositionsRef.current = displayPositions;
+  }, [displayPositions]);
 
   const ownedByPlayer = useMemo(() => {
     const map = new Map<string, Space[]>();
@@ -384,6 +393,47 @@ export default function App() {
   // Token/color assignment per playerId
   const tokenMapRef = useRef<Record<string, UIPlayer["token"]>>({});
   const colorMapRef = useRef<Record<string, string>>({});
+  const updateMovingFlag = () => setMoving(activeAnimationIdsRef.current.size > 0);
+
+  const cancelAnimation = (playerId: string) => {
+    const timer = animationTimersRef.current[playerId];
+    if (timer) {
+      window.clearTimeout(timer);
+      delete animationTimersRef.current[playerId];
+    }
+    if (activeAnimationIdsRef.current.delete(playerId)) {
+      updateMovingFlag();
+    }
+  };
+
+  const startStepAnimation = (playerId: string, from: number, to: number, total: number) => {
+    const steps = (to - from + total) % total;
+    if (steps === 0) {
+      setDisplayPositions((prev) => ({ ...prev, [playerId]: to }));
+      return;
+    }
+
+    cancelAnimation(playerId);
+    activeAnimationIdsRef.current.add(playerId);
+    updateMovingFlag();
+
+    let step = 0;
+    const stepDelayMs = 220;
+
+    const tick = () => {
+      step += 1;
+      const nextPos = (from + step) % total;
+      setDisplayPositions((prev) => ({ ...prev, [playerId]: nextPos }));
+
+      if (step < steps) {
+        animationTimersRef.current[playerId] = window.setTimeout(tick, stepDelayMs);
+      } else {
+        cancelAnimation(playerId);
+      }
+    };
+
+    animationTimersRef.current[playerId] = window.setTimeout(tick, stepDelayMs);
+  };
 
   useEffect(() => {
     console.log("Setting up socket connection...");
@@ -447,6 +497,51 @@ export default function App() {
           };
         });
         setPlayers(ui);
+        const nextPositions: Record<string, number> = {};
+        ids.forEach((pid) => {
+          nextPositions[pid] = g.players[pid]?.position ?? 0;
+        });
+        const prevPositions = prevPositionsRef.current;
+        const totalSpaces = g.board.length;
+        const hasPrev = Object.keys(prevPositions).length > 0;
+        const currentDisplays = displayPositionsRef.current;
+
+        const nextDisplayPositions: Record<string, number> = {};
+        ids.forEach((pid) => {
+          const nextPos = nextPositions[pid];
+          const prevPos = prevPositions[pid];
+          const isAnimating = activeAnimationIdsRef.current.has(pid);
+          if (isAnimating) {
+            if (prevPos !== undefined && nextPos === prevPos) {
+              nextDisplayPositions[pid] = currentDisplays[pid] ?? prevPos;
+              return;
+            }
+            if (prevPos !== undefined && nextPos !== prevPos) {
+              cancelAnimation(pid);
+              nextDisplayPositions[pid] = nextPos;
+              return;
+            }
+          }
+          if (!hasPrev || prevPos === undefined) {
+            nextDisplayPositions[pid] = nextPos;
+            return;
+          }
+          if (prevPos === nextPos) {
+            nextDisplayPositions[pid] = nextPos;
+            return;
+          }
+          const steps = (nextPos - prevPos + totalSpaces) % totalSpaces;
+          if (steps > 0 && steps <= 12) {
+            nextDisplayPositions[pid] = prevPos;
+            startStepAnimation(pid, prevPos, nextPos, totalSpaces);
+          } else {
+            cancelAnimation(pid);
+            nextDisplayPositions[pid] = nextPos;
+          }
+        });
+
+        setDisplayPositions(nextDisplayPositions);
+        prevPositionsRef.current = nextPositions;
         // Who's turn index
         const turnPid = ids[g.currentTurn];
         const idx = ids.findIndex((x) => x === turnPid);
@@ -458,7 +553,7 @@ export default function App() {
         setCanRoll(Boolean(isMyTurn && g.started && !g.hasRolledThisTurn));
         // canEnd: my turn, game started, and have rolled
         setCanEnd(Boolean(isMyTurn && g.started && g.hasRolledThisTurn));
-        setMoving(false);
+        updateMovingFlag();
 
         // When game starts, close lobby and show game board
         if (g.started && showLobby) {
@@ -494,6 +589,9 @@ export default function App() {
       console.log("Component unmounting, but keeping socket alive");
       // Don't close the socket on unmount in dev mode
       // s.close();
+      Object.values(animationTimersRef.current).forEach((timer) => window.clearTimeout(timer));
+      animationTimersRef.current = {};
+      activeAnimationIdsRef.current.clear();
     };
   }, []);
 
@@ -509,9 +607,10 @@ export default function App() {
     const map = new Map<any, { x: number; y: number }>();
     const byPos = new Map<number, typeof players>();
     for (const p of players) {
-      const arr = byPos.get(p.position) || [];
+      const displayPos = displayPositions[p.id] ?? p.position;
+      const arr = byPos.get(displayPos) || [];
       arr.push(p);
-      byPos.set(p.position, arr);
+      byPos.set(displayPos, arr);
     }
     const patterns: Array<{ x: number; y: number }> = [
       { x: -8, y: -8 },
@@ -530,7 +629,7 @@ export default function App() {
       });
     });
     return map;
-  }, [players]);
+  }, [players, displayPositions]);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -624,14 +723,17 @@ export default function App() {
           <section className="board-panel">
             <div className="board">
               <div className="token-layer">
-                <span className="space-highlight" style={getTilePercent(cp.position)} />
+                <span
+                  className="space-highlight"
+                  style={getTilePercent(displayPositions[cp.id] ?? 0)}
+                />
                 {players.map((player) => (
                   <span
                     key={player.id}
                     className={`token token-${player.token}`}
                     style={{
                       backgroundColor: player.color,
-                      ...getTilePercent(player.position),
+                      ...getTilePercent(displayPositions[player.id] ?? 0),
                       ["--token-offset-x" as any]: `${
                         tokenOffsets.get(player.id)?.x ?? 0
                       }px`,
