@@ -14,6 +14,7 @@ export function buildBoard(): Tile[] {
       type: d.type || "PROPERTY",
       price: d.price ?? (d.type === "PROPERTY" ? 100 : undefined),
       rent: d.rent ?? (d.type === "PROPERTY" ? 10 : undefined),
+      tax: d.tax ?? (d.type === "TAX" ? 150 : undefined),
       ownerId: null
     };
     tiles[i] = t;

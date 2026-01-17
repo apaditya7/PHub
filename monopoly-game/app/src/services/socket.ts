@@ -13,6 +13,7 @@ export type PlayerInfo = {
   position: number;
   inJail: boolean;
   bankrupt: boolean;
+  getOutOfJailFree?: number;
 };
 
 export type Tile = {
@@ -33,6 +34,10 @@ export type GameState = {
   started: boolean;
   lastRoll?: [number, number];
   hasRolledThisTurn?: boolean;
+  lastDrawnCard?: {
+    deck: 'chance' | 'community';
+    cardId: string;
+  } | null;
 };
 
 let socket: Socket | null = null;
@@ -105,6 +110,8 @@ export function connectSocket(
     onGameUpdate?: (g: GameState) => void;
     onError?: (msg: string) => void;
     onConnect?: (id: string) => void;
+    onPrivateCardDrawn?: (p: { deck: 'chance' | 'community'; cardId: string }) => void;
+    onPrivateTaxCharged?: (p: { amount: number; tileIndex: number }) => void;
   }
 ) {
   const s = getSocket();
@@ -112,6 +119,8 @@ export function connectSocket(
   if (handlers.onRoomUpdate) s.on("roomUpdate", handlers.onRoomUpdate);
   if (handlers.onGameUpdate) s.on("gameUpdate", handlers.onGameUpdate);
   if (handlers.onError) s.on("errorMessage", handlers.onError);
+  if (handlers.onPrivateCardDrawn) s.on("privateCardDrawn", handlers.onPrivateCardDrawn);
+  if (handlers.onPrivateTaxCharged) s.on("privateTaxCharged", handlers.onPrivateTaxCharged);
   return s;
 }
 

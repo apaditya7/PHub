@@ -12,6 +12,7 @@ import {
   type GameState,
   type RoomUpdatePayload,
 } from "./services/socket";
+import { cardById } from "./game/cards-data";
 
 type SpaceType =
   | "go"
@@ -43,6 +44,7 @@ interface UIPlayer {
   token: "car" | "statue" | "book" | "tower";
   color: string;
   inJail?: boolean;
+  getOutOfJailFree?: number;
 }
 
 const makeProperty = (name: string, color: string, price: number): Space => ({
@@ -87,7 +89,7 @@ const createSpaces = (): Space[] => [
   makeProperty("Campus Green (SMU)", "#7cc6de", 120),
   { name: "Campus Security (Just Visiting)", type: "jail" },
   makeProperty("One Stop SAC (NTU)", "#e6a3c1", 140),
-  makeUtility("Aircon"),
+  makeTax("Hall Aircon", 150),
   makeProperty("Office of Student Affairs (NUS)", "#e6a3c1", 140),
   makeProperty("Admin Offices (SMU)", "#e6a3c1", 160),
   makeRail("Overseas Exchange Allocation"),
@@ -103,7 +105,7 @@ const createSpaces = (): Space[] => [
   makeRail("Student Activity Centre (SAC)"),
   makeProperty("Hot Hideout (NTU)", "#e6c24f", 260),
   makeProperty("Deck / Frontier (NUS)", "#e6c24f", 260),
-  makeUtility("Campus WiFi"),
+  makeTax("Campus WiFi", 150),
   makeProperty("WokExpress (NUS)", "#e6c24f", 280),
   { name: "Go To Campus Security", type: "goToJail" },
   makeProperty("NUS Overseas College (NUS)", "#4f9b5a", 300),
@@ -184,6 +186,11 @@ export default function App() {
   const [isHost, setIsHost] = useState(false);
   const [isSocketConnected, setIsSocketConnected] = useState(false);
   const [connectionError, setConnectionError] = useState<string | null>(null);
+  const [showCardModal, setShowCardModal] = useState(false);
+  const [localDrawnCard, setLocalDrawnCard] = useState<{ deck: 'chance' | 'community'; cardId: string } | null>(null);
+  const [showTaxModal, setShowTaxModal] = useState(false);
+  const [taxInfo, setTaxInfo] = useState<{ amount: number; tileIndex: number } | null>(null);
+  const [playerName, setPlayerName] = useState<string>(() => (localStorage.getItem('playerName') || ''));
 
   const currentPlayer = players[current];
   const cp = currentPlayer ?? { name: "...", cash: 0, position: 0, color: "#999", id: "-", token: "car" as const };
@@ -244,20 +251,6 @@ export default function App() {
     currentSpace.ownerId == null &&
     (currentSpace.price ?? 0) <= (currentPlayer?.cash ?? 0);
 
-  const canDrawChance = isStarted && !moving && currentSpace.type === "chance";
-  const canDrawCommunity =
-    isStarted && !moving && currentSpace.type === "community";
-
-  const handleDrawChance = () => {
-    if (!canDrawChance) return;
-    addLog("Chance card drawn (stub).");
-  };
-
-  const handleDrawCommunity = () => {
-    if (!canDrawCommunity) return;
-    addLog("Community Chest card drawn (stub).");
-  };
-
   const handleBuy = () => {
     if (!roomId) return;
     if (!canBuyCurrent) return;
@@ -267,7 +260,8 @@ export default function App() {
   const handleCreateGame = () => {
     setIsConnecting(true);
     setShowLanding(false);
-    const name = localStorage.getItem("playerName") || "Player";
+    const name = (playerName || "").trim() || "Player";
+    localStorage.setItem("playerName", name);
     console.log("Creating room for player:", name);
 
     // If not connected, try to wait a bit for connection
@@ -315,7 +309,8 @@ export default function App() {
 
     setIsConnecting(true);
     setShowJoinInput(false);
-    const name = localStorage.getItem("playerName") || "Player";
+    const name = (playerName || "").trim() || "Player";
+    localStorage.setItem("playerName", name);
     const code = joinRoomCode.trim().toUpperCase();
 
     const attemptJoin = () => {
@@ -440,6 +435,7 @@ export default function App() {
             token: tokenMapRef.current[pid],
             color: colorMapRef.current[pid],
             inJail: p?.inJail,
+            getOutOfJailFree: p?.getOutOfJailFree,
           };
         });
         setPlayers(ui);
@@ -465,6 +461,15 @@ export default function App() {
         console.error("Socket error:", msg);
         setLog((prev) => [String(msg), ...prev.slice(0, 6)]);
       },
+      onPrivateCardDrawn: (p) => {
+        setLocalDrawnCard(p);
+        setShowCardModal(true);
+      },
+      onPrivateTaxCharged: (p) => {
+        setTaxInfo(p);
+        setShowTaxModal(true);
+        setTimeout(() => setShowTaxModal(false), 2000);
+      }
     });
 
     // Add error and disconnect handlers
@@ -527,6 +532,16 @@ export default function App() {
     });
     return map;
   }, [players]);
+
+  // Card modal is driven by a private event from the server (only for acting player)
+  const drawnCard = localDrawnCard ? cardById(localDrawnCard.cardId) : null;
+  const drawnMeta = localDrawnCard
+    ? {
+        deck: localDrawnCard.deck,
+        title: drawnCard?.name || `Card Drawn (${localDrawnCard.cardId})`,
+        description: drawnCard?.description || "A card was drawn, but details are unavailable on the client.",
+      }
+    : null;
 
   return (
     <div className="page">
@@ -637,7 +652,7 @@ export default function App() {
           <h3>Current space</h3>
           <div className="space-details">
             <p className="space-name">{currentSpace.name}</p>
-            <p className="space-type">{currentSpace.type}</p>
+            <p className="space-type">{String(currentSpace.type).toUpperCase()}</p>
             {currentSpace.price && (
               <p className="space-cost">
                 Price: ${currentSpace.price} · Rent: ${currentSpace.rent ?? 0}
@@ -660,16 +675,6 @@ export default function App() {
                 Buy property
               </button>
             )}
-            {canDrawChance && (
-              <button type="button" onClick={handleDrawChance}>
-                Draw chance
-              </button>
-            )}
-            {canDrawCommunity && (
-              <button type="button" onClick={handleDrawCommunity}>
-                Draw community
-              </button>
-            )}
           </div>
         </section>
 
@@ -686,10 +691,15 @@ export default function App() {
                   />
                   <div className="ownership-details">
                     <p>{player.name}</p>
-                    {properties.length === 0 ? (
+                    {(properties.length === 0 && !player.getOutOfJailFree) ? (
                       <p className="ownership-empty">No assets yet.</p>
                     ) : (
                       <div className="ownership-cards">
+                        {player.getOutOfJailFree && player.getOutOfJailFree > 0 && (
+                          <span className="property-pill property-pill-goojf">
+                            Get Out of Jail Free ({player.getOutOfJailFree})
+                          </span>
+                        )}
                         {properties.map((space) => (
                           <span
                             key={space.name}
@@ -759,11 +769,22 @@ export default function App() {
                 <p className="modal-subtitle">
                   {!isSocketConnected ? "🔄 Connecting to server..." : "Choose an option to begin"}
                 </p>
+                <div style={{ margin: '0.5rem 0 1rem 0' }}>
+                  <label style={{ display: 'block', fontSize: '0.9rem', color: '#555', marginBottom: '0.25rem' }}>Your Name</label>
+                  <input
+                    type="text"
+                    value={playerName}
+                    onChange={(e) => setPlayerName(e.target.value)}
+                    placeholder="Enter your name"
+                    maxLength={24}
+                    style={{ width: '100%', padding: '0.6rem', fontSize: '1rem', border: '1px solid #ccc', borderRadius: 4 }}
+                  />
+                </div>
                 <div className="modal-actions" style={{ flexDirection: "column", gap: "1rem" }}>
                   <button
                     type="button"
                     onClick={handleCreateGame}
-                    disabled={!isSocketConnected}
+                    disabled={!isSocketConnected || !playerName.trim()}
                     style={{ width: "100%" }}
                   >
                     Create New Game
@@ -771,7 +792,7 @@ export default function App() {
                   <button
                     type="button"
                     onClick={handleShowJoinInput}
-                    disabled={!isSocketConnected}
+                    disabled={!isSocketConnected || !playerName.trim()}
                     className="secondary"
                     style={{ width: "100%" }}
                   >
@@ -789,31 +810,41 @@ export default function App() {
         <div className="modal-backdrop">
           <div className="modal">
             <h2>Join Game</h2>
-            <p className="modal-subtitle">Enter the room code to join</p>
-            <input
-              type="text"
-              value={joinRoomCode}
-              onChange={(e) => setJoinRoomCode(e.target.value.toUpperCase())}
-              placeholder="Enter room code (e.g. ABC12)"
-              maxLength={5}
-              style={{
-                width: "100%",
-                padding: "0.75rem",
-                fontSize: "1.25rem",
-                textAlign: "center",
-                textTransform: "uppercase",
-                letterSpacing: "0.2em",
-                border: "2px solid #ccc",
-                borderRadius: "4px",
-                marginBottom: "1rem"
-              }}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" && joinRoomCode.trim()) {
-                  handleJoinGame();
-                }
-              }}
-              autoFocus
-            />
+            <p className="modal-subtitle">Enter your name and the room code</p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '0.5rem' }}>
+              <input
+                type="text"
+                value={playerName}
+                onChange={(e) => setPlayerName(e.target.value)}
+                placeholder="Your name"
+                maxLength={24}
+                style={{ width: '100%', padding: '0.75rem', fontSize: '1rem', border: '1px solid #ccc', borderRadius: '4px' }}
+              />
+              <input
+                type="text"
+                value={joinRoomCode}
+                onChange={(e) => setJoinRoomCode(e.target.value.toUpperCase())}
+                placeholder="Enter room code (e.g. ABC12)"
+                maxLength={5}
+                style={{
+                  width: "100%",
+                  padding: "0.75rem",
+                  fontSize: "1.25rem",
+                  textAlign: "center",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.2em",
+                  border: "2px solid #ccc",
+                  borderRadius: "4px",
+                  marginBottom: "0.25rem"
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && joinRoomCode.trim() && playerName.trim()) {
+                    handleJoinGame();
+                  }
+                }}
+                autoFocus
+              />
+            </div>
             <div className="modal-actions">
               <button
                 type="button"
@@ -825,7 +856,7 @@ export default function App() {
               <button
                 type="button"
                 onClick={handleJoinGame}
-                disabled={isConnecting || !joinRoomCode.trim()}
+                disabled={isConnecting || !joinRoomCode.trim() || !playerName.trim()}
               >
                 {isConnecting ? "Joining..." : "Join Game"}
               </button>
@@ -894,6 +925,44 @@ export default function App() {
                 </p>
               )}
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Card Modal (only for acting player via private event) */}
+      {showCardModal && localDrawnCard && (
+        <div className="modal-backdrop">
+          <div className="modal">
+            <h2 className={`card-title card-title-${localDrawnCard?.deck}`}>
+              {localDrawnCard?.deck === 'chance' ? '🎲 CHANCE' : 'COMMUNITY CHEST'}
+            </h2>
+            <p className="modal-subtitle" style={{ margin: '1rem 0' }}>
+              {drawnMeta?.title}
+            </p>
+            <p style={{ fontSize: '1.125rem', margin: '2rem 0', lineHeight: 1.5 }}>
+              {drawnMeta?.description}
+            </p>
+            <div className="modal-actions">
+              <button
+                type="button"
+                onClick={() => { setShowCardModal(false); setLocalDrawnCard(null); }}
+                style={{ width: "100%" }}
+              >
+                Continue
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Tax popup (only acting player) */}
+      {showTaxModal && taxInfo && (
+        <div className="modal-backdrop" style={{ background: 'transparent', pointerEvents: 'none' }}>
+          <div className="modal" style={{ pointerEvents: 'auto' }}>
+            <h2 className="card-title">TAX</h2>
+            <p style={{ fontSize: '1.125rem', margin: '1rem 0' }}>
+              You paid ${taxInfo.amount}.
+            </p>
           </div>
         </div>
       )}

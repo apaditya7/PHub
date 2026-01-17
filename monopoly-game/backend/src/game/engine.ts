@@ -1,6 +1,6 @@
 import { GameState, PlayerID, Tile } from "../types";
 import { advanceTurn, currentPlayerId } from "./state";
-import { cardById } from "./cards";
+import { cardById, CardEffect } from "./cards";
 
 function roll2d6(): [number, number] {
   const d1 = Math.floor(Math.random() * 6) + 1;
@@ -23,6 +23,9 @@ export function applyRoll(state: GameState, playerId: PlayerID, d1: number, d2: 
 
   state.lastRoll = [d1, d2];
   state.hasRolledThisTurn = true;
+  // clear ephemeral effects for this roll
+  state.lastDrawnCard = null;
+  state.lastTaxCharged = null;
 
   // Jail handling: must roll doubles to get out, otherwise stay up to 3 attempts, then pay 50 and move
   if (player.inJail) {
@@ -69,7 +72,11 @@ function applyTileEffect(state: GameState, playerId: PlayerID, tile: Tile) {
       drawAndApply(state, playerId, "community");
       return;
     case "TAX":
-      player.cash -= 100; // flat tax for MVP
+      {
+        const amount = tile.tax ?? 100;
+        player.cash -= amount; // default to 100 if unspecified
+        state.lastTaxCharged = { playerId, amount, tileIndex: tile.index };
+      }
       return;
     case "PROPERTY":
       // If owned by someone else, pay rent
@@ -100,6 +107,7 @@ export function handleBuyProperty(state: GameState, playerId: PlayerID) {
 export function handleEndTurn(state: GameState, playerId: PlayerID) {
   const current = currentPlayerId(state);
   if (current !== playerId) throw new Error("Not your turn");
+  state.lastDrawnCard = null;
   advanceTurn(state);
 }
 
@@ -129,8 +137,8 @@ function doMove(state: GameState, playerId: PlayerID, steps: number) {
   const player = state.players[playerId];
   const oldPos = player.position;
   const len = state.board.length;
-  const newPos = (oldPos + steps) % len;
-  if (oldPos + steps >= len) player.cash += 200;
+  const newPos = (((oldPos + steps) % len) + len) % len;
+  if (steps > 0 && newPos < oldPos) player.cash += 200;
   player.position = newPos;
   const tile = state.board[newPos];
   applyTileEffect(state, playerId, tile);
@@ -140,7 +148,10 @@ function drawAndApply(state: GameState, playerId: PlayerID, which: "chance" | "c
   if (!state.decks) return;
   let deck = state.decks[which];
   if (!deck || deck.length === 0) return; // nothing to draw
+  // Debug: log card draw
+  try { console.log(`[CARD] draw from ${which} by ${playerId}. deck size before: ${deck.length}`); } catch {}
   const cardId = deck.shift()!; // draw from top
+  state.lastDrawnCard = { deck: which, cardId: cardId, playerId };
   // Typical rule: place card at bottom unless it's GOOJF retained by player
   const card = cardById(cardId);
   if (!card) return;
@@ -149,13 +160,18 @@ function drawAndApply(state: GameState, playerId: PlayerID, which: "chance" | "c
   if (card.effect.type !== "GET_OUT_OF_JAIL_FREE") {
     deck.push(cardId);
   }
+  try { console.log(`[CARD] applied ${cardId}; deck size after: ${deck.length}`); } catch {}
 }
 
-function applyCardEffect(state: GameState, playerId: PlayerID, effect: any) {
+function applyCardEffect(state: GameState, playerId: PlayerID, effect: CardEffect) {
   const player = state.players[playerId];
   switch (effect.type) {
     case "MOVE_TO": {
       moveToIndex(state, playerId, effect.index, Boolean(effect.passGo));
+      return;
+    }
+    case "MOVE_STEPS": {
+      doMove(state, playerId, effect.steps);
       return;
     }
     case "GO_TO_JAIL": {

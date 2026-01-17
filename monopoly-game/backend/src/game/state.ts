@@ -9,7 +9,9 @@ export function createInitialState(): GameState {
     turnOrder: [],
     currentTurn: 0,
     started: false,
-    decks: buildDecks()
+    decks: buildDecks(),
+    lastDrawnCard: null,
+    lastTaxCharged: null
   };
 }
 
@@ -46,4 +48,6 @@ export function advanceTurn(state: GameState) {
   state.currentTurn = (state.currentTurn + 1) % state.turnOrder.length;
   state.hasRolledThisTurn = false;
   state.lastRoll = undefined;
+  state.lastDrawnCard = null;
+  state.lastTaxCharged = null;
 }
