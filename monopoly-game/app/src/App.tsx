@@ -215,7 +215,7 @@ export default function App() {
                   key={player.id}
                   className={`token token-${player.token}`}
                   style={{
-                    background: player.color,
+                    backgroundColor: player.color,
                     ...getTilePercent(player.position),
                   }}
                   title={player.name}
@@ -255,7 +255,7 @@ export default function App() {
                 <div key={player.id} className="player-row">
                   <span
                     className={`token token-${player.token}`}
-                    style={{ background: player.color }}
+                    style={{ backgroundColor: player.color }}
                   />
                   <div>
                     <p>{player.name}</p>
