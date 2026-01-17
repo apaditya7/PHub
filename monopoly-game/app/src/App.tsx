@@ -16,6 +16,7 @@ import Nav from "./components/Nav";
 import { Button } from "./components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "./components/ui/card";
 import { Input } from "./components/ui/input";
+import { cardById } from "./game/cards-data";
 
 type SpaceType =
   | "go"
@@ -47,6 +48,7 @@ interface UIPlayer {
   token: "car" | "statue" | "book" | "tower";
   color: string;
   inJail?: boolean;
+  getOutOfJailFree?: number;
 }
 
 const makeProperty = (name: string, color: string, price: number): Space => ({
@@ -91,7 +93,7 @@ const createSpaces = (): Space[] => [
   makeProperty("Campus Green (SMU)", "#7cc6de", 120),
   { name: "Campus Security (Just Visiting)", type: "jail" },
   makeProperty("One Stop SAC (NTU)", "#e6a3c1", 140),
-  makeUtility("Aircon"),
+  makeTax("Hall Aircon", 150),
   makeProperty("Office of Student Affairs (NUS)", "#e6a3c1", 140),
   makeProperty("Admin Offices (SMU)", "#e6a3c1", 160),
   makeRail("Overseas Exchange Allocation"),
@@ -107,7 +109,7 @@ const createSpaces = (): Space[] => [
   makeRail("Student Activity Centre (SAC)"),
   makeProperty("Hot Hideout (NTU)", "#e6c24f", 260),
   makeProperty("Deck / Frontier (NUS)", "#e6c24f", 260),
-  makeUtility("Campus WiFi"),
+  makeTax("Campus WiFi", 150),
   makeProperty("WokExpress (NUS)", "#e6c24f", 280),
   { name: "Go To Campus Security", type: "goToJail" },
   makeProperty("NUS Overseas College (NUS)", "#4f9b5a", 300),
@@ -193,6 +195,11 @@ export default function App() {
   const activeAnimationIdsRef = useRef<Set<string>>(new Set());
   const prevPositionsRef = useRef<Record<string, number>>({});
   const displayPositionsRef = useRef<Record<string, number>>({});
+  const [showCardModal, setShowCardModal] = useState(false);
+  const [localDrawnCard, setLocalDrawnCard] = useState<{ deck: 'chance' | 'community'; cardId: string } | null>(null);
+  const [showTaxModal, setShowTaxModal] = useState(false);
+  const [taxInfo, setTaxInfo] = useState<{ amount: number; tileIndex: number } | null>(null);
+  const [playerName, setPlayerName] = useState<string>(() => (localStorage.getItem('playerName') || ''));
 
   const currentPlayer = players[current];
   const cp = currentPlayer ?? { name: "...", cash: 0, position: 0, color: "#999", id: "-", token: "car" as const };
@@ -257,20 +264,6 @@ export default function App() {
     currentSpace.ownerId == null &&
     (currentSpace.price ?? 0) <= (currentPlayer?.cash ?? 0);
 
-  const canDrawChance = isStarted && !moving && currentSpace.type === "chance";
-  const canDrawCommunity =
-    isStarted && !moving && currentSpace.type === "community";
-
-  const handleDrawChance = () => {
-    if (!canDrawChance) return;
-    addLog("Chance card drawn (stub).");
-  };
-
-  const handleDrawCommunity = () => {
-    if (!canDrawCommunity) return;
-    addLog("Community Chest card drawn (stub).");
-  };
-
   const handleBuy = () => {
     if (!roomId) return;
     if (!canBuyCurrent) return;
@@ -280,7 +273,8 @@ export default function App() {
   const handleCreateGame = () => {
     setIsConnecting(true);
     setShowLanding(false);
-    const name = localStorage.getItem("playerName") || "Player";
+    const name = (playerName || "").trim() || "Player";
+    localStorage.setItem("playerName", name);
     console.log("Creating room for player:", name);
 
     // If not connected, try to wait a bit for connection
@@ -328,7 +322,8 @@ export default function App() {
 
     setIsConnecting(true);
     setShowJoinInput(false);
-    const name = localStorage.getItem("playerName") || "Player";
+    const name = (playerName || "").trim() || "Player";
+    localStorage.setItem("playerName", name);
     const code = joinRoomCode.trim().toUpperCase();
 
     const attemptJoin = () => {
@@ -494,6 +489,7 @@ export default function App() {
             token: tokenMapRef.current[pid],
             color: colorMapRef.current[pid],
             inJail: p?.inJail,
+            getOutOfJailFree: p?.getOutOfJailFree,
           };
         });
         setPlayers(ui);
@@ -564,6 +560,15 @@ export default function App() {
         console.error("Socket error:", msg);
         setLog((prev) => [String(msg), ...prev.slice(0, 6)]);
       },
+      onPrivateCardDrawn: (p) => {
+        setLocalDrawnCard(p);
+        setShowCardModal(true);
+      },
+      onPrivateTaxCharged: (p) => {
+        setTaxInfo(p);
+        setShowTaxModal(true);
+        setTimeout(() => setShowTaxModal(false), 2000);
+      }
     });
 
     // Add error and disconnect handlers
@@ -630,6 +635,16 @@ export default function App() {
     });
     return map;
   }, [players, displayPositions]);
+
+  // Card modal is driven by a private event from the server (only for acting player)
+  const drawnCard = localDrawnCard ? cardById(localDrawnCard.cardId) : null;
+  const drawnMeta = localDrawnCard
+    ? {
+        deck: localDrawnCard.deck,
+        title: drawnCard?.name || `Card Drawn (${localDrawnCard.cardId})`,
+        description: drawnCard?.description || "A card was drawn, but details are unavailable on the client.",
+      }
+    : null;
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -780,16 +795,6 @@ export default function App() {
                       Buy property
                     </Button>
                   )}
-                  {canDrawChance && (
-                    <Button size="sm" variant="outline" onClick={handleDrawChance}>
-                      Draw chance
-                    </Button>
-                  )}
-                  {canDrawCommunity && (
-                    <Button size="sm" variant="outline" onClick={handleDrawCommunity}>
-                      Draw community
-                    </Button>
-                  )}
                 </div>
               </CardContent>
             </Card>
@@ -846,6 +851,7 @@ export default function App() {
           </div>
         </div>
       </div>
+
       {/* Loading Screen */}
       {isConnecting && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
@@ -889,11 +895,23 @@ export default function App() {
                   <p className="text-center text-sm text-muted-foreground">
                     {!isSocketConnected ? "🔄 Connecting to server..." : "Choose an option to begin"}
                   </p>
+                  <div className="space-y-3">
+                    <div>
+                      <label className="block text-sm text-muted-foreground mb-1">Your Name</label>
+                      <Input
+                        type="text"
+                        value={playerName}
+                        onChange={(e) => setPlayerName(e.target.value)}
+                        placeholder="Enter your name"
+                        maxLength={24}
+                      />
+                    </div>
+                  </div>
                   <div className="flex flex-col gap-3">
                     <Button
                       className="w-full"
                       onClick={handleCreateGame}
-                      disabled={!isSocketConnected}
+                      disabled={!isSocketConnected || !playerName.trim()}
                     >
                       Create New Game
                     </Button>
@@ -901,7 +919,7 @@ export default function App() {
                       variant="outline"
                       className="w-full"
                       onClick={handleShowJoinInput}
-                      disabled={!isSocketConnected}
+                      disabled={!isSocketConnected || !playerName.trim()}
                     >
                       Join Existing Game
                     </Button>
@@ -1012,6 +1030,43 @@ export default function App() {
                   Waiting for host to start the game...
                 </p>
               )}
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
+      {/* Card Modal (only for acting player via private event) */}
+      {showCardModal && localDrawnCard && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+          <Card className="w-full max-w-md">
+            <CardHeader className="text-center">
+              <CardTitle className={localDrawnCard.deck === 'chance' ? 'text-orange-600' : 'text-blue-600'}>
+                {localDrawnCard.deck === 'chance' ? '🎲 CHANCE' : '📦 COMMUNITY CHEST'}
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <p className="text-center font-medium">{drawnMeta?.title}</p>
+              <p className="text-center text-sm text-muted-foreground">{drawnMeta?.description}</p>
+              <Button
+                className="w-full"
+                onClick={() => { setShowCardModal(false); setLocalDrawnCard(null); }}
+              >
+                Continue
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
+      {/* Tax popup (only acting player) */}
+      {showTaxModal && taxInfo && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
+          <Card className="w-full max-w-sm pointer-events-auto">
+            <CardHeader className="text-center">
+              <CardTitle>💰 TAX</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-center text-lg">You paid ${taxInfo.amount}.</p>
             </CardContent>
           </Card>
         </div>

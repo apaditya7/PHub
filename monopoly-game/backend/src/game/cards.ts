@@ -2,6 +2,7 @@ import data from "./cards-data.json";
 
 export type CardEffect =
   | { type: "MOVE_TO"; index: number; passGo?: boolean }
+  | { type: "MOVE_STEPS"; steps: number }
   | { type: "GO_TO_JAIL" }
   | { type: "COLLECT"; amount: number }
   | { type: "PAY"; amount: number }

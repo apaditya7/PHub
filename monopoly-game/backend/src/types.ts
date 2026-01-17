@@ -29,6 +29,7 @@ export interface Tile {
   type: TileType;
   price?: number;
   rent?: number;
+  tax?: number;
   ownerId?: PlayerID | null;
 }
 
@@ -40,6 +41,16 @@ export interface GameState {
   started: boolean;
   lastRoll?: [number, number];
   hasRolledThisTurn?: boolean; // true if current player has rolled this turn
+  lastDrawnCard?: {
+    deck: 'chance' | 'community';
+    cardId: string;
+    playerId?: PlayerID;
+  } | null;
+  lastTaxCharged?: {
+    playerId: PlayerID;
+    amount: number;
+    tileIndex: number;
+  } | null;
   // Card decks by ID; order is draw order (shift/pop based on policy)
   decks?: {
     chance: string[];
@@ -106,4 +117,6 @@ export interface ServerToClientEvents {
     started: boolean;
   }) => void;
   gameUpdate: (state: GameState) => void;
+  privateCardDrawn?: (payload: { deck: 'chance' | 'community'; cardId: string }) => void;
+  privateTaxCharged?: (payload: { amount: number; tileIndex: number }) => void;
 }
