@@ -241,7 +241,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-5 p-6">
-        <Nav title="Stupid Question Courtroom" />
+        <Nav title="Dept. HUB (Department of Highly Unecessary Beaureaucracy)" />
 
         {/* Input Section */}
         <Card>
