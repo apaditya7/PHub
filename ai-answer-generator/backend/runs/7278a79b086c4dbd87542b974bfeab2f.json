@@ -1,0 +1,836 @@
+{
+  "run_id": "7278a79b086c4dbd87542b974bfeab2f",
+  "started_at": "2026-01-17T16:47:52.593289Z",
+  "finished_at": "2026-01-17T16:49:23.613126Z",
+  "status": "complete",
+  "config": {
+    "mock_mode": false,
+    "deterministic": false,
+    "seed": null,
+    "question": "What should I eat for lunch I dont like anything"
+  },
+  "stages": [
+    {
+      "level": "trial",
+      "decision": {
+        "level": "trial",
+        "protocol": "majority vote",
+        "verdict_number": 1,
+        "shortlist": [
+          1
+        ],
+        "vote_tally": {
+          "1": 1
+        },
+        "dissents": [
+          {
+            "role": "Bailiff",
+            "proposed_number": null
+          },
+          {
+            "role": "Defense Advocate A",
+            "proposed_number": null
+          },
+          {
+            "role": "Expert Witness",
+            "proposed_number": null
+          },
+          {
+            "role": "Trial Judge",
+            "proposed_number": null
+          }
+        ],
+        "timestamp": "2026-01-17T16:48:27.600624Z"
+      },
+      "transcripts": [
+        {
+          "role": "Bailiff",
+          "level": "trial",
+          "message_type": "opening",
+          "proposed_number": null,
+          "vote": null,
+          "claims": [
+            "ANSWER: Consider a simple salad or a sandwich."
+          ],
+          "evidence": [
+            "Salads provide essential nutrients and are light.",
+            "Sandwiches offer variety and can be tailored to taste."
+          ],
+          "critiques": [
+            "Some may find salads too bland.",
+            "Sandwiches can be high in calories."
+          ],
+          "counterarguments": [
+            "A salad can be enhanced with dressings or toppings.",
+            "Sandwiches can include healthy options like whole grain bread."
+          ],
+          "confidence": 0.85,
+          "transcript_text": "The court advises that a salad or sandwich may meet the criteria for a light yet nutritious lunch option, balancing personal preferences and dietary needs.",
+          "exhibits": [
+            "Nutritional guidelines for salads.",
+            "Examples of healthy sandwich recipes."
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o-mini",
+            "timestamp": "2023-10-01T12:00:00Z"
+          }
+        },
+        {
+          "role": "Prosecution Advocate A",
+          "level": "trial",
+          "message_type": "opening",
+          "proposed_number": 1,
+          "vote": {
+            "decision": "approve",
+            "rationale": "Choosing a straightforward option like a simple sandwich provides a foundational meal without overwhelming choices."
+          },
+          "claims": [
+            "ANSWER: A simple sandwich is the best choice."
+          ],
+          "evidence": [
+            "Studies show that simplicity in meal choices reduces decision fatigue.",
+            "Nutritional guidelines recommend balanced meals, which a sandwich can provide.",
+            "Public opinion favors sandwiches as a versatile and widely accepted lunch option."
+          ],
+          "critiques": [
+            "Complex meals can lead to increased stress in decision-making.",
+            "Ignoring basic preferences may lead to dissatisfaction with lunch.",
+            "Overthinking can result in unhealthy eating habits."
+          ],
+          "counterarguments": [
+            "Some may argue for a salad, but that can be too complex or unappealing."
+          ],
+          "confidence": 0.9,
+          "transcript_text": "Ladies and gentlemen, the evidence is clear: a simple sandwich caters to both your desire for ease and your nutritional needs. Let's not overcomplicate lunch when a straightforward choice can satisfy you effectively.",
+          "exhibits": [
+            "Nutritional guidelines from the USDA on balanced meals.",
+            "Surveys showing sandwich popularity as a lunch choice."
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o-mini",
+            "timestamp": "2023-10-02T12:00:00Z"
+          }
+        },
+        {
+          "role": "Defense Advocate A",
+          "level": "trial",
+          "message_type": "opening",
+          "proposed_number": null,
+          "vote": null,
+          "claims": [
+            "ANSWER: Choose a neutral option like a sandwich."
+          ],
+          "evidence": [
+            "Census data shows sandwiches are universally accepted.",
+            "Nutritional guidelines recommend balanced meals."
+          ],
+          "critiques": [
+            "The claim of not liking anything lacks specificity.",
+            "Personal preferences may be overly generalized."
+          ],
+          "counterarguments": [
+            "Consider trying something new to expand palate options.",
+            "A small portion of a disliked food can help in acclimatization."
+          ],
+          "confidence": 0.8,
+          "transcript_text": "Ladies and gentlemen, the recommendations provided must align with nutritional guidance while accommodating the stated aversion. I propose a neutral yet universally accepted option such as a sandwich.",
+          "exhibits": [
+            "Nutritional guidelines document",
+            "Census food preference data"
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o-mini",
+            "timestamp": "2023-10-05T12:00:00Z"
+          }
+        },
+        {
+          "role": "Expert Witness",
+          "level": "trial",
+          "message_type": "opening",
+          "proposed_number": null,
+          "vote": null,
+          "claims": [
+            "ANSWER: A simple salad is a viable option."
+          ],
+          "evidence": [
+            "Nutritional guidelines suggest leafy greens provide essential vitamins.",
+            "Salads can accommodate various tastes with minimal ingredients.",
+            "Studies indicate that light meals can enhance focus and mood."
+          ],
+          "critiques": [
+            "Salads may lack sufficient protein for some individuals.",
+            "A salad's taste can be unappealing if prepared improperly.",
+            "Limited options may not cater to all dietary restrictions."
+          ],
+          "counterarguments": [
+            "Adding protein sources can enhance the nutritional profile.",
+            "Flavor enhancements like dressings can improve palatability.",
+            "Customization allows for personal preferences to be addressed."
+          ],
+          "confidence": 0.85,
+          "transcript_text": "In considering the options for lunch, one must acknowledge that a simple salad provides a nutritious alternative, especially when other preferences are limited.",
+          "exhibits": [
+            "USDA Dietary Guidelines",
+            "Nutritional Studies on Light Meals",
+            "Culinary Customization Resources"
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o-mini",
+            "timestamp": "2023-10-01T12:00:00Z"
+          }
+        },
+        {
+          "role": "Trial Judge",
+          "level": "trial",
+          "message_type": "opening",
+          "proposed_number": null,
+          "vote": null,
+          "claims": [
+            "ANSWER: Consider a balanced meal with elements you tolerate."
+          ],
+          "evidence": [
+            "Consultation with a nutritionist often suggests variety.",
+            "Balanced meals can improve mood and energy levels.",
+            "Trying new foods might adjust preferences over time."
+          ],
+          "critiques": [
+            "Personal preferences are subjective and challenging to generalize.",
+            "Nutritional needs vary from person to person."
+          ],
+          "counterarguments": [
+            "Some individuals have success with meal replacement shakes.",
+            "Seeking professional dietary advice could be beneficial."
+          ],
+          "confidence": 0.8,
+          "transcript_text": "Opening the floor to arguments on dietary choices, focusing on balance and nutritional value.",
+          "exhibits": [
+            "Nutritional guidelines from health organizations.",
+            "Studies on dietary variety and health."
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2023-10-02T14:00:00Z"
+          }
+        }
+      ],
+      "exhibits": [
+        "Nutritional guidelines for salads.",
+        "Examples of healthy sandwich recipes.",
+        "Nutritional guidelines from the USDA on balanced meals.",
+        "Surveys showing sandwich popularity as a lunch choice.",
+        "Nutritional guidelines document",
+        "Census food preference data",
+        "USDA Dietary Guidelines",
+        "Nutritional Studies on Light Meals",
+        "Culinary Customization Resources",
+        "Nutritional guidelines from health organizations.",
+        "Studies on dietary variety and health."
+      ]
+    },
+    {
+      "level": "appeals",
+      "decision": {
+        "level": "appeals",
+        "protocol": "critique + panel vote",
+        "holding": "affirm",
+        "majority_number": 1,
+        "dissents": [
+          {
+            "role": "Appellate Judge C",
+            "vote": {
+              "decision": "remand",
+              "rationale": "The trial verdict lacked substantive options and faced overwhelming dissent without proposing a real number."
+            }
+          }
+        ],
+        "timestamp": "2026-01-17T16:48:42.039752Z"
+      },
+      "transcripts": [
+        {
+          "role": "Appellate Judge A",
+          "level": "appeals",
+          "message_type": "ruling",
+          "proposed_number": 1,
+          "vote": {
+            "decision": "affirm",
+            "rationale": "The trial court's decision was based on a valid majority vote with no procedural errors."
+          },
+          "claims": [
+            "ANSWER: affirm"
+          ],
+          "evidence": [
+            "Majority vote achieved with verdict number 1.",
+            "No procedural errors noted in the trial record."
+          ],
+          "critiques": [
+            "Dissents lack proposed alternative verdict numbers.",
+            "Bailiff and non-judicial roles dissenting are uncommon."
+          ],
+          "counterarguments": [
+            "Dissents highlight potential dissatisfaction with the verdict."
+          ],
+          "confidence": 0.95,
+          "transcript_text": "The trial court's decision to affirm the verdict number 1 is upheld based on a valid majority vote.",
+          "exhibits": [],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2026-01-17T16:48:27.600624Z"
+          }
+        },
+        {
+          "role": "Appellate Judge B",
+          "level": "appeals",
+          "message_type": "ruling",
+          "proposed_number": 1,
+          "vote": {
+            "decision": "affirm",
+            "rationale": "The trial record shows a valid majority vote for verdict number 1."
+          },
+          "claims": [
+            "ANSWER: Affirm the trial verdict number 1."
+          ],
+          "evidence": [
+            "Majority vote protocol was followed.",
+            "Vote tally supports verdict number 1.",
+            "Dissents did not propose an alternative number."
+          ],
+          "critiques": [
+            "Limited engagement from dissenting roles.",
+            "Lack of alternative proposals from dissents.",
+            "Verdict number 1 was the sole option voted on."
+          ],
+          "counterarguments": [
+            "Dissents could imply discontent with options.",
+            "Potential for overlooked alternatives."
+          ],
+          "confidence": 0.9,
+          "transcript_text": "After reviewing the trial record, the verdict number 1 is valid and should be affirmed.",
+          "exhibits": [
+            "Trial verdict showing majority vote for number 1."
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2026-01-17T17:00:00.000000Z"
+          }
+        },
+        {
+          "role": "Appellate Judge C",
+          "level": "appeals",
+          "message_type": "opinion",
+          "proposed_number": null,
+          "vote": {
+            "decision": "remand",
+            "rationale": "The trial verdict lacked substantive options and faced overwhelming dissent without proposing a real number."
+          },
+          "claims": [
+            "ANSWER: Remand for further consideration."
+          ],
+          "evidence": [
+            "Trial verdict resulted in a solitary option with no substantial alternatives presented.",
+            "A significant number of key roles dissented without proposing a number."
+          ],
+          "critiques": [
+            "The trial failed to explore a diverse range of legitimate options for lunch.",
+            "Dissenters did not provide constructive alternatives, leaving the decision ungrounded."
+          ],
+          "counterarguments": [
+            "One might argue the single number reflects consensus, but it lacks depth and variety."
+          ],
+          "confidence": 0.7,
+          "transcript_text": "The trial failed to present a viable shortlist, necessitating a remand for further exploration of options.",
+          "exhibits": [],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2026-01-17T16:50:00Z"
+          }
+        }
+      ],
+      "exhibits": [
+        "Trial verdict showing majority vote for number 1."
+      ]
+    },
+    {
+      "level": "supreme",
+      "decision": {
+        "level": "supreme",
+        "protocol": "consensus + authored opinion",
+        "final_number": 1,
+        "opinion": {
+          "syllabus": "The Court consolidates the record and affirms procedural legitimacy.",
+          "majority": "The majority synthesizes the trial and appellate record into a single number.",
+          "dissents": [
+            {
+              "against": "remand",
+              "reason": "Some justices believe immediate options should have been proposed to avoid further indecision."
+            },
+            {
+              "against": "affirm",
+              "reason": "The decision lacks adaptability and fails to accommodate diverse preferences."
+            }
+          ],
+          "writer": "Chief Justice"
+        },
+        "timestamp": "2026-01-17T16:49:05.793405Z"
+      },
+      "transcripts": [
+        {
+          "role": "Chief Justice",
+          "level": "supreme",
+          "message_type": "opinion",
+          "proposed_number": null,
+          "vote": {
+            "decision": "remand",
+            "rationale": "The appeals court failed to provide a substantive option and faced substantial dissent."
+          },
+          "claims": [
+            "ANSWER: A diverse selection should be considered to accommodate the lack of preference."
+          ],
+          "evidence": [
+            "Past decisions suggest offering multiple options when preferences are unclear.",
+            "Nutritional guidelines recommend balanced meals.",
+            "Culinary experts advise trying a variety of foods to discover new preferences."
+          ],
+          "critiques": [
+            "The initial holding lacked specificity and actionable outcomes.",
+            "The decision did not address potential dietary needs.",
+            "Failure to propose a tangible option leaves the question unresolved."
+          ],
+          "counterarguments": [
+            "It may be challenging to reach a consensus without a clear preference.",
+            "Variety may overwhelm rather than assist in decision-making.",
+            "Previous attempts at suggesting options have not successfully led to a decision."
+          ],
+          "confidence": 0.85,
+          "transcript_text": "The court, in its wisdom, finds a lack of substantive resolution from the appeals, and directs attention back to considering a broader spectrum of options for lunch.",
+          "exhibits": [
+            "Exhibit A: Nutritional Guidelines",
+            "Exhibit B: Culinary Expert Testimonies"
+          ],
+          "dissent": {
+            "against": "remand",
+            "reason": "Some justices believe immediate options should have been proposed to avoid further indecision."
+          },
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2026-01-17T17:02:00.000000Z"
+          }
+        },
+        {
+          "role": "Justice Originalist",
+          "level": "supreme",
+          "message_type": "holding",
+          "proposed_number": 1,
+          "vote": {
+            "decision": "affirm",
+            "rationale": "The appeals court has validated the singular option as the most viable."
+          },
+          "claims": [
+            "ANSWER: 1"
+          ],
+          "evidence": [
+            "The appeals court majority affirmed the choice of 1.",
+            "The lack of alternative numbers presented reinforces the decision.",
+            "Institutional consistency dictates adherence to prior rulings."
+          ],
+          "critiques": [
+            "The trial verdict offered insufficient variety.",
+            "The remand dissent highlighted the lack of substantive options."
+          ],
+          "counterarguments": [
+            "Consensus at appeals level supports the majority number.",
+            "Continuity of decision-making processes justifies the affirmation."
+          ],
+          "confidence": 0.8,
+          "transcript_text": "The Supreme Court affirms the appeals court's holding of 1, maintaining institutional consistency.",
+          "exhibits": [
+            "Appeals holding document"
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2026-01-17T17:00:00Z"
+          }
+        },
+        {
+          "role": "Justice Utilitarian",
+          "level": "supreme",
+          "message_type": "opinion",
+          "proposed_number": 1,
+          "vote": {
+            "decision": "affirm",
+            "rationale": "Selecting a singular option maximizes decision efficiency and public utility."
+          },
+          "claims": [
+            "ANSWER: Affirm the proposed number of 1 for its simplicity and directness."
+          ],
+          "evidence": [
+            "The appeals holding affirmed the number 1, indicating procedural correctness.",
+            "A singular number simplifies decision-making processes.",
+            "Affirmation aligns with previous majority consensus."
+          ],
+          "critiques": [
+            "The choice of 1 lacks diversity in options.",
+            "Preference constraints were not fully addressed in the trial."
+          ],
+          "counterarguments": [
+            "Efficiency and clarity are paramount in public utility, supporting a singular choice.",
+            "Providing too many options could lead to indecision, reducing utility."
+          ],
+          "confidence": 0.9,
+          "transcript_text": "The court affirms the number 1, maximizing decision clarity and aligning with procedural justice.",
+          "exhibits": [],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2026-01-17T16:50:00.000000Z"
+          }
+        },
+        {
+          "role": "Justice Empiricist",
+          "level": "supreme",
+          "message_type": "opinion",
+          "proposed_number": 1,
+          "vote": {
+            "decision": "affirm",
+            "rationale": "The prior decision provided a singular option that reflects a minimalistic approach, suitable given the individual's expressed dislike of anything."
+          },
+          "claims": [
+            "ANSWER: 1"
+          ],
+          "evidence": [
+            "The appellate holding affirmed a singular option as a decision.",
+            "The individual expressed a generalized dislike without specificity.",
+            "A simple choice avoids overwhelming the decision-maker."
+          ],
+          "critiques": [
+            "The choice of '1' may lack nuance for dietary needs.",
+            "The original appeal did not consider alternative options.",
+            "A consensus on diverse preferences was not attempted."
+          ],
+          "counterarguments": [
+            "A singular option simplifies decision-making for those with broad dislikes.",
+            "The streamlined decision reflects the individual's stated preferences."
+          ],
+          "confidence": 0.85,
+          "transcript_text": "In the pursuit of simplicity and in light of the appellant's aversion to all options, the court affirms the decision of offering a singular choice.",
+          "exhibits": [
+            "Appeals holding document"
+          ],
+          "dissent": {
+            "against": "affirm",
+            "reason": "The decision lacks adaptability and fails to accommodate diverse preferences."
+          },
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2026-01-17T16:50:00.000000Z"
+          }
+        }
+      ],
+      "exhibits": [
+        "Exhibit A: Nutritional Guidelines",
+        "Exhibit B: Culinary Expert Testimonies",
+        "Appeals holding document",
+        "Appeals holding document"
+      ]
+    },
+    {
+      "level": "senate",
+      "decision": {
+        "level": "senate",
+        "protocol": "political override vote",
+        "statute_number": 1,
+        "amendments": [
+          "ANSWER: Approve the statute-number 1 as validated by the Supreme Court.",
+          "ANSWER: Remand the decision for further deliberation.",
+          "ANSWER: Offer a variety of eclectic options."
+        ],
+        "roll_call": [
+          {
+            "senator": "Majority Leader",
+            "decision": "approve",
+            "proposed_number": 1
+          },
+          {
+            "senator": "Minority Leader",
+            "decision": "remand",
+            "proposed_number": 1
+          },
+          {
+            "senator": "Senator 1",
+            "decision": "adopt",
+            "proposed_number": 1
+          }
+        ],
+        "result": "passed",
+        "timestamp": "2026-01-17T16:49:23.611968Z"
+      },
+      "transcripts": [
+        {
+          "role": "Majority Leader",
+          "level": "senate",
+          "message_type": "vote",
+          "proposed_number": 1,
+          "vote": {
+            "decision": "approve",
+            "rationale": "The supreme decision provides a consolidated and affirmed procedural legitimacy, warranting approval."
+          },
+          "claims": [
+            "ANSWER: Approve the statute-number 1 as validated by the Supreme Court."
+          ],
+          "evidence": [
+            "The Supreme Court has affirmed the procedural legitimacy.",
+            "A single number was synthesized for clarity.",
+            "The dissent opinions highlight the need for adaptability but were not upheld."
+          ],
+          "critiques": [
+            "The decision may lack flexibility for diverse preferences."
+          ],
+          "counterarguments": [
+            "The consolidated approach ensures procedural clarity."
+          ],
+          "confidence": 0.95,
+          "transcript_text": "The Senate will adhere to the Supreme Court's decision and approve the statute-number 1, ensuring procedural integrity.",
+          "exhibits": [
+            "Supreme Court's final_number 1"
+          ],
+          "dissent": {
+            "against": "affirm",
+            "reason": "The decision does not accommodate diverse preferences."
+          },
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2026-01-17T16:55:00Z"
+          }
+        },
+        {
+          "role": "Minority Leader",
+          "level": "senate",
+          "message_type": "amendment",
+          "proposed_number": 1,
+          "vote": {
+            "decision": "remand",
+            "rationale": "The decision should be revisited to consider more adaptable and diverse options."
+          },
+          "claims": [
+            "ANSWER: Remand the decision for further deliberation."
+          ],
+          "evidence": [
+            "The majority opinion lacks adaptability.",
+            "Diverse preferences are not accommodated."
+          ],
+          "critiques": [
+            "The Supreme decision's rigidity fails to address personal dietary needs."
+          ],
+          "counterarguments": [
+            "Immediate options could streamline decision-making."
+          ],
+          "confidence": 0.75,
+          "transcript_text": "The Court's procedural legitimacy is sound, but the rigid number fails to address individual dietary preferences for lunch.",
+          "exhibits": [],
+          "dissent": {
+            "against": "remand",
+            "reason": "Immediate solutions could resolve the indecision without remand."
+          },
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2026-01-17T16:55:00.000000Z"
+          }
+        },
+        {
+          "role": "Senator 1",
+          "level": "senate",
+          "message_type": "amendment",
+          "proposed_number": 1,
+          "vote": {
+            "decision": "adopt",
+            "rationale": "To ensure that the lunch options reflect the quirky preferences of our constituency."
+          },
+          "claims": [
+            "ANSWER: Offer a variety of eclectic options."
+          ],
+          "evidence": [
+            "Survey results indicate a preference for unconventional meals.",
+            "Local eateries have unique dishes that suit diverse palates.",
+            "Cultural influences in our area support varied cuisine."
+          ],
+          "critiques": [
+            "The suggestion may overwhelm those with simpler tastes.",
+            "Limited options could lead to dissatisfaction.",
+            "No consensus on what constitutes 'eclectic'."
+          ],
+          "counterarguments": [
+            "Diversity in menu promotes inclusivity.",
+            "Unique offerings encourage local business support.",
+            "Flexibility allows for personal choice."
+          ],
+          "confidence": 0.85,
+          "transcript_text": "In light of the supreme opinion, I propose we adopt a number that reflects our constituents' complex culinary desires, specifically number one, to ensure we cater to their unique tastes while promoting local fare.",
+          "exhibits": [
+            "Local restaurant menus",
+            "Survey data on food preferences",
+            "Cultural food diversity reports"
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o-mini",
+            "timestamp": "2026-01-17T16:49:05.793405Z"
+          }
+        }
+      ],
+      "exhibits": [
+        "Supreme Court's final_number 1",
+        "Local restaurant menus",
+        "Survey data on food preferences",
+        "Cultural food diversity reports"
+      ]
+    }
+  ],
+  "record_on_appeal": [
+    {
+      "level": "trial",
+      "decision": {
+        "level": "trial",
+        "protocol": "majority vote",
+        "verdict_number": 1,
+        "shortlist": [
+          1
+        ],
+        "vote_tally": {
+          "1": 1
+        },
+        "dissents": [
+          {
+            "role": "Bailiff",
+            "proposed_number": null
+          },
+          {
+            "role": "Defense Advocate A",
+            "proposed_number": null
+          },
+          {
+            "role": "Expert Witness",
+            "proposed_number": null
+          },
+          {
+            "role": "Trial Judge",
+            "proposed_number": null
+          }
+        ],
+        "timestamp": "2026-01-17T16:48:27.600624Z"
+      },
+      "exhibits": [
+        "Nutritional guidelines for salads.",
+        "Examples of healthy sandwich recipes.",
+        "Nutritional guidelines from the USDA on balanced meals.",
+        "Surveys showing sandwich popularity as a lunch choice.",
+        "Nutritional guidelines document",
+        "Census food preference data",
+        "USDA Dietary Guidelines",
+        "Nutritional Studies on Light Meals",
+        "Culinary Customization Resources",
+        "Nutritional guidelines from health organizations.",
+        "Studies on dietary variety and health."
+      ]
+    },
+    {
+      "level": "appeals",
+      "decision": {
+        "level": "appeals",
+        "protocol": "critique + panel vote",
+        "holding": "affirm",
+        "majority_number": 1,
+        "dissents": [
+          {
+            "role": "Appellate Judge C",
+            "vote": {
+              "decision": "remand",
+              "rationale": "The trial verdict lacked substantive options and faced overwhelming dissent without proposing a real number."
+            }
+          }
+        ],
+        "timestamp": "2026-01-17T16:48:42.039752Z"
+      },
+      "exhibits": [
+        "Trial verdict showing majority vote for number 1."
+      ]
+    },
+    {
+      "level": "supreme",
+      "decision": {
+        "level": "supreme",
+        "protocol": "consensus + authored opinion",
+        "final_number": 1,
+        "opinion": {
+          "syllabus": "The Court consolidates the record and affirms procedural legitimacy.",
+          "majority": "The majority synthesizes the trial and appellate record into a single number.",
+          "dissents": [
+            {
+              "against": "remand",
+              "reason": "Some justices believe immediate options should have been proposed to avoid further indecision."
+            },
+            {
+              "against": "affirm",
+              "reason": "The decision lacks adaptability and fails to accommodate diverse preferences."
+            }
+          ],
+          "writer": "Chief Justice"
+        },
+        "timestamp": "2026-01-17T16:49:05.793405Z"
+      },
+      "exhibits": [
+        "Exhibit A: Nutritional Guidelines",
+        "Exhibit B: Culinary Expert Testimonies",
+        "Appeals holding document",
+        "Appeals holding document"
+      ]
+    },
+    {
+      "level": "senate",
+      "decision": {
+        "level": "senate",
+        "protocol": "political override vote",
+        "statute_number": 1,
+        "amendments": [
+          "ANSWER: Approve the statute-number 1 as validated by the Supreme Court.",
+          "ANSWER: Remand the decision for further deliberation.",
+          "ANSWER: Offer a variety of eclectic options."
+        ],
+        "roll_call": [
+          {
+            "senator": "Majority Leader",
+            "decision": "approve",
+            "proposed_number": 1
+          },
+          {
+            "senator": "Minority Leader",
+            "decision": "remand",
+            "proposed_number": 1
+          },
+          {
+            "senator": "Senator 1",
+            "decision": "adopt",
+            "proposed_number": 1
+          }
+        ],
+        "result": "passed",
+        "timestamp": "2026-01-17T16:49:23.611968Z"
+      },
+      "exhibits": [
+        "Supreme Court's final_number 1",
+        "Local restaurant menus",
+        "Survey data on food preferences",
+        "Cultural food diversity reports"
+      ]
+    }
+  ],
+  "final_number": 1,
+  "final_answer": "Offer a variety of eclectic options."
+}

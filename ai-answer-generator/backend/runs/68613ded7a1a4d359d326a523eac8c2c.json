@@ -1,0 +1,825 @@
+{
+  "run_id": "68613ded7a1a4d359d326a523eac8c2c",
+  "started_at": "2026-01-17T16:42:28.212070Z",
+  "finished_at": "2026-01-17T16:44:04.048450Z",
+  "status": "complete",
+  "config": {
+    "mock_mode": false,
+    "deterministic": false,
+    "seed": null,
+    "question": "What time is it today?"
+  },
+  "stages": [
+    {
+      "level": "trial",
+      "decision": {
+        "level": "trial",
+        "protocol": "majority vote",
+        "verdict_number": 0,
+        "shortlist": [],
+        "vote_tally": {},
+        "dissents": [
+          {
+            "role": "Bailiff",
+            "proposed_number": null
+          },
+          {
+            "role": "Prosecution Advocate A",
+            "proposed_number": null
+          },
+          {
+            "role": "Defense Advocate A",
+            "proposed_number": null
+          },
+          {
+            "role": "Expert Witness",
+            "proposed_number": null
+          },
+          {
+            "role": "Trial Judge",
+            "proposed_number": null
+          }
+        ],
+        "timestamp": "2026-01-17T16:42:55.835580Z"
+      },
+      "transcripts": [
+        {
+          "role": "Bailiff",
+          "level": "trial",
+          "message_type": "opening",
+          "proposed_number": null,
+          "vote": null,
+          "claims": [
+            "ANSWER: Time cannot be determined in court."
+          ],
+          "evidence": [
+            "Court does not provide real-time information.",
+            "Official timekeeping is not within the court's jurisdiction.",
+            "Public clock may differ from court's operational time."
+          ],
+          "critiques": [
+            "User's inquiry is outside legal scope.",
+            "Time questions lack evidentiary basis.",
+            "Court's primary function is not to provide current time."
+          ],
+          "counterarguments": [
+            "Inquiries about time may be pertinent in scheduling.",
+            "Understanding current time can affect case proceedings.",
+            "Public announcements may reference time."
+          ],
+          "confidence": 1.0,
+          "transcript_text": "The court maintains that inquiries regarding the current time fall outside its operational duties, thus cannot be answered here.",
+          "exhibits": [
+            "N/A"
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "openai/gpt-4o-mini",
+            "timestamp": "2023-10-06T12:00:00Z"
+          }
+        },
+        {
+          "role": "Prosecution Advocate A",
+          "level": "trial",
+          "message_type": "opening",
+          "proposed_number": null,
+          "vote": null,
+          "claims": [
+            "ANSWER: 2 PM"
+          ],
+          "evidence": [
+            "Public clock shows 2 PM",
+            "Online time services confirm 2 PM",
+            "Local news report timestamps articles at 2 PM"
+          ],
+          "critiques": [
+            "No evidence presented for any other time",
+            "Witnesses confirm the same time",
+            "No conflicting reports found"
+          ],
+          "counterarguments": [
+            "Opposing counsel may claim it's a different time",
+            "But those claims lack solid evidence",
+            "Time zones are irrelevant here as we are in the same locale"
+          ],
+          "confidence": 1.0,
+          "transcript_text": "Ladies and gentlemen of the jury, let me be clear: it is 2 PM! The evidence is irrefutable, the time is set, and the public clock does not lie! We must proceed based on this fact.",
+          "exhibits": [
+            "Public clock image",
+            "Screenshot of online time service",
+            "Screenshot of local news article"
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "openai/gpt-4o-mini",
+            "timestamp": "2023-10-01T12:00:00Z"
+          }
+        },
+        {
+          "role": "Defense Advocate A",
+          "level": "trial",
+          "message_type": "opening",
+          "proposed_number": null,
+          "vote": null,
+          "claims": [
+            "ANSWER: I cannot determine the time."
+          ],
+          "evidence": [],
+          "critiques": [],
+          "counterarguments": [],
+          "confidence": 0.0,
+          "transcript_text": "Your Honor, while the question of the current time may seem straightforward, it is outside the purview of this court to ascertain such information without precise reference or context.",
+          "exhibits": [],
+          "dissent": null,
+          "metadata": {
+            "model": "openai/gpt-4o-mini",
+            "timestamp": "2023-10-02T00:00:00Z"
+          }
+        },
+        {
+          "role": "Expert Witness",
+          "level": "trial",
+          "message_type": "opening",
+          "proposed_number": null,
+          "vote": null,
+          "claims": [
+            "ANSWER: The current time is determined by the local timezone."
+          ],
+          "evidence": [
+            "Local time can be verified through public clocks and timekeeping services.",
+            "Official government websites provide current time information.",
+            "Time zones are defined by the Coordinated Universal Time (UTC) standard."
+          ],
+          "critiques": [
+            "Relying solely on digital devices may lead to discrepancies due to synchronization issues.",
+            "Public clocks may not reflect the exact time due to maintenance or errors.",
+            "Timekeeping can vary based on regional observances of daylight saving time."
+          ],
+          "counterarguments": [
+            "Digital devices often auto-sync with universal time servers, ensuring accuracy.",
+            "Global positioning systems (GPS) provide precise time data regardless of location.",
+            "Most public clocks are regularly maintained to reflect accurate time."
+          ],
+          "confidence": 0.9,
+          "transcript_text": "The court acknowledges the necessity of establishing the current time, which is contingent upon the local timezone and can be corroborated by multiple authoritative sources.",
+          "exhibits": [
+            "Current local time display from a government website.",
+            "Time zone mapping from the International Earth Rotation and Reference Systems Service (IERS).",
+            "Official timekeeping service statements."
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "openai/gpt-4o-mini",
+            "timestamp": "2023-10-04T12:00:00Z"
+          }
+        },
+        {
+          "role": "Trial Judge",
+          "level": "trial",
+          "message_type": "opening",
+          "proposed_number": null,
+          "vote": null,
+          "claims": [
+            "ANSWER: The time is determined by the user's local time zone."
+          ],
+          "evidence": [
+            "Standard time measurement based on geographic location.",
+            "Global time zones ensure consistent timekeeping.",
+            "User's device settings often indicate current time."
+          ],
+          "critiques": [
+            "The question lacks specificity regarding the time zone.",
+            "Time is dynamic and changes continuously."
+          ],
+          "counterarguments": [
+            "Some devices automatically adjust to local time zones.",
+            "Digital clocks provide real-time updates."
+          ],
+          "confidence": 0.9,
+          "transcript_text": "The court acknowledges the query on current time, emphasizing its dependence on the user's local time zone.",
+          "exhibits": [
+            "World Time Zone Map",
+            "Standard Timekeeping Devices"
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "openai/gpt-4o",
+            "timestamp": "2023-10-07T10:00:00Z"
+          }
+        }
+      ],
+      "exhibits": [
+        "N/A",
+        "Public clock image",
+        "Screenshot of online time service",
+        "Screenshot of local news article",
+        "Current local time display from a government website.",
+        "Time zone mapping from the International Earth Rotation and Reference Systems Service (IERS).",
+        "Official timekeeping service statements.",
+        "World Time Zone Map",
+        "Standard Timekeeping Devices"
+      ]
+    },
+    {
+      "level": "appeals",
+      "decision": {
+        "level": "appeals",
+        "protocol": "critique + panel vote",
+        "holding": "remand",
+        "majority_number": 0,
+        "dissents": [
+          {
+            "role": "Appellate Judge A",
+            "vote": {
+              "decision": "reverse",
+              "rationale": "The trial verdict lacked a clear determination of the issue at hand, resulting in an indecisive and incomplete ruling."
+            }
+          }
+        ],
+        "timestamp": "2026-01-17T16:43:13.491191Z"
+      },
+      "transcripts": [
+        {
+          "role": "Appellate Judge A",
+          "level": "appeals",
+          "message_type": "ruling",
+          "proposed_number": null,
+          "vote": {
+            "decision": "reverse",
+            "rationale": "The trial verdict lacked a clear determination of the issue at hand, resulting in an indecisive and incomplete ruling."
+          },
+          "claims": [
+            "ANSWER: reverse"
+          ],
+          "evidence": [
+            "No proposed number determined by any trial participant."
+          ],
+          "critiques": [
+            "The trial verdict was not definitive.",
+            "All roles failed to propose a number."
+          ],
+          "counterarguments": [
+            "A lack of consensus suggests procedural confusion."
+          ],
+          "confidence": 0.95,
+          "transcript_text": "The trial record reveals an absence of a majority decision, necessitating reversal for clarity.",
+          "exhibits": [],
+          "dissent": null,
+          "metadata": {
+            "model": "openai/gpt-4o",
+            "timestamp": "2026-01-17T16:42:55"
+          }
+        },
+        {
+          "role": "Appellate Judge B",
+          "level": "appeals",
+          "message_type": "ruling",
+          "proposed_number": null,
+          "vote": {
+            "decision": "remand",
+            "rationale": "The trial record lacks a conclusive verdict number and the relevant decision-making details."
+          },
+          "claims": [
+            "ANSWER: The trial verdict is inconclusive as no number was determined."
+          ],
+          "evidence": [
+            "The verdict_number is recorded as 0.",
+            "No proposed number was accepted by any role.",
+            "Dissents from all roles indicate a lack of consensus."
+          ],
+          "critiques": [
+            "The trial failed to establish a definitive number.",
+            "Lack of majority vote details impairs the verdict's validity.",
+            "All involved roles dissenting indicates procedural flaws."
+          ],
+          "counterarguments": [
+            "The absence of a number may suggest a deliberate non-decision.",
+            "A remand could provide clarity and proper protocol adherence."
+          ],
+          "confidence": 0.85,
+          "transcript_text": "The trial's failure to determine a valid number mandates a remand for proper conclusion.",
+          "exhibits": [
+            "Trial record showing verdict_number as 0."
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "openai/gpt-4o",
+            "timestamp": "2026-01-17T16:42:55.835580Z"
+          }
+        },
+        {
+          "role": "Appellate Judge C",
+          "level": "appeals",
+          "message_type": "critique",
+          "proposed_number": null,
+          "vote": {
+            "decision": "remand",
+            "rationale": "The trial failed to address the question posed, leading to an inconclusive verdict."
+          },
+          "claims": [
+            "ANSWER: The trial record inadequately addressed the question."
+          ],
+          "evidence": [
+            "No verdict number was proposed by any trial members.",
+            "The timestamp indicates a clear temporal context but not the answer to the question."
+          ],
+          "critiques": [
+            "The trial process ignored the central query and provided no consensus.",
+            "Dissents lacked any numerical proposals, indicating a procedural lapse."
+          ],
+          "counterarguments": [
+            "Some might argue the timestamp itself serves as an answer, but it was not used as such."
+          ],
+          "confidence": 0.2,
+          "transcript_text": "The trial's failure to address the core question necessitates further proceedings.",
+          "exhibits": [
+            "Trial record with unaddressed question."
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "openai/gpt-4o",
+            "timestamp": "2026-01-17T16:42:55.835580Z"
+          }
+        }
+      ],
+      "exhibits": [
+        "Trial record showing verdict_number as 0.",
+        "Trial record with unaddressed question."
+      ]
+    },
+    {
+      "level": "supreme",
+      "decision": {
+        "level": "supreme",
+        "protocol": "consensus + authored opinion",
+        "final_number": 0,
+        "opinion": {
+          "syllabus": "The Court consolidates the record and affirms procedural legitimacy.",
+          "majority": "The majority synthesizes the trial and appellate record into a single number.",
+          "dissents": [],
+          "writer": "Chief Justice"
+        },
+        "timestamp": "2026-01-17T16:43:48.570904Z"
+      },
+      "transcripts": [
+        {
+          "role": "Chief Justice",
+          "level": "supreme",
+          "message_type": "opening",
+          "proposed_number": null,
+          "vote": null,
+          "claims": [
+            "ANSWER: Unable to determine exact time without current context",
+            "Appeals court failed to establish factual basis for time determination",
+            "Temporal questions require contemporaneous evidence"
+          ],
+          "evidence": [
+            "Appeals court remand indicates insufficient trial record",
+            "No timestamp validation mechanism presented",
+            "Question requires real-time data not available to the court"
+          ],
+          "critiques": [
+            "Fundamental jurisdiction question over temporal matters",
+            "Lack of verifiable time source",
+            "Appeals dissent raises valid procedural concerns"
+          ],
+          "counterarguments": [
+            "Court could take judicial notice of time if properly presented",
+            "Digital timestamps could provide evidence",
+            "Time zones must be considered for accuracy"
+          ],
+          "confidence": 0.3,
+          "transcript_text": "The Court recognizes the challenge of determining time without proper evidentiary foundation and contemporaneous data.",
+          "exhibits": [
+            "Appeals Court remand order",
+            "Appellate dissent on procedural grounds",
+            "Lack of timestamp validation protocol"
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "anthropic/claude-3.5-sonnet",
+            "timestamp": "2024-01-17T16:43:13Z"
+          }
+        },
+        {
+          "role": "Justice Originalist",
+          "level": "supreme",
+          "message_type": "opinion",
+          "proposed_number": null,
+          "vote": {
+            "decision": "remand",
+            "rationale": "Time determination requires factual evidence from trial level"
+          },
+          "claims": [
+            "ANSWER: Case requires remand for factual determination",
+            "Question of time requires direct evidentiary record",
+            "Lower courts failed to establish basic temporal facts"
+          ],
+          "evidence": [
+            "Appeals court identified lack of clear determination",
+            "No temporal evidence presented in record",
+            "Constitutional framework requires factual basis"
+          ],
+          "critiques": [
+            "Trial court failed to establish temporal baseline",
+            "Appeals process revealed procedural gaps"
+          ],
+          "counterarguments": [
+            "Time could be judicially noticed",
+            "Modern technology provides ready access to time"
+          ],
+          "confidence": 0.9,
+          "transcript_text": "The Court finds that determination of time requires factual evidence at trial level, necessitating remand.",
+          "exhibits": [
+            "Appeals court holding dated 2026-01-17",
+            "Constitutional requirements for fact-finding"
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "anthropic/claude-3.5-sonnet",
+            "timestamp": "2026-01-17T16:43:13"
+          }
+        },
+        {
+          "role": "Supreme Justice",
+          "level": "supreme",
+          "message_type": "opinion",
+          "proposed_number": null,
+          "vote": {
+            "decision": "affirm",
+            "rationale": "Appeals court correctly identified the need for a clear temporal determination"
+          },
+          "claims": [
+            "ANSWER: The current time cannot be definitively determined without reference to a specific timezone and timestamp",
+            "Time determination requires standardized temporal reference points",
+            "Question as posed lacks necessary context for accurate determination"
+          ],
+          "evidence": [
+            "Appeals court remand highlighting need for temporal clarity",
+            "Absence of timezone specification in original query",
+            "Lack of synchronized timestamp reference"
+          ],
+          "critiques": [
+            "Original question lacks precision required for judicial determination",
+            "Time is inherently relative to observer location",
+            "Previous courts failed to establish temporal jurisdiction"
+          ],
+          "counterarguments": [
+            "Time could be determined relative to query submission",
+            "Local system time could serve as reference",
+            "Common law precedent of reasonable interpretation"
+          ],
+          "confidence": 0.95,
+          "transcript_text": "The Court finds that temporal determination requires specific contextual parameters that are absent from the record.",
+          "exhibits": [
+            "Appeals court remand order",
+            "Standard time zone protocols",
+            "Judicial time-keeping requirements"
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "anthropic/claude-3.5-sonnet",
+            "timestamp": "2026-01-17T16:43:13"
+          }
+        },
+        {
+          "role": "Justice Empiricist",
+          "level": "supreme",
+          "message_type": "opinion",
+          "proposed_number": null,
+          "vote": {
+            "decision": "remand",
+            "rationale": "Insufficient empirical evidence to determine current time without timestamp verification"
+          },
+          "claims": [
+            "ANSWER: Time cannot be definitively determined without system verification",
+            "Appeals court correctly identified lack of temporal evidence",
+            "Current data insufficient for accurate time determination"
+          ],
+          "evidence": [
+            "Appeals timestamp shows 2026-01-17T16:43:13.491191Z",
+            "No current system time provided in query",
+            "No standardized time zone reference given"
+          ],
+          "critiques": [
+            "Time is inherently dynamic and requires real-time verification",
+            "Question lacks specificity regarding time zone",
+            "Historical timestamp cannot determine present time"
+          ],
+          "counterarguments": [
+            "Appeals timestamp provides historical context",
+            "System time could be inferred",
+            "Local time zones could be assumed"
+          ],
+          "confidence": 0.2,
+          "transcript_text": "The Court finds insufficient evidence to determine the current time and remands for proper temporal verification.",
+          "exhibits": [
+            "Appeals Court Timestamp: 2026-01-17T16:43:13.491191Z",
+            "Original Question: 'What time is it today?'",
+            "Missing: Current System Time"
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "anthropic/claude-3.5-sonnet",
+            "timestamp": "2024-01-17T00:00:00Z"
+          }
+        }
+      ],
+      "exhibits": [
+        "Appeals Court remand order",
+        "Appellate dissent on procedural grounds",
+        "Lack of timestamp validation protocol",
+        "Appeals court holding dated 2026-01-17",
+        "Constitutional requirements for fact-finding",
+        "Appeals court remand order",
+        "Standard time zone protocols",
+        "Judicial time-keeping requirements",
+        "Appeals Court Timestamp: 2026-01-17T16:43:13.491191Z",
+        "Original Question: 'What time is it today?'",
+        "Missing: Current System Time"
+      ]
+    },
+    {
+      "level": "senate",
+      "decision": {
+        "level": "senate",
+        "protocol": "political override vote",
+        "statute_number": 0,
+        "amendments": [
+          "ANSWER: The proposed statute-number is 0 due to Supreme Court's consolidation.",
+          "ANSWER: Senate should propose a definitive statute-number.",
+          "ANSWER: The time is now."
+        ],
+        "roll_call": [
+          {
+            "senator": "Majority Leader",
+            "decision": "approve",
+            "proposed_number": 0
+          },
+          {
+            "senator": "Minority Leader",
+            "decision": "override",
+            "proposed_number": null
+          },
+          {
+            "senator": "Senator 1",
+            "decision": "approve",
+            "proposed_number": 1
+          }
+        ],
+        "result": "passed",
+        "timestamp": "2026-01-17T16:44:04.046992Z"
+      },
+      "transcripts": [
+        {
+          "role": "Majority Leader",
+          "level": "senate",
+          "message_type": "vote",
+          "proposed_number": 0,
+          "vote": {
+            "decision": "approve",
+            "rationale": "The Supreme Court's affirmation of procedural legitimacy provides a solid foundation."
+          },
+          "claims": [
+            "ANSWER: The proposed statute-number is 0 due to Supreme Court's consolidation."
+          ],
+          "evidence": [
+            "Supreme Court's opinion consolidating the record into a single number.",
+            "Court's affirmation of procedural legitimacy.",
+            "Chief Justice's authored opinion."
+          ],
+          "critiques": [
+            "Lack of clarity on the original statutory content.",
+            "Potential oversimplification in consolidating records."
+          ],
+          "counterarguments": [
+            "Supreme Court's decision provides a clear precedent.",
+            "Single number aids in legislative clarity."
+          ],
+          "confidence": 0.95,
+          "transcript_text": "Today, we anchor our decision on the Supreme Court's consolidation into statute-number 0, in light of their procedural affirmation.",
+          "exhibits": [
+            "Supreme Court's authored opinion"
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "openai/gpt-4o",
+            "timestamp": "2026-01-17T16:45:00.000Z"
+          }
+        },
+        {
+          "role": "Minority Leader",
+          "level": "senate",
+          "message_type": "amendment",
+          "proposed_number": null,
+          "vote": {
+            "decision": "override",
+            "rationale": "The Supreme decision lacks clarity on the statute-number, necessitating Senate action."
+          },
+          "claims": [
+            "ANSWER: Senate should propose a definitive statute-number."
+          ],
+          "evidence": [
+            "The Supreme decision provides no final number.",
+            "The senate must resolve ambiguity to ensure legislative clarity."
+          ],
+          "critiques": [
+            "The Supreme ruling fails to specify a statute-number.",
+            "The Court's consolidation does not translate to actionable legislation."
+          ],
+          "counterarguments": [
+            "The Supreme Court's procedural legitimacy does not address the statutory requirement."
+          ],
+          "confidence": 0.85,
+          "transcript_text": "The Supreme Court's decision leaves a legislative vacuum by not defining the statute-number, and thus the Senate must intervene.",
+          "exhibits": [],
+          "dissent": {
+            "against": "The lack of a statute-number",
+            "reason": "It undermines legislative clarity and procedural completion."
+          },
+          "metadata": {
+            "model": "openai/gpt-4o",
+            "timestamp": "2026-01-17T16:50:00.000000Z"
+          }
+        },
+        {
+          "role": "Senator 1",
+          "level": "senate",
+          "message_type": "amendment",
+          "proposed_number": 1,
+          "vote": {
+            "decision": "approve",
+            "rationale": "To ensure clarity and unity in our legislative efforts."
+          },
+          "claims": [
+            "ANSWER: The time is now."
+          ],
+          "evidence": [
+            "The Supreme Court has affirmed procedural legitimacy.",
+            "Consensus has been reached on the statute."
+          ],
+          "critiques": [
+            "Timing can be subjective.",
+            "Precision in timekeeping may vary."
+          ],
+          "counterarguments": [
+            "We must focus on the legislative agenda rather than the specific hour.",
+            "Time is merely a backdrop to our duties."
+          ],
+          "confidence": 1.0,
+          "transcript_text": "In light of the Supreme Court's affirmation, I propose we adopt statute-number 1, reflecting our commitment to timely governance.",
+          "exhibits": [
+            "Supreme Court opinion",
+            "Legislative calendar"
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "openai/gpt-4o-mini",
+            "timestamp": "2026-01-17T16:43:48.570904Z"
+          }
+        }
+      ],
+      "exhibits": [
+        "Supreme Court's authored opinion",
+        "Supreme Court opinion",
+        "Legislative calendar"
+      ]
+    }
+  ],
+  "record_on_appeal": [
+    {
+      "level": "trial",
+      "decision": {
+        "level": "trial",
+        "protocol": "majority vote",
+        "verdict_number": 0,
+        "shortlist": [],
+        "vote_tally": {},
+        "dissents": [
+          {
+            "role": "Bailiff",
+            "proposed_number": null
+          },
+          {
+            "role": "Prosecution Advocate A",
+            "proposed_number": null
+          },
+          {
+            "role": "Defense Advocate A",
+            "proposed_number": null
+          },
+          {
+            "role": "Expert Witness",
+            "proposed_number": null
+          },
+          {
+            "role": "Trial Judge",
+            "proposed_number": null
+          }
+        ],
+        "timestamp": "2026-01-17T16:42:55.835580Z"
+      },
+      "exhibits": [
+        "N/A",
+        "Public clock image",
+        "Screenshot of online time service",
+        "Screenshot of local news article",
+        "Current local time display from a government website.",
+        "Time zone mapping from the International Earth Rotation and Reference Systems Service (IERS).",
+        "Official timekeeping service statements.",
+        "World Time Zone Map",
+        "Standard Timekeeping Devices"
+      ]
+    },
+    {
+      "level": "appeals",
+      "decision": {
+        "level": "appeals",
+        "protocol": "critique + panel vote",
+        "holding": "remand",
+        "majority_number": 0,
+        "dissents": [
+          {
+            "role": "Appellate Judge A",
+            "vote": {
+              "decision": "reverse",
+              "rationale": "The trial verdict lacked a clear determination of the issue at hand, resulting in an indecisive and incomplete ruling."
+            }
+          }
+        ],
+        "timestamp": "2026-01-17T16:43:13.491191Z"
+      },
+      "exhibits": [
+        "Trial record showing verdict_number as 0.",
+        "Trial record with unaddressed question."
+      ]
+    },
+    {
+      "level": "supreme",
+      "decision": {
+        "level": "supreme",
+        "protocol": "consensus + authored opinion",
+        "final_number": 0,
+        "opinion": {
+          "syllabus": "The Court consolidates the record and affirms procedural legitimacy.",
+          "majority": "The majority synthesizes the trial and appellate record into a single number.",
+          "dissents": [],
+          "writer": "Chief Justice"
+        },
+        "timestamp": "2026-01-17T16:43:48.570904Z"
+      },
+      "exhibits": [
+        "Appeals Court remand order",
+        "Appellate dissent on procedural grounds",
+        "Lack of timestamp validation protocol",
+        "Appeals court holding dated 2026-01-17",
+        "Constitutional requirements for fact-finding",
+        "Appeals court remand order",
+        "Standard time zone protocols",
+        "Judicial time-keeping requirements",
+        "Appeals Court Timestamp: 2026-01-17T16:43:13.491191Z",
+        "Original Question: 'What time is it today?'",
+        "Missing: Current System Time"
+      ]
+    },
+    {
+      "level": "senate",
+      "decision": {
+        "level": "senate",
+        "protocol": "political override vote",
+        "statute_number": 0,
+        "amendments": [
+          "ANSWER: The proposed statute-number is 0 due to Supreme Court's consolidation.",
+          "ANSWER: Senate should propose a definitive statute-number.",
+          "ANSWER: The time is now."
+        ],
+        "roll_call": [
+          {
+            "senator": "Majority Leader",
+            "decision": "approve",
+            "proposed_number": 0
+          },
+          {
+            "senator": "Minority Leader",
+            "decision": "override",
+            "proposed_number": null
+          },
+          {
+            "senator": "Senator 1",
+            "decision": "approve",
+            "proposed_number": 1
+          }
+        ],
+        "result": "passed",
+        "timestamp": "2026-01-17T16:44:04.046992Z"
+      },
+      "exhibits": [
+        "Supreme Court's authored opinion",
+        "Supreme Court opinion",
+        "Legislative calendar"
+      ]
+    }
+  ],
+  "final_number": 0,
+  "final_answer": "The time is now."
+}

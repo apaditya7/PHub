@@ -1,0 +1,128 @@
+{
+  "chance": [
+    {
+      "id": "CH_ORIENTATION_WEEK",
+      "name": "Orientation Week",
+      "description": "Orientation events went well. Collect $200.",
+      "effect": { "type": "COLLECT", "amount": 200 }
+    },
+    {
+      "id": "CH_VIVACE_NIGHT",
+      "name": "Vivace Night",
+      "description": "You attended Vivace and made new connections. Collect $100.",
+      "effect": { "type": "COLLECT", "amount": 100 }
+    },
+    {
+      "id": "CH_LINKEDIN_NOTICE",
+      "name": "LinkedIn Recruiter Message",
+      "description": "A recruiter noticed your profile. Collect $150.",
+      "effect": { "type": "COLLECT", "amount": 150 }
+    },
+    {
+      "id": "CH_TOURIST_CROWD",
+      "name": "Campus Tour Crowd",
+      "description": "Tourists overcrowded campus buses. Miss your plans.",
+      "effect": { "type": "MOVE_STEPS", "steps": -3 }
+    },
+    {
+      "id": "CH_STARLY_NIGHT",
+      "name": "Starry Night",
+      "description": "Advance to Campus Green.",
+      "effect": { "type": "MOVE_TO", "index": 24, "passGo": true }
+    },
+    {
+      "id": "CH_GROUP_PROJECT",
+      "name": "Group Project Chaos",
+      "description": "Groupmates disappeared before the deadline. Pay $50.",
+      "effect": { "type": "PAY", "amount": 50 }
+    },
+    {
+      "id": "CH_EXCHANGE_SUCCESS",
+      "name": "Exchange Allocation Successful",
+      "description": "Your overseas exchange was approved. Collect $100.",
+      "effect": { "type": "COLLECT", "amount": 100 }
+    },
+    {
+      "id": "CH_EXAM_STRESS",
+      "name": "Finals Week",
+      "description": "Exam stress catches up to you. Go to Campus Security.",
+      "effect": { "type": "GO_TO_JAIL" }
+    },
+    {
+      "id": "CH_ADV_GO",
+      "name": "Advance to Orientation",
+      "description": "Advance to GO and collect $200.",
+      "effect": { "type": "MOVE_TO", "index": 0, "passGo": true }
+    },
+    {
+      "id": "CH_GOOJF",
+      "name": "Academic Appeal Approved",
+      "description": "This card may be kept until needed or traded.",
+      "effect": { "type": "GET_OUT_OF_JAIL_FREE" }
+    }
+  ],
+  "community": [
+    {
+      "id": "CC_HALL_POINTS_LOST",
+      "name": "Hall Points Deducted",
+      "description": "Late night noise complaint. Pay $50.",
+      "effect": { "type": "PAY", "amount": 50 }
+    },
+    {
+      "id": "CC_CLASS_PART",
+      "name": "Class Participation Bonus",
+      "description": "Active participation paid off. Collect $50.",
+      "effect": { "type": "COLLECT", "amount": 50 }
+    },
+    {
+      "id": "CC_BIDDING_FAILED",
+      "name": "SMU Bidding Failed",
+      "description": "You failed to secure your module. Go to Campus Security.",
+      "effect": { "type": "GO_TO_JAIL" }
+    },
+    {
+      "id": "CC_PROF_CURVE",
+      "name": "Bell Curve Adjustment",
+      "description": "Professor curved grades down. Pay $100.",
+      "effect": { "type": "PAY", "amount": 100 }
+    },
+    {
+      "id": "CC_CCA_FUNDING",
+      "name": "CCA Funding Approved",
+      "description": "Your CCA received funding. Collect $100.",
+      "effect": { "type": "COLLECT", "amount": 100 }
+    },
+    {
+      "id": "CC_MISSED_TUTORIAL",
+      "name": "Missed Tutorial",
+      "description": "Attendance issues flagged. Move back 2 spaces.",
+      "effect": { "type": "MOVE_STEPS", "steps": -2 }
+    },
+    {
+      "id": "CC_ADMIN_ERROR",
+      "name": "Admin Processing Error",
+      "description": "Paperwork delayed everything. Pay $50.",
+      "effect": { "type": "PAY", "amount": 50 }
+    },
+    {
+      "id": "CC_SU_APPROVED",
+      "name": "S/U Approved",
+      "description": "Your S/U request was successful. Collect $50.",
+      "effect": { "type": "COLLECT", "amount": 50 }
+    },
+    {
+      "id": "CC_ADV_GO",
+      "name": "Semester Reset",
+      "description": "Advance to GO and collect $200.",
+      "effect": { "type": "MOVE_TO", "index": 0, "passGo": true }
+    },
+    {
+      "id": "CC_GOOJF",
+      "name": "Valid Medical Certificate",
+      "description": "This card may be kept until needed.",
+      "effect": { "type": "GET_OUT_OF_JAIL_FREE" }
+    }
+  ]
+}
+
+

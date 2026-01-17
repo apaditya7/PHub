@@ -1,0 +1,859 @@
+{
+  "run_id": "f8d863835a4c4d67aea64c29cd2d79f3",
+  "started_at": "2026-01-17T15:51:45.918503Z",
+  "finished_at": "2026-01-17T15:53:21.935639Z",
+  "status": "complete",
+  "config": {
+    "mock_mode": false,
+    "deterministic": true,
+    "seed": 42
+  },
+  "stages": [
+    {
+      "level": "trial",
+      "decision": {
+        "level": "trial",
+        "protocol": "majority vote",
+        "verdict_number": 5,
+        "shortlist": [
+          5,
+          1,
+          10
+        ],
+        "vote_tally": {
+          "1": 1,
+          "10": 1,
+          "5": 3
+        },
+        "dissents": [
+          {
+            "role": "Bailiff",
+            "proposed_number": 1
+          },
+          {
+            "role": "Prosecution Advocate A",
+            "proposed_number": 10
+          }
+        ],
+        "timestamp": "2026-01-17T15:52:16.956963Z"
+      },
+      "transcripts": [
+        {
+          "role": "Bailiff",
+          "level": "trial",
+          "message_type": "opening",
+          "proposed_number": 1,
+          "vote": null,
+          "claims": [
+            "The defendant acted with intent.",
+            "The evidence supports the prosecution's case.",
+            "Witness testimonies corroborate the timeline."
+          ],
+          "evidence": [
+            "Surveillance footage from the scene.",
+            "Forensic analysis of the weapon.",
+            "Text messages between parties."
+          ],
+          "critiques": [
+            "The defense lacks substantial evidence.",
+            "Witness credibility is questionable.",
+            "The timeline presented is inconsistent."
+          ],
+          "counterarguments": [
+            "The defendant has an alibi.",
+            "Evidence may have been tampered with.",
+            "Witnesses may have biases."
+          ],
+          "confidence": 0.85,
+          "transcript_text": "The prosecution asserts that the defendant's actions were deliberate and premeditated, supported by compelling evidence and witness accounts.",
+          "exhibits": [
+            "Exhibit A: Surveillance footage.",
+            "Exhibit B: Forensic report.",
+            "Exhibit C: Text message logs."
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "openai/gpt-4o-mini",
+            "timestamp": "2023-10-01T12:00:00Z"
+          }
+        },
+        {
+          "role": "Prosecution Advocate A",
+          "level": "trial",
+          "message_type": "opening",
+          "proposed_number": 10,
+          "vote": null,
+          "claims": [
+            "The defendant's actions were premeditated.",
+            "The evidence clearly links the defendant to the crime scene.",
+            "Witness testimonies corroborate the timeline of events."
+          ],
+          "evidence": [
+            "Surveillance footage shows the defendant entering the premises.",
+            "Forensic analysis matches the defendant's fingerprints to the weapon.",
+            "Multiple witnesses identified the defendant at the scene."
+          ],
+          "critiques": [
+            "The defense relies on flimsy alibis.",
+            "They attempt to confuse the jury with irrelevant details.",
+            "Their arguments lack credible support."
+          ],
+          "counterarguments": [
+            "The defense may claim mistaken identity, but the evidence is overwhelming.",
+            "They might argue lack of motive, yet motive is irrelevant to the act itself.",
+            "Any suggestion of reasonable doubt is obliterated by the facts."
+          ],
+          "confidence": 0.95,
+          "transcript_text": "Ladies and gentlemen of the jury, we are here to deliver justice, and I propose a decisive number: ten years. This is not just a number; it represents the gravity of the defendant's actions and the impact on the victims. We will prove beyond a reasonable doubt that the defendant is guilty as charged.",
+          "exhibits": [
+            "Exhibit A: Surveillance footage",
+            "Exhibit B: Forensic report",
+            "Exhibit C: Witness statements"
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "openai/gpt-4o-mini",
+            "timestamp": "2023-10-01T12:00:00Z"
+          }
+        },
+        {
+          "role": "Defense Advocate A",
+          "level": "trial",
+          "message_type": "opening",
+          "proposed_number": 5,
+          "vote": null,
+          "claims": [
+            "The prosecution claims that five witnesses corroborate the timeline.",
+            "The prosecution asserts that the defendant's fingerprints were found at the scene.",
+            "The prosecution alleges a motive based on financial gain."
+          ],
+          "evidence": [
+            "Witness statements provided by the prosecution.",
+            "Fingerprint analysis report from the forensic team.",
+            "Financial records indicating potential motive."
+          ],
+          "critiques": [
+            "Witnesses may have conflicting accounts that undermine their reliability.",
+            "Fingerprint evidence lacks context regarding how they were obtained.",
+            "Financial records do not definitively establish motive without further context."
+          ],
+          "counterarguments": [
+            "The defense can present alternative explanations for the witnesses' testimonies.",
+            "Fingerprint presence does not equate to involvement in the crime.",
+            "Motive alone does not prove guilt without corroborating evidence."
+          ],
+          "confidence": 0.75,
+          "transcript_text": "Your Honor, the prosecution's reliance on five witnesses raises questions about their credibility and the context of the evidence presented.",
+          "exhibits": [
+            "Witness statement summaries",
+            "Forensic fingerprint analysis",
+            "Financial transaction logs"
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "openai/gpt-4o-mini",
+            "timestamp": "2023-10-01T12:00:00Z"
+          }
+        },
+        {
+          "role": "Expert Witness",
+          "level": "trial",
+          "message_type": "opening",
+          "proposed_number": 5,
+          "vote": null,
+          "claims": [
+            "The statistical analysis indicates a significant correlation between the variables in question.",
+            "Entropy measures suggest a high degree of uncertainty in the opposing party's claims.",
+            "The data set utilized is robust and representative of the population."
+          ],
+          "evidence": [
+            "A correlation coefficient of 0.85 was calculated, indicating a strong relationship.",
+            "Entropy calculations yielded a value of 3.2 bits, reflecting substantial unpredictability.",
+            "The sample size of 500 exceeds the minimum requirement for statistical significance."
+          ],
+          "critiques": [
+            "The opposing analysis fails to account for confounding variables.",
+            "There is a lack of transparency in the methodology used by the opposing party.",
+            "The sample size in the opposing argument is insufficient to draw valid conclusions."
+          ],
+          "counterarguments": [
+            "The opposing party's claims are based on anecdotal evidence rather than empirical data.",
+            "Their methodology does not adhere to established statistical protocols.",
+            "The conclusions drawn by the opposing party are not supported by the data presented."
+          ],
+          "confidence": 0.95,
+          "transcript_text": "Your Honor, the evidence presented demonstrates a clear statistical foundation for our claims, underscoring the validity of our position.",
+          "exhibits": [
+            "Exhibit A: Correlation Analysis Report",
+            "Exhibit B: Entropy Calculation Documentation",
+            "Exhibit C: Sample Size Justification"
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "openai/gpt-4o-mini",
+            "timestamp": "2023-10-01T12:00:00Z"
+          }
+        },
+        {
+          "role": "Trial Judge",
+          "level": "trial",
+          "message_type": "opening",
+          "proposed_number": 5,
+          "vote": null,
+          "claims": [
+            "The proposed number is fair and reasonable.",
+            "It aligns with precedent in similar cases.",
+            "It balances the interests of both parties."
+          ],
+          "evidence": [
+            "Previous case rulings with similar numbers.",
+            "Expert testimony supporting the number.",
+            "Statistical data showing commonality of the number."
+          ],
+          "critiques": [],
+          "counterarguments": [],
+          "confidence": 0.85,
+          "transcript_text": "The court is now in session to deliberate on the proposed number of 5. We will hear opening arguments supporting this proposal.",
+          "exhibits": [
+            "Exhibit A: Case Law Precedents",
+            "Exhibit B: Expert Testimony",
+            "Exhibit C: Statistical Data"
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "openai/gpt-4o",
+            "timestamp": "2023-10-18T14:30:00Z"
+          }
+        }
+      ],
+      "exhibits": [
+        "Exhibit A: Surveillance footage.",
+        "Exhibit B: Forensic report.",
+        "Exhibit C: Text message logs.",
+        "Exhibit A: Surveillance footage",
+        "Exhibit B: Forensic report",
+        "Exhibit C: Witness statements",
+        "Witness statement summaries",
+        "Forensic fingerprint analysis",
+        "Financial transaction logs",
+        "Exhibit A: Correlation Analysis Report",
+        "Exhibit B: Entropy Calculation Documentation",
+        "Exhibit C: Sample Size Justification",
+        "Exhibit A: Case Law Precedents",
+        "Exhibit B: Expert Testimony",
+        "Exhibit C: Statistical Data"
+      ]
+    },
+    {
+      "level": "appeals",
+      "decision": {
+        "level": "appeals",
+        "protocol": "critique + panel vote",
+        "holding": "affirm",
+        "majority_number": 0,
+        "dissents": [
+          {
+            "role": "Appellate Judge C",
+            "vote": {
+              "decision": "remand",
+              "rationale": "The trial record shows a lack of clarity in the decision-making process, with significant dissent and a narrow majority."
+            }
+          }
+        ],
+        "timestamp": "2026-01-17T15:52:33.280289Z"
+      },
+      "transcripts": [
+        {
+          "role": "Appellate Judge A",
+          "level": "appeals",
+          "message_type": "ruling",
+          "proposed_number": null,
+          "vote": {
+            "decision": "affirm",
+            "rationale": "The trial verdict was reached by a clear majority vote, with no procedural errors evident in the record."
+          },
+          "claims": [
+            "The trial verdict was reached by majority vote.",
+            "The dissenting opinions did not affect the majority decision."
+          ],
+          "evidence": [
+            "Vote tally shows a majority for verdict number 5.",
+            "Dissents were noted but did not alter the outcome."
+          ],
+          "critiques": [
+            "The role of the Bailiff in dissent is unusual.",
+            "Prosecution Advocate A's dissent suggests disagreement with the majority."
+          ],
+          "counterarguments": [
+            "The majority vote is decisive and procedurally sound."
+          ],
+          "confidence": 0.95,
+          "transcript_text": "Upon review, the trial court's decision was reached by a majority vote, with no procedural irregularities affecting the outcome.",
+          "exhibits": [],
+          "dissent": null,
+          "metadata": {
+            "model": "openai/gpt-4o",
+            "timestamp": "2026-01-17T15:52:16.956963Z"
+          }
+        },
+        {
+          "role": "Appellate Judge B",
+          "level": "appeals",
+          "message_type": "ruling",
+          "proposed_number": null,
+          "vote": {
+            "decision": "affirm",
+            "rationale": "The trial court's majority vote was properly conducted, and the verdict number 5 was supported by the majority."
+          },
+          "claims": [
+            "The trial court followed the correct majority vote protocol.",
+            "The verdict number 5 received the majority of votes."
+          ],
+          "evidence": [
+            "Vote tally shows 3 votes for number 5.",
+            "Trial protocol was adhered to as per the record."
+          ],
+          "critiques": [
+            "Dissents were noted but did not affect the majority decision.",
+            "No procedural errors were identified in the trial record."
+          ],
+          "counterarguments": [
+            "Dissents suggest alternative numbers were considered."
+          ],
+          "confidence": 0.95,
+          "transcript_text": "Upon review, the trial court's decision to select verdict number 5 is affirmed as it was reached through a valid majority vote process.",
+          "exhibits": [],
+          "dissent": null,
+          "metadata": {
+            "model": "openai/gpt-4o",
+            "timestamp": "2026-01-17T15:52:16.956963Z"
+          }
+        },
+        {
+          "role": "Appellate Judge C",
+          "level": "appeals",
+          "message_type": "vote",
+          "proposed_number": 0,
+          "vote": {
+            "decision": "remand",
+            "rationale": "The trial record shows a lack of clarity in the decision-making process, with significant dissent and a narrow majority."
+          },
+          "claims": [
+            "The majority vote was not decisive.",
+            "Dissents indicate unresolved issues."
+          ],
+          "evidence": [
+            "Vote tally shows only a slight majority.",
+            "Two dissents from key roles."
+          ],
+          "critiques": [
+            "The trial failed to adequately address dissenting opinions.",
+            "The rationale for the majority decision is not well-documented."
+          ],
+          "counterarguments": [
+            "A majority was achieved, which is typically sufficient.",
+            "Dissents are common and do not always indicate a flawed process."
+          ],
+          "confidence": 0.6,
+          "transcript_text": "The trial's decision-making process appears flawed, necessitating further examination.",
+          "exhibits": [
+            "Trial verdict document",
+            "Vote tally records"
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "openai/gpt-4o",
+            "timestamp": "2026-01-17T15:52:16.956963Z"
+          }
+        }
+      ],
+      "exhibits": [
+        "Trial verdict document",
+        "Vote tally records"
+      ]
+    },
+    {
+      "level": "supreme",
+      "decision": {
+        "level": "supreme",
+        "protocol": "consensus + authored opinion",
+        "final_number": 0,
+        "opinion": {
+          "syllabus": "The Court consolidates the record and affirms procedural legitimacy.",
+          "majority": "The majority synthesizes the trial and appellate record into a single number.",
+          "dissents": [],
+          "writer": "Chief Justice"
+        },
+        "timestamp": "2026-01-17T15:53:06.137806Z"
+      },
+      "transcripts": [
+        {
+          "role": "Chief Justice",
+          "level": "supreme",
+          "message_type": "opening",
+          "proposed_number": null,
+          "vote": null,
+          "claims": [
+            "Appeals court affirmed trial court ruling on number 0",
+            "One appellate judge dissented, favoring remand",
+            "Procedural concerns raised about trial clarity"
+          ],
+          "evidence": [
+            "Appeals court majority affirmation",
+            "Dissenting opinion citing unclear process",
+            "Split decision at trial level"
+          ],
+          "critiques": [
+            "Decision-making process lacks transparency",
+            "Significant dissent at multiple levels",
+            "Narrow majority raises legitimacy concerns"
+          ],
+          "counterarguments": [
+            "Multiple courts have upheld number 0",
+            "Majority consensus achieved at both levels",
+            "Procedural concerns don't negate outcome"
+          ],
+          "confidence": 0.7,
+          "transcript_text": "The Court will now review the appeals court affirmation of number 0, with particular attention to the procedural concerns raised in dissent.",
+          "exhibits": [
+            "Appeals court majority opinion",
+            "Appellate dissent",
+            "Trial court record"
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "anthropic/claude-3.5-sonnet",
+            "timestamp": "2026-01-17T15:53:33.280289Z"
+          }
+        },
+        {
+          "role": "Justice Originalist",
+          "level": "supreme",
+          "message_type": "analysis",
+          "proposed_number": null,
+          "vote": null,
+          "claims": [
+            "Appeals court affirmation lacks sufficient constitutional grounding",
+            "Procedural irregularities warrant closer scrutiny",
+            "Split decision suggests fundamental disagreement on core principles"
+          ],
+          "evidence": [
+            "Appeals court dissent highlighting process concerns",
+            "Narrow majority in lower court ruling",
+            "Lack of clear constitutional precedent cited"
+          ],
+          "critiques": [
+            "Appeals holding fails to address fundamental rights questions",
+            "Insufficient attention to historical context and original meaning",
+            "Procedural record suggests hasty deliberation"
+          ],
+          "counterarguments": [
+            "Majority view reflects contemporary interpretation",
+            "Deference to lower court fact-finding may be warranted",
+            "Procedural concerns may not rise to constitutional level"
+          ],
+          "confidence": 0.7,
+          "transcript_text": "The appeals court holding presents serious constitutional concerns that this Court must address with utmost gravity.",
+          "exhibits": [
+            "Appeals court majority opinion",
+            "Dissenting opinion from Judge C",
+            "Trial court record"
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "anthropic/claude-3.5-sonnet",
+            "timestamp": "2026-01-17T15:53:33.280289Z"
+          }
+        },
+        {
+          "role": "Supreme Justice",
+          "level": "supreme",
+          "message_type": "analysis",
+          "proposed_number": null,
+          "vote": null,
+          "claims": [
+            "Appeals court affirmed trial outcome with split decision",
+            "Dissenting opinion raised procedural concerns",
+            "Case warrants Supreme review due to split lower courts"
+          ],
+          "evidence": [
+            "Appeals court majority affirmed original number",
+            "Dissenting judge cited unclear decision process",
+            "Narrow majority in lower court proceedings"
+          ],
+          "critiques": [
+            "Lack of clarity in trial record",
+            "Split decisions indicate controversial outcome",
+            "Procedural concerns merit review"
+          ],
+          "counterarguments": [
+            "Multiple courts have reviewed the matter",
+            "Majority decisions at both levels",
+            "Further review may not yield different outcome"
+          ],
+          "confidence": 0.7,
+          "transcript_text": "The Court recognizes significant division in the lower courts warranting careful Supreme review.",
+          "exhibits": [
+            "Appeals court holding",
+            "Dissenting opinion",
+            "Trial court record"
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "anthropic/claude-3.5-sonnet",
+            "timestamp": "2026-01-17T15:53:33.280289Z"
+          }
+        },
+        {
+          "role": "Justice Empiricist",
+          "level": "supreme",
+          "message_type": "opening",
+          "proposed_number": null,
+          "vote": null,
+          "claims": [
+            "Appeals court affirmed trial ruling with split decision",
+            "Dissenting opinion raised concerns about clarity of process",
+            "Case requires supreme review of decision-making standards"
+          ],
+          "evidence": [
+            "Appeals court majority affirmed original number",
+            "One appellate judge dissented advocating remand",
+            "Trial record shows significant disagreement"
+          ],
+          "critiques": [
+            "Decision-making process lacks sufficient transparency",
+            "Split decisions at multiple levels suggest uncertainty",
+            "Empirical basis for number selection unclear"
+          ],
+          "counterarguments": [
+            "Multiple levels of review already conducted",
+            "Majority consensus achieved at both levels",
+            "Further delay impacts finality"
+          ],
+          "confidence": 0.7,
+          "transcript_text": "The Court recognizes this case from the Appeals Court with a split decision warranting supreme review.",
+          "exhibits": [
+            "Appeals Court holding document",
+            "Dissenting opinion documentation",
+            "Trial court record"
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "anthropic/claude-3.5-sonnet",
+            "timestamp": "2026-01-17T15:53:33.280289Z"
+          }
+        }
+      ],
+      "exhibits": [
+        "Appeals court majority opinion",
+        "Appellate dissent",
+        "Trial court record",
+        "Appeals court majority opinion",
+        "Dissenting opinion from Judge C",
+        "Trial court record",
+        "Appeals court holding",
+        "Dissenting opinion",
+        "Trial court record",
+        "Appeals Court holding document",
+        "Dissenting opinion documentation",
+        "Trial court record"
+      ]
+    },
+    {
+      "level": "senate",
+      "decision": {
+        "level": "senate",
+        "protocol": "political override vote",
+        "statute_number": 0,
+        "amendments": [
+          "The statute consolidates previous records.",
+          "Procedural legitimacy is affirmed by the Supreme Court.",
+          "The statute number is necessary for legal clarity.",
+          "The Supreme Court's decision does not address the Senate's role in statute numbering.",
+          "The consolidation of records by the Court is insufficient for legislative clarity.",
+          "The proposed statute enhances local governance.",
+          "It addresses specific needs of our quirky constituency.",
+          "It promotes community engagement."
+        ],
+        "roll_call": [
+          {
+            "senator": "Majority Leader",
+            "decision": "approve",
+            "proposed_number": 1024
+          },
+          {
+            "senator": "Minority Leader",
+            "decision": "tabled",
+            "proposed_number": null
+          }
+        ],
+        "result": "passed",
+        "timestamp": "2026-01-17T15:53:21.933939Z"
+      },
+      "transcripts": [
+        {
+          "role": "Majority Leader",
+          "level": "senate",
+          "message_type": "vote",
+          "proposed_number": 1024,
+          "vote": {
+            "decision": "approve",
+            "rationale": "The Supreme Court's affirmation of procedural legitimacy provides a solid foundation for Senate approval."
+          },
+          "claims": [
+            "The statute consolidates previous records.",
+            "Procedural legitimacy is affirmed by the Supreme Court.",
+            "The statute number is necessary for legal clarity."
+          ],
+          "evidence": [
+            "Supreme Court's opinion on procedural legitimacy.",
+            "Consolidation of trial and appellate records.",
+            "Chief Justice's authored opinion."
+          ],
+          "critiques": [
+            "Potential for procedural redundancy.",
+            "Concerns over the clarity of consolidation."
+          ],
+          "counterarguments": [
+            "The Supreme Court's decision mitigates redundancy concerns.",
+            "Consolidation enhances legal clarity."
+          ],
+          "confidence": 0.95,
+          "transcript_text": "The Senate must now approve the statute number 1024, as the Supreme Court has affirmed its procedural legitimacy.",
+          "exhibits": [
+            "Supreme Court opinion document.",
+            "Trial and appellate records."
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "openai/gpt-4o",
+            "timestamp": "2026-01-17T16:00:00.000000Z"
+          }
+        },
+        {
+          "role": "Minority Leader",
+          "level": "senate",
+          "message_type": "amendment",
+          "proposed_number": null,
+          "vote": {
+            "decision": "tabled",
+            "rationale": "The Supreme Court's decision lacks clarity on procedural integration."
+          },
+          "claims": [
+            "The Supreme Court's decision does not address the Senate's role in statute numbering.",
+            "The consolidation of records by the Court is insufficient for legislative clarity."
+          ],
+          "evidence": [
+            "The Court's syllabus only affirms procedural legitimacy without legislative guidance.",
+            "The majority opinion fails to provide a clear statute-numbering protocol."
+          ],
+          "critiques": [
+            "The Court's decision overlooks the Senate's procedural requirements.",
+            "The lack of a final number creates legislative ambiguity."
+          ],
+          "counterarguments": [
+            "The Court's consolidation might streamline judicial processes."
+          ],
+          "confidence": 0.7,
+          "transcript_text": "The Supreme Court's decision, while procedurally sound, leaves the Senate without clear guidance on statute numbering.",
+          "exhibits": [
+            "Supreme Court opinion dated 2026-01-17"
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "openai/gpt-4o",
+            "timestamp": "2026-01-17T16:00:00Z"
+          }
+        },
+        {
+          "role": "Senator 1",
+          "level": "senate",
+          "message_type": "amendment",
+          "proposed_number": 1,
+          "vote": null,
+          "claims": [
+            "The proposed statute enhances local governance.",
+            "It addresses specific needs of our quirky constituency.",
+            "It promotes community engagement."
+          ],
+          "evidence": [
+            "Local surveys indicate overwhelming support.",
+            "Historical data shows improved outcomes with similar measures.",
+            "Expert testimony highlights the benefits."
+          ],
+          "critiques": [
+            "Some argue it may overreach local authority.",
+            "Concerns about funding sustainability.",
+            "Potential bureaucratic inefficiencies."
+          ],
+          "counterarguments": [
+            "Local autonomy is essential for tailored solutions.",
+            "Funding can be sourced through community initiatives.",
+            "Streamlined processes can mitigate inefficiencies."
+          ],
+          "confidence": 0.85,
+          "transcript_text": "I hereby propose an amendment to enhance local governance, reflecting the unique needs of our constituents, and I urge my fellow senators to consider the merits of community engagement.",
+          "exhibits": [
+            "Local survey results",
+            "Historical outcome data",
+            "Expert testimony transcripts"
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "openai/gpt-4o-mini",
+            "timestamp": "2026-01-17T15:53:06.137806Z"
+          }
+        }
+      ],
+      "exhibits": [
+        "Supreme Court opinion document.",
+        "Trial and appellate records.",
+        "Supreme Court opinion dated 2026-01-17",
+        "Local survey results",
+        "Historical outcome data",
+        "Expert testimony transcripts"
+      ]
+    }
+  ],
+  "record_on_appeal": [
+    {
+      "level": "trial",
+      "decision": {
+        "level": "trial",
+        "protocol": "majority vote",
+        "verdict_number": 5,
+        "shortlist": [
+          5,
+          1,
+          10
+        ],
+        "vote_tally": {
+          "1": 1,
+          "10": 1,
+          "5": 3
+        },
+        "dissents": [
+          {
+            "role": "Bailiff",
+            "proposed_number": 1
+          },
+          {
+            "role": "Prosecution Advocate A",
+            "proposed_number": 10
+          }
+        ],
+        "timestamp": "2026-01-17T15:52:16.956963Z"
+      },
+      "exhibits": [
+        "Exhibit A: Surveillance footage.",
+        "Exhibit B: Forensic report.",
+        "Exhibit C: Text message logs.",
+        "Exhibit A: Surveillance footage",
+        "Exhibit B: Forensic report",
+        "Exhibit C: Witness statements",
+        "Witness statement summaries",
+        "Forensic fingerprint analysis",
+        "Financial transaction logs",
+        "Exhibit A: Correlation Analysis Report",
+        "Exhibit B: Entropy Calculation Documentation",
+        "Exhibit C: Sample Size Justification",
+        "Exhibit A: Case Law Precedents",
+        "Exhibit B: Expert Testimony",
+        "Exhibit C: Statistical Data"
+      ]
+    },
+    {
+      "level": "appeals",
+      "decision": {
+        "level": "appeals",
+        "protocol": "critique + panel vote",
+        "holding": "affirm",
+        "majority_number": 0,
+        "dissents": [
+          {
+            "role": "Appellate Judge C",
+            "vote": {
+              "decision": "remand",
+              "rationale": "The trial record shows a lack of clarity in the decision-making process, with significant dissent and a narrow majority."
+            }
+          }
+        ],
+        "timestamp": "2026-01-17T15:52:33.280289Z"
+      },
+      "exhibits": [
+        "Trial verdict document",
+        "Vote tally records"
+      ]
+    },
+    {
+      "level": "supreme",
+      "decision": {
+        "level": "supreme",
+        "protocol": "consensus + authored opinion",
+        "final_number": 0,
+        "opinion": {
+          "syllabus": "The Court consolidates the record and affirms procedural legitimacy.",
+          "majority": "The majority synthesizes the trial and appellate record into a single number.",
+          "dissents": [],
+          "writer": "Chief Justice"
+        },
+        "timestamp": "2026-01-17T15:53:06.137806Z"
+      },
+      "exhibits": [
+        "Appeals court majority opinion",
+        "Appellate dissent",
+        "Trial court record",
+        "Appeals court majority opinion",
+        "Dissenting opinion from Judge C",
+        "Trial court record",
+        "Appeals court holding",
+        "Dissenting opinion",
+        "Trial court record",
+        "Appeals Court holding document",
+        "Dissenting opinion documentation",
+        "Trial court record"
+      ]
+    },
+    {
+      "level": "senate",
+      "decision": {
+        "level": "senate",
+        "protocol": "political override vote",
+        "statute_number": 0,
+        "amendments": [
+          "The statute consolidates previous records.",
+          "Procedural legitimacy is affirmed by the Supreme Court.",
+          "The statute number is necessary for legal clarity.",
+          "The Supreme Court's decision does not address the Senate's role in statute numbering.",
+          "The consolidation of records by the Court is insufficient for legislative clarity.",
+          "The proposed statute enhances local governance.",
+          "It addresses specific needs of our quirky constituency.",
+          "It promotes community engagement."
+        ],
+        "roll_call": [
+          {
+            "senator": "Majority Leader",
+            "decision": "approve",
+            "proposed_number": 1024
+          },
+          {
+            "senator": "Minority Leader",
+            "decision": "tabled",
+            "proposed_number": null
+          }
+        ],
+        "result": "passed",
+        "timestamp": "2026-01-17T15:53:21.933939Z"
+      },
+      "exhibits": [
+        "Supreme Court opinion document.",
+        "Trial and appellate records.",
+        "Supreme Court opinion dated 2026-01-17",
+        "Local survey results",
+        "Historical outcome data",
+        "Expert testimony transcripts"
+      ]
+    }
+  ],
+  "final_number": 0
+}
