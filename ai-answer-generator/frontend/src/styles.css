@@ -10,7 +10,7 @@
   --muted: 40 15% 93%;
   --muted-foreground: 24 8% 45%;
   --border: 30 10% 85%;
-  --primary: 0 72% 51%;
+  --primary: 142 50% 36%;
   --primary-foreground: 0 0% 100%;
   --accent: 40 60% 50%;
   --accent-foreground: 40 10% 10%;
@@ -27,6 +27,7 @@
 body {
   @apply bg-background text-foreground antialiased;
   font-family: var(--font-body);
+  margin: 0;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -46,30 +47,4 @@ h1, h2, h3, h4, h5, h6 {
 
 ::-webkit-scrollbar-thumb {
   @apply bg-muted-foreground/20 rounded-full hover:bg-muted-foreground/30;
-}
-
-/* Fade in animation */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.3s ease-out forwards;
-}
-
-/* Subtle pulse for loading */
-@keyframes pulse-subtle {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; }
-}
-
-.animate-pulse-subtle {
-  animation: pulse-subtle 2s ease-in-out infinite;
 }

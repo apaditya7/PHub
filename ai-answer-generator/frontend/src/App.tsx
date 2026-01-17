@@ -241,10 +241,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 p-6">
-        <Nav
-          title="Stupid Question Courtroom"
-          subtitle="A procedural chain-of-thought spectacle that answers a silly question through adversarial legitimacy."
-        />
+        <Nav title="Stupid Question Courtroom" />
 
         <Card>
           <CardHeader>
@@ -315,9 +312,7 @@ export default function App() {
             </CardHeader>
             <CardContent>
               {transcripts.length === 0 ? (
-                <p className="text-sm text-muted-foreground">
-                  Run the court to populate the record.
-                </p>
+                <p className="text-sm text-muted-foreground">No transcript yet.</p>
               ) : (
                 <div className="space-y-4">
                   {transcripts.map((entry, index) => (
@@ -432,7 +427,7 @@ export default function App() {
                     </div>
                   ))
                 ) : (
-                  <p>Awaiting record.</p>
+                  <p>Pending.</p>
                 )}
               </CardContent>
             </Card>
@@ -466,7 +461,7 @@ export default function App() {
                     </div>
                   </>
                 ) : (
-                  <p>Supreme opinion pending.</p>
+                  <p>Pending.</p>
                 )}
               </CardContent>
             </Card>
@@ -504,7 +499,7 @@ export default function App() {
                     </div>
                   </>
                 ) : (
-                  <p>Senate roll call pending.</p>
+                  <p>Pending.</p>
                 )}
               </CardContent>
             </Card>
@@ -519,7 +514,7 @@ export default function App() {
                 </Button>
                 <div className="space-y-2 text-sm text-muted-foreground">
                   {runs.length === 0 ? (
-                    <p>No runs stored yet.</p>
+                    <p>No runs yet.</p>
                   ) : (
                     runs.map((item) => (
                       <button

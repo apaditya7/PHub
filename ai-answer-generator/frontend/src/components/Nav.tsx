@@ -12,8 +12,6 @@ export default function Nav({ title, subtitle, className }: NavProps) {
       <div className="flex flex-col gap-1">
         <div className="flex items-center gap-3">
           <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">PHub</span>
-          <span className="text-muted-foreground/30">·</span>
-          <span className="text-xs text-muted-foreground">{title}</span>
         </div>
         <h1 className="text-2xl font-semibold tracking-tight">{title}</h1>
         {subtitle ? <p className="max-w-xl text-sm text-muted-foreground">{subtitle}</p> : null}
