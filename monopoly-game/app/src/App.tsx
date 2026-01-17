@@ -1,4 +1,17 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  connectSocket,
+  createOrJoinRoom,
+  emitBuy,
+  emitEndTurn,
+  emitPayJailFine,
+  emitRoll,
+  emitStartGame,
+  emitUseGOOJF,
+  getSocket,
+  type GameState,
+  type RoomUpdatePayload,
+} from "./services/socket";
 
 type SpaceType =
   | "go"
@@ -16,19 +29,20 @@ interface Space {
   name: string;
   type: SpaceType;
   color?: string;
-  ownerId?: number;
+  ownerId?: string;
   price?: number;
   rent?: number;
   tax?: number;
 }
 
-interface Player {
-  id: number;
+interface UIPlayer {
+  id: string;
   name: string;
   position: number;
   cash: number;
   token: "car" | "statue" | "book" | "tower";
   color: string;
+  inJail?: boolean;
 }
 
 const makeProperty = (name: string, color: string, price: number): Space => ({
@@ -58,6 +72,7 @@ const makeTax = (name: string, amount: number): Space => ({
   type: "tax",
   tax: amount,
 });
+
 
 const createSpaces = (): Space[] => [
   { name: "GO", type: "go" },
@@ -102,15 +117,14 @@ const createSpaces = (): Space[] => [
   makeProperty("NUS Medicine (NUS)", "#2c4a92", 400),
 ];
 
-const TOKENS: Player["token"][] = ["car", "statue", "book", "tower"];
+const TOKENS: UIPlayer["token"][] = ["car", "statue", "book", "tower"];
 const TOKEN_COLORS = ["#d3453a", "#2c7fb3", "#3b9b6d", "#d1a344"];
-const PLAYER_COUNT_OPTIONS = [2, 3, 4] as const;
 const DEFAULT_STARTING_CASH = 1500;
 const OWNABLE_TYPES: SpaceType[] = ["property", "rail", "utility"];
 
-const createPlayers = (count: number, startingCash: number): Player[] =>
+const createPlayers = (count: number, startingCash: number): UIPlayer[] =>
   Array.from({ length: count }, (_, index) => ({
-    id: index,
+    id: String(index),
     name: `Player ${index + 1}`,
     position: 0,
     cash: startingCash,
@@ -145,9 +159,7 @@ const getTilePosition = (index: number) => {
 };
 
 export default function App() {
-  const [players, setPlayers] = useState<Player[]>(() =>
-    createPlayers(2, DEFAULT_STARTING_CASH),
-  );
+  const [players, setPlayers] = useState<UIPlayer[]>([]);
   const [spaces, setSpaces] = useState<Space[]>(() => createSpaces());
   const [current, setCurrent] = useState(0);
   const [dice, setDice] = useState<[number, number]>([1, 1]);
@@ -155,16 +167,27 @@ export default function App() {
     "Welcome to the Monopoly frontend prototype.",
   ]);
   const [isStarted, setIsStarted] = useState(false);
-  const [setupOpen, setSetupOpen] = useState(true);
-  const [setupPlayerCount, setSetupPlayerCount] = useState<number>(2);
+  const [showLanding, setShowLanding] = useState(true);
+  const [showJoinInput, setShowJoinInput] = useState(false);
+  const [joinRoomCode, setJoinRoomCode] = useState("");
+  const [showLobby, setShowLobby] = useState(false);
   const [rolling, setRolling] = useState(false);
   const [moving, setMoving] = useState(false);
-  const [canRoll, setCanRoll] = useState(true);
+  const [canRoll, setCanRoll] = useState(false);
   const [canEnd, setCanEnd] = useState(false);
-  const moveTimerRef = useRef<number | null>(null);
+  const [roomId, setRoomId] = useState<string | null>(null);
+  const roomIdRef = useRef<string | null>(null);
+  const [meId, setMeId] = useState<string | null>(null);
+  const meRef = useRef<string | null>(null);
+  const [state, setState] = useState<GameState | null>(null);
+  const [isConnecting, setIsConnecting] = useState(false);
+  const [isHost, setIsHost] = useState(false);
+  const [isSocketConnected, setIsSocketConnected] = useState(false);
+  const [connectionError, setConnectionError] = useState<string | null>(null);
 
   const currentPlayer = players[current];
-  const currentSpace = spaces[currentPlayer.position];
+  const cp = currentPlayer ?? { name: "...", cash: 0, position: 0, color: "#999", id: "-", token: "car" as const };
+  const currentSpace = spaces[cp.position] ?? spaces[0];
 
   const addLog = (message: string) => {
     setLog((prev) => [message, ...prev.slice(0, 6)]);
@@ -172,83 +195,16 @@ export default function App() {
 
   const isOwnable = (space: Space) => OWNABLE_TYPES.includes(space.type);
 
-  const resolveLanding = () => {
-    setPlayers((prev) => {
-      const next = [...prev];
-      const player = { ...next[current] };
-      const space = spaces[player.position];
-
-      addLog(`${player.name} landed on ${space.name}.`);
-
-      if (space.type === "tax" && space.tax) {
-        player.cash -= space.tax;
-        addLog(`${player.name} paid $${space.tax} in fees.`);
-      }
-
-      if (isOwnable(space) && space.ownerId != null && space.ownerId !== player.id) {
-        const ownerIndex = next.findIndex((p) => p.id === space.ownerId);
-        const rent = space.rent ?? 0;
-        player.cash -= rent;
-        if (ownerIndex >= 0) {
-          const owner = { ...next[ownerIndex] };
-          owner.cash += rent;
-          next[ownerIndex] = owner;
-        }
-        addLog(`${player.name} paid $${rent} rent for ${space.name}.`);
-      }
-
-      next[current] = player;
-      return next;
-    });
-  };
-
   const rollDice = () => {
-    if (!isStarted || !canRoll || moving) return;
-    setRolling(true);
-    const d1 = Math.floor(Math.random() * 6) + 1;
-    const d2 = Math.floor(Math.random() * 6) + 1;
-    setDice([d1, d2]);
-    const steps = d1 + d2;
+    if (!roomId || !canRoll || moving) return;
     setCanRoll(false);
-    setCanEnd(false);
-    setMoving(true);
-    addLog(`${currentPlayer.name} rolled ${steps}.`);
-
-    window.setTimeout(() => {
-      setRolling(false);
-      let remaining = steps;
-      moveTimerRef.current = window.setInterval(() => {
-        setPlayers((prev) => {
-          const next = [...prev];
-          const player = { ...next[current] };
-          const oldPos = player.position;
-          player.position = (player.position + 1) % TOTAL_TILES;
-          if (oldPos === TOTAL_TILES - 1) {
-            player.cash += 200;
-            addLog(`${player.name} passed GO and collected 200.`);
-          }
-          next[current] = player;
-          return next;
-        });
-        remaining -= 1;
-        if (remaining <= 0) {
-          if (moveTimerRef.current) {
-            window.clearInterval(moveTimerRef.current);
-          }
-          setMoving(false);
-          setCanEnd(true);
-          resolveLanding();
-        }
-      }, 250);
-    }, 500);
+    emitRoll(roomId);
   };
 
   const endTurn = () => {
-    if (!isStarted || !canEnd || moving) return;
-    setCurrent((prev) => (prev + 1) % players.length);
-    setCanRoll(true);
+    if (!roomId || !canEnd || moving) return;
     setCanEnd(false);
-    addLog(`It is now ${players[(current + 1) % players.length].name}'s turn.`);
+    emitEndTurn(roomId);
   };
 
   const tilePositions = useMemo(() => {
@@ -259,6 +215,21 @@ export default function App() {
     }));
   }, [spaces]);
 
+  const ownedByPlayer = useMemo(() => {
+    const map = new Map<string, Space[]>();
+    for (const player of players) {
+      map.set(player.id, []);
+    }
+    for (const space of spaces) {
+      if (space.ownerId != null) {
+        const arr = map.get(String(space.ownerId)) || [];
+        arr.push(space);
+        map.set(String(space.ownerId), arr);
+      }
+    }
+    return map;
+  }, [spaces, players]);
+
   const getTilePercent = (index: number) => {
     const tile = tilePositions[index];
     const left = (tile.x / BOARD_UNITS) * 100;
@@ -266,93 +237,12 @@ export default function App() {
     return { left: `${left}%`, top: `${top}%` };
   };
 
-  const tokenOffsets = useMemo(() => {
-    const offsets = new Map<number, { x: number; y: number }>();
-    const grouped = new Map<number, Player[]>();
-
-    players.forEach((player) => {
-      const group = grouped.get(player.position) ?? [];
-      group.push(player);
-      grouped.set(player.position, group);
-    });
-
-    grouped.forEach((group) => {
-      const count = group.length;
-      const presets =
-        count === 1
-          ? [[0, 0]]
-          : count === 2
-          ? [[-8, 0], [8, 0]]
-          : count === 3
-          ? [
-              [-8, -5],
-              [8, -5],
-              [0, 8],
-            ]
-          : [
-              [-8, -8],
-              [8, -8],
-              [-8, 8],
-              [8, 8],
-            ];
-
-      group.forEach((player, index) => {
-        const [x, y] = presets[index] ?? [0, 0];
-        offsets.set(player.id, { x, y });
-      });
-    });
-
-    return offsets;
-  }, [players]);
-
-  const startGame = () => {
-    if (moveTimerRef.current) {
-      window.clearInterval(moveTimerRef.current);
-    }
-    setPlayers(createPlayers(setupPlayerCount, DEFAULT_STARTING_CASH));
-    setSpaces(createSpaces());
-    setCurrent(0);
-    setDice([1, 1]);
-    setRolling(false);
-    setMoving(false);
-    setCanRoll(true);
-    setCanEnd(false);
-    setLog(["Game started."]);
-    setIsStarted(true);
-    setSetupOpen(false);
-  };
-
-  const closeSetup = () => {
-    if (!isStarted) return;
-    setSetupOpen(false);
-  };
-
   const canBuyCurrent =
     isStarted &&
     !moving &&
     isOwnable(currentSpace) &&
     currentSpace.ownerId == null &&
-    (currentSpace.price ?? 0) <= currentPlayer.cash;
-
-  const handleBuy = () => {
-    if (!canBuyCurrent) return;
-    const price = currentSpace.price ?? 0;
-    setPlayers((prev) => {
-      const next = [...prev];
-      const player = { ...next[current], cash: next[current].cash - price };
-      next[current] = player;
-      return next;
-    });
-    setSpaces((prev) => {
-      const next = [...prev];
-      next[currentPlayer.position] = {
-        ...next[currentPlayer.position],
-        ownerId: currentPlayer.id,
-      };
-      return next;
-    });
-    addLog(`${currentPlayer.name} purchased ${currentSpace.name}.`);
-  };
+    (currentSpace.price ?? 0) <= (currentPlayer?.cash ?? 0);
 
   const canDrawChance = isStarted && !moving && currentSpace.type === "chance";
   const canDrawCommunity =
@@ -368,16 +258,275 @@ export default function App() {
     addLog("Community Chest card drawn (stub).");
   };
 
-  const ownedByPlayer = useMemo(() => {
-    const ownership = new Map<number, Space[]>();
-    players.forEach((player) => ownership.set(player.id, []));
-    spaces.forEach((space) => {
-      if (!isOwnable(space)) return;
-      if (space.ownerId == null) return;
-      ownership.get(space.ownerId)?.push(space);
+  const handleBuy = () => {
+    if (!roomId) return;
+    if (!canBuyCurrent) return;
+    emitBuy(roomId);
+  };
+
+  const handleCreateGame = () => {
+    setIsConnecting(true);
+    setShowLanding(false);
+    const name = localStorage.getItem("playerName") || "Player";
+    console.log("Creating room for player:", name);
+
+    // If not connected, try to wait a bit for connection
+    const attemptCreate = () => {
+      createOrJoinRoom(name).then((rid) => {
+        console.log("Room created:", rid);
+        roomIdRef.current = rid;
+        setRoomId(rid);
+        setIsHost(true);
+        setIsConnecting(false);
+        setShowLobby(true);
+        addLog(`Created room ${rid}`);
+      }).catch((err) => {
+        console.error("Failed to create room:", err);
+        addLog("Failed to create room - is backend running?");
+        setIsConnecting(false);
+        setShowLanding(true);
+        setConnectionError("Cannot create room. Make sure backend is running.");
+      });
+    };
+
+    if (!isSocketConnected) {
+      console.log("Socket not connected yet, waiting 2 seconds...");
+      addLog("Connecting to server...");
+      setTimeout(() => {
+        if (isSocketConnected) {
+          attemptCreate();
+        } else {
+          console.error("Socket still not connected after timeout");
+          setIsConnecting(false);
+          setShowLanding(true);
+          setConnectionError("Cannot connect to server. Is the backend running on port 4000?");
+        }
+      }, 2000);
+    } else {
+      attemptCreate();
+    }
+  };
+
+  const handleJoinGame = () => {
+    if (!joinRoomCode.trim()) {
+      addLog("Please enter a room code");
+      return;
+    }
+
+    setIsConnecting(true);
+    setShowJoinInput(false);
+    const name = localStorage.getItem("playerName") || "Player";
+    const code = joinRoomCode.trim().toUpperCase();
+
+    const attemptJoin = () => {
+      const s = getSocket();
+      console.log("Joining room:", code, "as player:", name);
+      s.emit("joinRoom", code, name, (ok: boolean, message?: string) => {
+        console.log("Join room response - ok:", ok, "message:", message);
+        if (ok) {
+          console.log("Successfully joined, setting room state...");
+          roomIdRef.current = code;
+          setRoomId(code);
+          setIsHost(false);
+          setIsConnecting(false);
+          setShowLobby(true);
+          addLog(`Joined room ${code}`);
+        } else {
+          console.error("Failed to join room:", message);
+          addLog(`Failed to join room - ${message || "room not found"}`);
+          setIsConnecting(false);
+          setShowJoinInput(true);
+        }
+      });
+    };
+
+    if (!isSocketConnected) {
+      console.log("Socket not connected yet, waiting 2 seconds...");
+      addLog("Connecting to server...");
+      setTimeout(() => {
+        if (isSocketConnected) {
+          attemptJoin();
+        } else {
+          console.error("Socket still not connected after timeout");
+          setIsConnecting(false);
+          setShowJoinInput(true);
+          setConnectionError("Cannot connect to server. Is the backend running on port 4000?");
+        }
+      }, 2000);
+    } else {
+      attemptJoin();
+    }
+  };
+
+  const handleShowJoinInput = () => {
+    setShowLanding(false);
+    setShowJoinInput(true);
+  };
+
+  const handleBackToLanding = () => {
+    setShowJoinInput(false);
+    setShowLanding(true);
+    setJoinRoomCode("");
+  };
+
+  const handleStartGame = () => {
+    const currentRoomId = roomIdRef.current;
+    if (currentRoomId) {
+      emitStartGame(currentRoomId);
+      addLog("Starting game...");
+    }
+  };
+
+  // Token/color assignment per playerId
+  const tokenMapRef = useRef<Record<string, UIPlayer["token"]>>({});
+  const colorMapRef = useRef<Record<string, string>>({});
+
+  useEffect(() => {
+    console.log("Setting up socket connection...");
+
+    // Initialize socket immediately
+    const s = getSocket();
+
+    // Set up event handlers
+    const handleConnect = (id: string) => {
+      console.log("Socket connected with ID:", id);
+      meRef.current = id;
+      setMeId(id);
+      setIsSocketConnected(true);
+      setConnectionError(null);
+      addLog(`Connected to server`);
+    };
+
+    const s2 = connectSocket({
+      onConnect: handleConnect,
+      onRoomUpdate: (r: RoomUpdatePayload) => {
+        // This is a lightweight summary; we map turn to index later using full state
+        setCanEnd(false);
+      },
+      onGameUpdate: (g: GameState) => {
+        console.log("Received gameUpdate:", g);
+        setState(g);
+        setDice(g.lastRoll || [1, 1]);
+        // Sync isStarted with backend state
+        setIsStarted(g.started);
+        
+        // Update spaces with owner information from the server
+        setSpaces(prevSpaces => 
+          prevSpaces.map((space, index) => {
+            const boardTile = g.board[index];
+            return {
+              ...space,
+              ownerId: boardTile ? (boardTile.ownerId || undefined) : undefined,
+            };
+          })
+        );
+
+        // Build UI players array in turn order
+        const ids = g.turnOrder;
+        const ui: UIPlayer[] = ids.map((pid, i) => {
+          const p = g.players[pid];
+          if (!p) {
+            console.warn(`Player ${pid} in turnOrder but not in players object!`);
+          }
+          if (!tokenMapRef.current[pid]) {
+            tokenMapRef.current[pid] = TOKENS[(Object.keys(tokenMapRef.current).length) % TOKENS.length];
+            colorMapRef.current[pid] = TOKEN_COLORS[(Object.keys(colorMapRef.current).length) % TOKEN_COLORS.length];
+          }
+          return {
+            id: pid,
+            name: p?.name || `P${i + 1}`,
+            position: p?.position ?? 0,
+            cash: p?.cash ?? 1500,
+            token: tokenMapRef.current[pid],
+            color: colorMapRef.current[pid],
+            inJail: p?.inJail,
+          };
+        });
+        setPlayers(ui);
+        // Who's turn index
+        const turnPid = ids[g.currentTurn];
+        const idx = ids.findIndex((x) => x === turnPid);
+        setCurrent(idx >= 0 ? idx : 0);
+
+        const myPid = meRef.current && g.players[meRef.current] ? meRef.current : null;
+        const isMyTurn = myPid ? ids[g.currentTurn] === myPid : false;
+        // canRoll: my turn, game started, and haven't rolled yet
+        setCanRoll(Boolean(isMyTurn && g.started && !g.hasRolledThisTurn));
+        // canEnd: my turn, game started, and have rolled
+        setCanEnd(Boolean(isMyTurn && g.started && g.hasRolledThisTurn));
+        setMoving(false);
+
+        // When game starts, close lobby and show game board
+        if (g.started && showLobby) {
+          setShowLobby(false);
+        }
+      },
+      onError: (msg) => {
+        console.error("Socket error:", msg);
+        setLog((prev) => [String(msg), ...prev.slice(0, 6)]);
+      },
     });
-    return ownership;
-  }, [players, spaces]);
+
+    // Add error and disconnect handlers
+    // Check if already connected
+    if (s.connected) {
+      console.log("Socket already connected:", s.id);
+      handleConnect(s.id ?? "");
+    }
+
+    s.on("connect_error", (err) => {
+      console.error("Connection error:", err);
+      setConnectionError(`Cannot connect to server. Is the backend running on port 4000?`);
+      setIsSocketConnected(false);
+    });
+
+    s.on("disconnect", () => {
+      console.log("Socket disconnected");
+      setIsSocketConnected(false);
+    });
+
+    // Cleanup function - but don't close the socket
+    return () => {
+      console.log("Component unmounting, but keeping socket alive");
+      // Don't close the socket on unmount in dev mode
+      // s.close();
+    };
+  }, []);
+
+  const myPid = meRef.current && state && state.players[meRef.current] ? meRef.current : null;
+  const myPlayer = myPid && state ? state.players[myPid] : null;
+  const onProperty = state ? state.board[myPlayer?.position ?? 0]?.type === "PROPERTY" : false;
+  const propertyOwned = state ? Boolean(state.board[myPlayer?.position ?? 0]?.ownerId) : false;
+  const canBuy = Boolean(myPlayer && onProperty && !propertyOwned && (myPlayer.cash ?? 0) > (state?.board[myPlayer.position].price ?? Infinity) - 1 && canRoll === false);
+  const isInJail = Boolean(myPlayer?.inJail);
+
+  // Distribute tokens slightly when multiple players share a tile
+  const tokenOffsets = useMemo(() => {
+    const map = new Map<any, { x: number; y: number }>();
+    const byPos = new Map<number, typeof players>();
+    for (const p of players) {
+      const arr = byPos.get(p.position) || [];
+      arr.push(p);
+      byPos.set(p.position, arr);
+    }
+    const patterns: Array<{ x: number; y: number }> = [
+      { x: -8, y: -8 },
+      { x: 8, y: -8 },
+      { x: -8, y: 8 },
+      { x: 8, y: 8 },
+      { x: 0, y: -12 },
+      { x: -12, y: 0 },
+      { x: 12, y: 0 },
+      { x: 0, y: 12 },
+    ];
+    byPos.forEach((arr) => {
+      arr.forEach((p, i) => {
+        const off = patterns[i] || { x: 0, y: 0 };
+        map.set(p.id as any, off);
+      });
+    });
+    return map;
+  }, [players]);
 
   return (
     <div className="page">
@@ -385,26 +534,25 @@ export default function App() {
         <div>
           <h1>Monopoly Frontend Prototype</h1>
           <p className="subtitle">
-            Board rendering, turn flow, dice feedback, and UI scaffolding.
+            Board rendering, turn flow, dice feedback, and Socket.IO wiring.
           </p>
         </div>
         <div className="turn-card">
-          <button
-            type="button"
-            className="start-button"
-            onClick={() => setSetupOpen(true)}
-          >
-            {isStarted ? "New Game" : "Start Game"}
-          </button>
+          {isStarted && (
+            <button
+              type="button"
+              className="start-button"
+              onClick={() => window.location.reload()}
+            >
+              New Game
+            </button>
+          )}
           <span className="label">Current turn</span>
           <p className="player">
-            <span
-              className="player-chip"
-              style={{ background: currentPlayer.color }}
-            />
-            {currentPlayer.name}
+            <span className="player-chip" style={{ background: cp.color }} />
+            {cp.name}
           </p>
-          <p className="cash">${currentPlayer.cash}</p>
+          <p className="cash">${cp.cash}</p>
         </div>
       </header>
 
@@ -463,10 +611,7 @@ export default function App() {
         <section className="board-panel layout-board">
           <div className="board">
             <div className="token-layer">
-              <span
-                className="space-highlight"
-                style={getTilePercent(currentPlayer.position)}
-              />
+              <span className="space-highlight" style={getTilePercent(cp.position)} />
               {players.map((player) => (
                 <span
                   key={player.id}
@@ -574,39 +719,180 @@ export default function App() {
           </ul>
         </section>
       </main>
-      {setupOpen && (
+      {/* Loading Screen */}
+      {isConnecting && (
         <div className="modal-backdrop">
           <div className="modal">
-            <p className="modal-eyebrow">Game setup</p>
-            <h2>Choose players</h2>
-            <p className="modal-subtitle">
-              Starting cash is fixed at ${DEFAULT_STARTING_CASH}.
-            </p>
-            <div className="player-select">
-              {PLAYER_COUNT_OPTIONS.map((count) => (
+            <h2>Connecting...</h2>
+            <p className="modal-subtitle">Please wait</p>
+          </div>
+        </div>
+      )}
+
+      {/* Landing Screen - Create or Join */}
+      {showLanding && !isConnecting && (
+        <div className="modal-backdrop">
+          <div className="modal">
+            <h2>Monopoly Game</h2>
+            {connectionError ? (
+              <>
+                <p className="modal-subtitle" style={{ color: "#d9534f", fontWeight: "bold" }}>
+                  ⚠️ {connectionError}
+                </p>
+                <p style={{ fontSize: "0.875rem", margin: "1rem 0", color: "#666" }}>
+                  Make sure the backend server is running:
+                  <br />
+                  <code style={{ background: "#f5f5f5", padding: "0.25rem 0.5rem", borderRadius: "4px" }}>
+                    cd backend && npm run dev
+                  </code>
+                </p>
                 <button
-                  key={count}
                   type="button"
-                  className={count === setupPlayerCount ? "active" : ""}
-                  onClick={() => setSetupPlayerCount(count)}
+                  onClick={() => window.location.reload()}
+                  style={{ width: "100%", marginTop: "1rem" }}
                 >
-                  {count} players
+                  Retry Connection
                 </button>
-              ))}
-            </div>
+              </>
+            ) : (
+              <>
+                <p className="modal-subtitle">
+                  {!isSocketConnected ? "🔄 Connecting to server..." : "Choose an option to begin"}
+                </p>
+                <div className="modal-actions" style={{ flexDirection: "column", gap: "1rem" }}>
+                  <button
+                    type="button"
+                    onClick={handleCreateGame}
+                    disabled={!isSocketConnected}
+                    style={{ width: "100%" }}
+                  >
+                    Create New Game
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleShowJoinInput}
+                    disabled={!isSocketConnected}
+                    className="secondary"
+                    style={{ width: "100%" }}
+                  >
+                    Join Existing Game
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Join Game - Enter Room Code */}
+      {showJoinInput && (
+        <div className="modal-backdrop">
+          <div className="modal">
+            <h2>Join Game</h2>
+            <p className="modal-subtitle">Enter the room code to join</p>
+            <input
+              type="text"
+              value={joinRoomCode}
+              onChange={(e) => setJoinRoomCode(e.target.value.toUpperCase())}
+              placeholder="Enter room code (e.g. ABC12)"
+              maxLength={5}
+              style={{
+                width: "100%",
+                padding: "0.75rem",
+                fontSize: "1.25rem",
+                textAlign: "center",
+                textTransform: "uppercase",
+                letterSpacing: "0.2em",
+                border: "2px solid #ccc",
+                borderRadius: "4px",
+                marginBottom: "1rem"
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && joinRoomCode.trim()) {
+                  handleJoinGame();
+                }
+              }}
+              autoFocus
+            />
             <div className="modal-actions">
-              {isStarted && (
+              <button
+                type="button"
+                onClick={handleBackToLanding}
+                className="secondary"
+              >
+                Back
+              </button>
+              <button
+                type="button"
+                onClick={handleJoinGame}
+                disabled={isConnecting || !joinRoomCode.trim()}
+              >
+                {isConnecting ? "Joining..." : "Join Game"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Lobby - Wait for Players */}
+      {showLobby && !isStarted && !isConnecting && (
+        <div className="modal-backdrop">
+          <div className="modal">
+            <h2>Game Lobby</h2>
+            <p className="modal-subtitle" style={{ fontSize: "1.5rem", margin: "1rem 0" }}>
+              Room Code: <strong style={{ letterSpacing: "0.2em" }}>{roomId}</strong>
+            </p>
+            <p className="modal-subtitle">Share this code with other players!</p>
+
+            <div style={{ margin: "2rem 0" }}>
+              <h3 style={{ marginBottom: "1rem" }}>
+                Players ({state?.turnOrder.length || 0})
+              </h3>
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                {players.map((player, idx) => (
+                  <div
+                    key={player.id}
+                    style={{
+                      padding: "0.75rem",
+                      background: "#f5f5f5",
+                      borderRadius: "4px",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "0.5rem"
+                    }}
+                  >
+                    <span
+                      className={`token token-${player.token}`}
+                      style={{ backgroundColor: player.color }}
+                    />
+                    <span>{player.name}</span>
+                    {idx === 0 && <span style={{ marginLeft: "auto", fontSize: "0.875rem", color: "#666" }}>(Host)</span>}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {state && state.turnOrder.length < 2 && (
+              <p style={{ color: "#666", fontSize: "0.875rem", marginBottom: "1rem" }}>
+                Waiting for at least 2 players to start...
+              </p>
+            )}
+
+            <div className="modal-actions">
+              {isHost ? (
                 <button
                   type="button"
-                  className="secondary"
-                  onClick={closeSetup}
+                  onClick={handleStartGame}
+                  disabled={!state || state.turnOrder.length < 2}
+                  style={{ width: "100%" }}
                 >
-                  Cancel
+                  Start Game
                 </button>
+              ) : (
+                <p style={{ textAlign: "center", color: "#666" }}>
+                  Waiting for host to start the game...
+                </p>
               )}
-              <button type="button" onClick={startGame}>
-                Start game
-              </button>
             </div>
           </div>
         </div>
