@@ -7,18 +7,14 @@ export const metadata: Metadata = {
   description: "A game of intentionally terrible UX",
 };
 
-export default function RootLayout({
+export default function GameLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>
-        <TimerProvider>
-          {children}
-        </TimerProvider>
-      </body>
-    </html>
+    <TimerProvider>
+      {children}
+    </TimerProvider>
   );
 }

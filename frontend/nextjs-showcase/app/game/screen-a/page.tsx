@@ -12,7 +12,7 @@ export default function ScreenA() {
     // Progress bar goes backward on success - intentional bad UX
     setProgress(45);
     setTimeout(() => {
-      router.push('/screen-b');
+      router.push('/game/screen-b');
     }, 800);
   };
 

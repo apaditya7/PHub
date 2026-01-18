@@ -46,7 +46,7 @@ export default function ScreenD() {
   };
 
   const handleInvisibleButton = () => {
-    router.push('/screen-e');
+    router.push('/game/screen-e');
   };
 
   const handleSecondPopupClose = () => {

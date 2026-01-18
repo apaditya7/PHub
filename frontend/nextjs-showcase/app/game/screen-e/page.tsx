@@ -53,7 +53,7 @@ export default function ScreenE() {
       return;
     }
 
-    router.push('/screen-f');
+    router.push('/game/screen-f');
   };
 
   return (

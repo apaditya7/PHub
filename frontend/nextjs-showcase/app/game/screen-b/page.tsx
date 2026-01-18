@@ -10,7 +10,7 @@ export default function ScreenB() {
 
   const handleConfirm = () => {
     // This is the correct button (grey one)
-    router.push('/screen-c');
+    router.push('/game/screen-c');
   };
 
   const handleCancel = () => {
