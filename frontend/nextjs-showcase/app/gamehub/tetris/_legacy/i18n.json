@@ -3,7 +3,7 @@
   "default": "en",
   "data": {
     "title": {
-      "en": "PHub Tetris"
+      "en": "ProHub Tetris"
     },
     "github": {
       "cn": "GitHub",
@@ -24,7 +24,7 @@
       "fa": "کیوآر کد"
     },
     "titleCenter": {
-      "en": "PHub Tetris"
+      "en": "ProHub Tetris"
     },
     "point": { "en": "Point" },
     "highestScore": { "en": "Max" },

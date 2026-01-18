@@ -259,8 +259,8 @@ export default function Register() {
         <div className="flex justify-center mb-8">
           <Link href="/">
             <Image
-              src="/phub-logo.png"
-              alt="PHub"
+              src="/prohub_logo.jpeg"
+              alt="ProHub"
               width={200}
               height={100}
               className="h-20 w-auto cursor-pointer"

@@ -82,8 +82,8 @@ export default function LandingPage() {
           className="mb-12"
         >
           <Image
-            src="/phub-logo.png"
-            alt="PHub Logo"
+            src="/prohub_logo.jpeg"
+            alt="ProHub Logo"
             width={600}
             height={300}
             className="max-w-2xl w-full h-auto"

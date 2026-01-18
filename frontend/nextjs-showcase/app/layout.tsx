@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "PHub",
-  description: "PHub – Bad UI components, practical demos, and more",
+  title: "ProHub",
+  description: "ProHub – Bad UI components, practical demos, and more",
 };
 
 export default function RootLayout({

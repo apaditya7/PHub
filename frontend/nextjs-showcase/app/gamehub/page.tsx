@@ -143,17 +143,6 @@ const games = [
     description: 'A cinematic car showcase with post-processing effects.',
     color: 'from-pink-500 to-rose-500'
   },
-  {
-    id: 'tetris',
-    title: 'Neon Tetris',
-    href: '/gamehub/tetris',
-    category: 'Puzzle',
-    players: 'Classic',
-    author: 'Trae Studios',
-    Icon: StarIcon,
-    description: 'Modern, high-performance Tetris port.',
-    color: 'from-cyan-500 to-blue-600'
-  },
 ]
 
 export default function GameHub() {
@@ -161,46 +150,7 @@ export default function GameHub() {
 
   return (
     <div className="min-h-screen bg-[#0f0f0f] text-gray-100 font-sans selection:bg-[#ff9900] selection:text-black">
-      {/* Header */}
-      <header className="sticky top-0 z-50 flex items-center justify-between px-6 py-4 bg-[#0f0f0f]/95 backdrop-blur-sm border-b border-[#2a2a2a]">
-        <div className="flex items-center gap-8">
-            {/* Logo */}
-            <Link href="/" className="flex items-center gap-1 group">
-              <div className="flex items-center tracking-tighter">
-                <span className="text-2xl font-black text-white">GAME</span>
-                <span className="text-2xl font-black text-[#ff9900]">HUB</span>
-              </div>
-            </Link>
-            
-            {/* Nav Links */}
-            <nav className="hidden md:flex items-center gap-6 text-sm font-bold text-gray-400">
-                <Link href="/" className="hover:text-white transition-colors">HOME</Link>
-                <span className="text-[#ff9900] cursor-pointer">GAMES</span>
-                <span className="hover:text-white transition-colors cursor-pointer">COMMUNITY</span>
-            </nav>
-        </div>
-
-        {/* Search / User */}
-        <div className="flex items-center gap-4">
-            <div className="hidden md:flex items-center bg-[#1a1a1a] border border-[#333] rounded-full overflow-hidden w-64 transition-colors focus-within:border-[#ff9900]">
-                <input 
-                    type="text" 
-                    placeholder="Search" 
-                    className="bg-transparent text-gray-300 px-4 py-2 outline-none w-full text-sm placeholder:text-gray-600"
-                />
-                <button className="px-4 py-2 text-gray-500 hover:text-[#ff9900] transition-colors">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-                </button>
-            </div>
-            <button className="text-sm font-bold hover:text-[#ff9900] transition-colors">
-                LOGIN
-            </button>
-            <button className="bg-[#ff9900] text-black text-sm font-bold px-4 py-2 rounded-full hover:bg-[#e68a00] transition-colors">
-                SIGN UP
-            </button>
-        </div>
-      </header>
-
+      
       {/* Main Content */}
       <main className="max-w-[1600px] mx-auto px-6 py-8">
         
