@@ -239,6 +239,7 @@ function NeonRacerUI() {
     const resetGame = useStore(state => state.resetGame)
 
     useEffect(() => {
+        resetGame()
         return () => {
             audioManager.stopMusic()
         }

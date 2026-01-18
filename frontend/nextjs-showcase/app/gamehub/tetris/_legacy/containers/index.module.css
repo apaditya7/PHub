@@ -1,0 +1,105 @@
+.app {
+  width: 640px;
+  padding-top: 42px;
+  box-shadow: 0 0 10px #fff inset;
+  border-radius: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -480px 0 0 -320px;
+  background: #efcc19;
+}
+
+.app b {
+  display: block;
+  width: 20px;
+  height: 20px;
+  padding: 2px;
+  border: 2px solid #879372;
+  margin: 0 2px 2px 0;
+  float: left;
+}
+
+.app b::after {
+  content: '';
+  display: block;
+  width: 12px;
+  height: 12px;
+  background: #879372;
+  overflow: hidden;
+}
+
+.app b.c {
+  border-color: #000;
+}
+
+.app b.c::after {
+  background: #000;
+}
+
+.app b.d {
+  border-color: #560000;
+}
+
+.app b.d::after {
+  background: #560000;
+}
+
+.rect {
+  width: 480px;
+  padding: 45px 0 35px;
+  border: #000 solid;
+  border-width: 0 10px 10px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.drop {
+  transform: translateY(5px);
+}
+
+.screen {
+  width: 390px;
+  height: 478px;
+  border: 5px solid;
+  border-color: #987f0f #fae36c #fae36c #987f0f;
+  margin: 0 auto;
+  position: relative;
+}
+
+.panel {
+  width: 380px;
+  height: 468px;
+  margin: 0 auto;
+  background: #9ead86;
+  padding: 8px;
+  border: 2px solid #494536;
+}
+
+.state {
+  width: 108px;
+  position: absolute;
+  top: 0;
+  right: 15px;
+}
+
+.state p {
+  line-height: 47px;
+  height: 57px;
+  padding: 10px 0 0;
+  white-space: nowrap;
+  clear: both;
+}
+
+.state .bottom {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 114px;
+  padding-top: 20px;
+}
+
+:global(.bg) {
+  background: url('/games/tetris/sprite.png') no-repeat;
+  overflow: hidden;
+}

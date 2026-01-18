@@ -1,0 +1,141 @@
+.guide {
+  position: absolute;
+  left: 115%;
+  right: 115%;
+  text-align: center;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.right {
+  right: auto;
+  bottom: 5%;
+}
+
+.left {
+  left: auto;
+  bottom: 5%;
+}
+
+.guide p {
+  text-align: left;
+  margin-bottom: 350px;
+  opacity: .5;
+}
+
+.guide p iframe {
+  margin-top: 20px;
+}
+
+.guide a {
+  color: #005850;
+  font-size: 30px;
+  position: relative;
+  z-index: 1;
+  cursor: alias;
+  text-decoration: none;
+}
+
+.qr {
+  left: auto;
+  top: 5%;
+  width: 250px;
+  height: 250px;
+  opacity: .5;
+  text-align: right;
+  cursor: none;
+}
+
+.qr:hover img {
+  width: 100%;
+  height: 100%;
+}
+
+.qr img {
+  width: 38px;
+  height: 38px;
+}
+
+.guide > div {
+  width: 100px;
+  height: 54px;
+  background: #364d4b;
+  display: inline-block;
+  border-radius: 4px;
+  position: relative;
+  color: #acc3c1;
+  font-size: 16px;
+}
+
+.guide > div em {
+  display: block;
+  width: 0;
+  height: 0;
+  border: 6px solid;
+  border-color: transparent transparent #acc3c1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -9px 0 0 -6px;
+}
+
+.guide > div::before,
+.guide > div::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 4px;
+  box-shadow: 0 5px 10px rgba(255, 255, 255, .15) inset;
+}
+
+.guide > div::before {
+  box-shadow: 0 -5px 10px rgba(0, 0, 0, .15) inset;
+}
+
+.up {
+  height: 60px;
+  display: block;
+  margin: 0 auto 2px;
+}
+
+.down {
+  display: block;
+  margin: 0 auto 2px;
+}
+
+.left {
+  float: left;
+  margin-left: 2px;
+}
+
+.right {
+  float: right;
+  margin-right: 2px;
+}
+
+.space {
+  display: block;
+  width: 200px !important;
+  height: 60px !important;
+  margin: 0 auto;
+}
+
+.guide > div.up em {
+  transform: translate(0, -3px) scale(1, 1.3);
+}
+
+.guide > div.left em {
+  transform: translate(-7px, 3px) rotate(-90deg) scale(1, 1.3);
+}
+
+.guide > div.right em {
+  transform: translate(7px, 3px) rotate(90deg) scale(1, 1.3);
+}
+
+.guide > div.down em {
+  transform: translate(0, 9px) rotate(180deg) scale(1, 1.3);
+}

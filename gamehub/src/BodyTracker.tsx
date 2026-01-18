@@ -10,6 +10,7 @@ export function BodyTracker() {
   useEffect(() => {
     let faceLandmarker: FaceLandmarker | null = null
     let animationFrameId: number
+    let stream: MediaStream | null = null
     let lastTilt = 0
     let lastLean = 0
 
@@ -30,7 +31,7 @@ export function BodyTracker() {
       })
 
       if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-        const stream = await navigator.mediaDevices.getUserMedia({ video: true })
+        stream = await navigator.mediaDevices.getUserMedia({ video: true })
         if (videoRef.current) {
           videoRef.current.srcObject = stream
           videoRef.current.addEventListener('loadeddata', predictWebcam)
@@ -76,6 +77,9 @@ export function BodyTracker() {
 
     return () => {
       cancelAnimationFrame(animationFrameId)
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop())
+      }
       faceLandmarker?.close()
     }
   }, [])
