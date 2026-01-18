@@ -42,4 +42,3 @@ A futuristic, high-octane 3D racing game controlled entirely by your head moveme
 
 ## 📝 Credits
 - Spaceship & Obstacle Models: [Kenney Assets](https://kenney.nl/) / Custom GLB
-- Developed by: Trae (AI Pair Programmer) & User

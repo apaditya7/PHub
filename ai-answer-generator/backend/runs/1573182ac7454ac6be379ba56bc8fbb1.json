@@ -1,0 +1,792 @@
+{
+  "run_id": "1573182ac7454ac6be379ba56bc8fbb1",
+  "started_at": "2026-01-18T03:10:39.094951Z",
+  "finished_at": "2026-01-18T03:11:43.480560Z",
+  "status": "complete",
+  "config": {
+    "mock_mode": false,
+    "deterministic": false,
+    "seed": null,
+    "question": "hello"
+  },
+  "stages": [
+    {
+      "level": "trial",
+      "decision": {
+        "level": "trial",
+        "protocol": "majority vote",
+        "verdict_number": 0,
+        "shortlist": [],
+        "vote_tally": {},
+        "dissents": [
+          {
+            "role": "Bailiff",
+            "proposed_number": null
+          },
+          {
+            "role": "Prosecution Advocate A",
+            "proposed_number": null
+          },
+          {
+            "role": "Defense Advocate A",
+            "proposed_number": null
+          },
+          {
+            "role": "Expert Witness",
+            "proposed_number": null
+          },
+          {
+            "role": "Trial Judge",
+            "proposed_number": null
+          }
+        ],
+        "timestamp": "2026-01-18T03:11:01.486883Z"
+      },
+      "transcripts": [
+        {
+          "role": "Bailiff",
+          "level": "trial",
+          "message_type": "opening",
+          "proposed_number": null,
+          "vote": null,
+          "claims": [
+            "ANSWER: The user is greeting the court."
+          ],
+          "evidence": [
+            "Greeting is a common social protocol.",
+            "The term 'hello' serves as a formal salutation.",
+            "Communication is essential in courtroom proceedings."
+          ],
+          "critiques": [
+            "The greeting does not pertain to court matters.",
+            "Lack of context for courtroom relevance.",
+            "No substantive legal question presented."
+          ],
+          "counterarguments": [
+            "User may be establishing rapport.",
+            "Initial greetings can lead to procedural introductions.",
+            "May seek to clarify the purpose of their presence."
+          ],
+          "confidence": 0.8,
+          "transcript_text": "The court acknowledges the greeting presented by the user, signifying the commencement of interaction.",
+          "exhibits": [],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o-mini",
+            "timestamp": "2023-10-05T12:00:00Z"
+          }
+        },
+        {
+          "role": "Prosecution Advocate A",
+          "level": "trial",
+          "message_type": "opening",
+          "proposed_number": null,
+          "vote": null,
+          "claims": [
+            "ANSWER: 10 years."
+          ],
+          "evidence": [
+            "Statistical data on recidivism rates shows that offenders typically re-offend within 10 years.",
+            "Victim impact statements indicate lasting trauma that warrants a significant sentence.",
+            "Sentencing guidelines suggest a baseline of 10 years for similar offenses."
+          ],
+          "critiques": [
+            "The defense may argue for leniency based on personal circumstances.",
+            "They might question the severity of the crime.",
+            "They may attempt to downplay the long-term impact on victims."
+          ],
+          "counterarguments": [
+            "Personal circumstances do not absolve responsibility for actions.",
+            "Severity is determined by impact, not intention.",
+            "Long-term victim impacts must be prioritized over transient defense claims."
+          ],
+          "confidence": 0.95,
+          "transcript_text": "Your Honor, we are here to seek justice, and justice demands a decisive 10-year sentence. The evidence is clear: recidivism rates, victim testimonies, and established guidelines all point to this figure as both fair and necessary.",
+          "exhibits": [
+            "Recidivism report from the Department of Justice.",
+            "Victim impact statements.",
+            "Sentencing guideline document."
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o-mini",
+            "timestamp": "2023-10-05T12:00:00Z"
+          }
+        },
+        {
+          "role": "Defense Advocate A",
+          "level": "trial",
+          "message_type": "opening",
+          "proposed_number": null,
+          "vote": null,
+          "claims": [
+            "ANSWER: The prosecution's case lacks sufficient numerical support."
+          ],
+          "evidence": [
+            "Statistical data from the crime report indicates a discrepancy in reported incidents.",
+            "Witness testimony conflicts with the timeline established by the prosecution.",
+            "Forensic evidence does not align with the prosecution's narrative."
+          ],
+          "critiques": [
+            "The prosecution has not adequately justified their numerical assertions.",
+            "Key figures presented were cherry-picked, ignoring broader context.",
+            "The methodology used to derive the key number lacks transparency."
+          ],
+          "counterarguments": [
+            "The prosecution may argue that the figures are estimates based on trends.",
+            "They could claim that witness testimony corroborates their numbers.",
+            "The prosecution might assert that forensic evidence is conclusive."
+          ],
+          "confidence": 0.8,
+          "transcript_text": "Your Honor, I assert that the prosecution's case, built on numerical claims, lacks the necessary rigor and clarity, raising doubts about the validity of their conclusions.",
+          "exhibits": [
+            "Crime Report Exhibit A",
+            "Witness Testimony Transcript B",
+            "Forensic Analysis Report C"
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o-mini",
+            "timestamp": "2023-10-01T12:00:00Z"
+          }
+        },
+        {
+          "role": "Expert Witness",
+          "level": "trial",
+          "message_type": "opening",
+          "proposed_number": null,
+          "vote": null,
+          "claims": [
+            "ANSWER: The question posed is irrelevant to the trial."
+          ],
+          "evidence": [
+            "The relevance of questions in courtroom proceedings must directly pertain to the case at hand."
+          ],
+          "critiques": [
+            "The inquiry lacks specificity and does not provide context for legal examination."
+          ],
+          "counterarguments": [
+            "One might argue that all inquiries hold potential relevance; however, context is critical."
+          ],
+          "confidence": 1.0,
+          "transcript_text": "The court must focus on inquiries pertinent to the case, as the current question lacks substantive legal merit.",
+          "exhibits": [],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o-mini",
+            "timestamp": "2023-10-04T12:00:00Z"
+          }
+        },
+        {
+          "role": "Trial Judge",
+          "level": "trial",
+          "message_type": "opening",
+          "proposed_number": null,
+          "vote": null,
+          "claims": [
+            "ANSWER: This is a greeting."
+          ],
+          "evidence": [
+            "Standard social interaction protocols.",
+            "Common understanding of conversational norms."
+          ],
+          "critiques": [
+            "No numerical value or decision can be derived from 'hello'."
+          ],
+          "counterarguments": [
+            "Insufficient context to ascertain a numerical answer."
+          ],
+          "confidence": 1.0,
+          "transcript_text": "The court acknowledges the greeting as a standard social exchange.",
+          "exhibits": [],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2023-10-18T12:00:00Z"
+          }
+        }
+      ],
+      "exhibits": [
+        "Recidivism report from the Department of Justice.",
+        "Victim impact statements.",
+        "Sentencing guideline document.",
+        "Crime Report Exhibit A",
+        "Witness Testimony Transcript B",
+        "Forensic Analysis Report C"
+      ]
+    },
+    {
+      "level": "appeals",
+      "decision": {
+        "level": "appeals",
+        "protocol": "critique + panel vote",
+        "holding": "remand",
+        "majority_number": 0,
+        "dissents": [],
+        "timestamp": "2026-01-18T03:11:12.441250Z"
+      },
+      "transcripts": [
+        {
+          "role": "Appellate Judge A",
+          "level": "appeals",
+          "message_type": "ruling",
+          "proposed_number": 0,
+          "vote": {
+            "decision": "remand",
+            "rationale": "The trial record lacks a clear verdict number and exhibits procedural irregularities."
+          },
+          "claims": [
+            "ANSWER: Remand"
+          ],
+          "evidence": [
+            "Incomplete vote tally",
+            "No proposed numbers",
+            "Multiple dissents with no clear resolution"
+          ],
+          "critiques": [
+            "Lack of finality in verdict",
+            "Absence of numerical decision"
+          ],
+          "counterarguments": [
+            "Possible clerical oversight"
+          ],
+          "confidence": 0.9,
+          "transcript_text": "The trial record is deficient in providing a conclusive number, warranting remand for clarification.",
+          "exhibits": [],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2026-01-18T03:11:01.486883Z"
+          }
+        },
+        {
+          "role": "Appellate Judge B",
+          "level": "appeals",
+          "message_type": "critique",
+          "proposed_number": null,
+          "vote": {
+            "decision": "remand",
+            "rationale": "The trial record lacks a proposed number, making it impossible to affirm or reverse without further clarification from the trial court."
+          },
+          "claims": [
+            "ANSWER: Remand for clarification."
+          ],
+          "evidence": [
+            "The trial verdict presents a 'verdict_number' of 0 without any shortlist or vote tally."
+          ],
+          "critiques": [
+            "The record does not specify a clear number for review, nor does it provide a majority decision."
+          ],
+          "counterarguments": [
+            "A remand will allow the trial court to rectify procedural deficiencies."
+          ],
+          "confidence": 0.8,
+          "transcript_text": "The absence of a definitive verdict number necessitates a remand to ensure judicial clarity and procedural integrity.",
+          "exhibits": [
+            "Trial verdict record dated 2026-01-18"
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2023-10-17T12:00:00Z"
+          }
+        },
+        {
+          "role": "Appellate Judge C",
+          "level": "appeals",
+          "message_type": "critique",
+          "proposed_number": null,
+          "vote": {
+            "decision": "remand",
+            "rationale": "The trial verdict lacks a proposed number and clear vote tally, suggesting procedural confusion."
+          },
+          "claims": [
+            "ANSWER: The trial verdict is procedurally flawed."
+          ],
+          "evidence": [
+            "No proposed number from any role.",
+            "Empty vote tally.",
+            "Multiple dissents without proposals."
+          ],
+          "critiques": [
+            "The verdict relies on a majority vote protocol yet lacks any clear majority decision.",
+            "No participant proposed a number, indicating a breakdown in protocol."
+          ],
+          "counterarguments": [
+            "It is possible the roles involved misunderstood the protocol requirements.",
+            "The absence of a proposed number from all parties might indicate an unresolved dispute or oversight."
+          ],
+          "confidence": 0.3,
+          "transcript_text": "The absence of a proposed number and vote tally demonstrates a critical procedural flaw that mandates remand for clarity.",
+          "exhibits": [
+            "Trial record lacking a proposed number.",
+            "Timestamp of record."
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2023-10-01T12:00:00Z"
+          }
+        }
+      ],
+      "exhibits": [
+        "Trial verdict record dated 2026-01-18",
+        "Trial record lacking a proposed number.",
+        "Timestamp of record."
+      ]
+    },
+    {
+      "level": "supreme",
+      "decision": {
+        "level": "supreme",
+        "protocol": "consensus + authored opinion",
+        "final_number": 0,
+        "opinion": {
+          "syllabus": "The Court consolidates the record and affirms procedural legitimacy.",
+          "majority": "The majority synthesizes the trial and appellate record into a single number.",
+          "dissents": [
+            {
+              "against": "remand",
+              "reason": "Insufficient justification for remanding without a majority rationale."
+            }
+          ],
+          "writer": "Chief Justice"
+        },
+        "timestamp": "2026-01-18T03:11:26.444541Z"
+      },
+      "transcripts": [
+        {
+          "role": "Chief Justice",
+          "level": "supreme",
+          "message_type": "ruling",
+          "proposed_number": 0,
+          "vote": {
+            "decision": "remand",
+            "rationale": "The appeals court decision to remand is under review."
+          },
+          "claims": [
+            "ANSWER: The remand decision is upheld."
+          ],
+          "evidence": [
+            "The appeals court's protocol was followed with a panel vote.",
+            "No effective dissent was recorded at the appeals level."
+          ],
+          "critiques": [
+            "The appeals decision lacked explicit justification for remanding.",
+            "The majority number was not specified in the appeals decision."
+          ],
+          "counterarguments": [
+            "Remanding allows for additional fact-finding at the lower court level."
+          ],
+          "confidence": 0.85,
+          "transcript_text": "The Supreme Court has reviewed the appeals holding and affirms the decision to remand the case for further proceedings.",
+          "exhibits": [
+            "Appeals court decision document",
+            "Panel vote record"
+          ],
+          "dissent": {
+            "against": "remand",
+            "reason": "Insufficient justification for remanding without a majority rationale."
+          },
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2026-01-18T03:15:45.123456Z"
+          }
+        },
+        {
+          "role": "Justice Originalist",
+          "level": "supreme",
+          "message_type": "holding",
+          "proposed_number": 0,
+          "vote": {
+            "decision": "remand",
+            "rationale": "The appeals court's decision to remand aligns with proper judicial procedure, allowing further examination."
+          },
+          "claims": [
+            "ANSWER: remand"
+          ],
+          "evidence": [
+            "The appeals court issued a remand, indicating further review is necessary.",
+            "No dissent was recorded at the appeals level, suggesting consensus.",
+            "Remanding is often used to ensure all facts and circumstances are adequately considered."
+          ],
+          "critiques": [
+            "Remanding may delay final resolution, affecting parties involved.",
+            "The appeals panel could have provided more detailed reasoning for remand.",
+            "Potential misuse of remand as a procedural stalling tactic."
+          ],
+          "counterarguments": [
+            "Remand allows for thorough justice and fact-finding.",
+            "Proper protocol is followed, preserving judicial integrity.",
+            "Ensures that any oversights or mistakes are rectified."
+          ],
+          "confidence": 0.95,
+          "transcript_text": "The appeals court's remand reflects a commitment to thorough judicial review, ensuring that no stone is left unturned in pursuit of justice.",
+          "exhibits": [
+            "Appeals court holding document",
+            "Majority vote record"
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2026-01-18T03:15:22.123456Z"
+          }
+        },
+        {
+          "role": "Justice Utilitarian",
+          "level": "supreme",
+          "message_type": "holding",
+          "proposed_number": null,
+          "vote": {
+            "decision": "remand",
+            "rationale": "The appeals court's decision to remand aligns with the need for further review to optimize public utility."
+          },
+          "claims": [
+            "ANSWER: Remand"
+          ],
+          "evidence": [
+            "The appeals court has identified issues requiring further examination.",
+            "Remanding allows for additional fact-finding and legal analysis.",
+            "Maximizing public utility is best served by ensuring a thorough review."
+          ],
+          "critiques": [
+            "A dissent might argue that remanding delays resolution.",
+            "Opponents may claim remand adds unnecessary litigation costs."
+          ],
+          "counterarguments": [
+            "Further examination ensures justice and accuracy, which ultimately saves resources.",
+            "Allowing all facts and arguments to be considered increases confidence in the outcome."
+          ],
+          "confidence": 0.95,
+          "transcript_text": "The court finds that remanding allows for a comprehensive review, serving maximal utility.",
+          "exhibits": [
+            "Appeals court holding document",
+            "Case evidence requiring further review"
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2026-01-18T03:11:12.441250Z"
+          }
+        },
+        {
+          "role": "Justice Empiricist",
+          "level": "supreme",
+          "message_type": "analysis",
+          "proposed_number": null,
+          "vote": null,
+          "claims": [
+            "ANSWER: remand"
+          ],
+          "evidence": [
+            "Appeals court holding indicates remand.",
+            "No dissents registered in appeals holding.",
+            "Timestamp of appeals decision: 2026-01-18T03:11:12.441250Z."
+          ],
+          "critiques": [
+            "Remand may necessitate further factual development.",
+            "Lack of dissents suggests consensus at appeals level."
+          ],
+          "counterarguments": [
+            "Remand could delay final resolution.",
+            "Consensus might overlook minority perspectives."
+          ],
+          "confidence": 0.95,
+          "transcript_text": "The appeals court's decision to remand lacks dissent, suggesting a unified rationale for further review at a lower level.",
+          "exhibits": [],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2026-01-18T03:20:00.000000Z"
+          }
+        }
+      ],
+      "exhibits": [
+        "Appeals court decision document",
+        "Panel vote record",
+        "Appeals court holding document",
+        "Majority vote record",
+        "Appeals court holding document",
+        "Case evidence requiring further review"
+      ]
+    },
+    {
+      "level": "senate",
+      "decision": {
+        "level": "senate",
+        "protocol": "political override vote",
+        "statute_number": 0,
+        "amendments": [
+          "ANSWER: Approve the statute-number as 0.",
+          "ANSWER: Override the Supreme Court's procedural legitimacy claim.",
+          "ANSWER: Approve amendment to set statute number."
+        ],
+        "roll_call": [
+          {
+            "senator": "Majority Leader",
+            "decision": "approve",
+            "proposed_number": 0
+          },
+          {
+            "senator": "Minority Leader",
+            "decision": "override",
+            "proposed_number": null
+          },
+          {
+            "senator": "Senator 1",
+            "decision": "approve",
+            "proposed_number": 1
+          }
+        ],
+        "result": "passed",
+        "timestamp": "2026-01-18T03:11:43.479881Z"
+      },
+      "transcripts": [
+        {
+          "role": "Majority Leader",
+          "level": "senate",
+          "message_type": "summary",
+          "proposed_number": 0,
+          "vote": {
+            "decision": "approve",
+            "rationale": "Procedural legitimacy affirmed by Supreme Court."
+          },
+          "claims": [
+            "ANSWER: Approve the statute-number as 0."
+          ],
+          "evidence": [
+            "Supreme Court affirmed procedural legitimacy.",
+            "Majority synthesized trial and appellate records.",
+            "Dissent does not impact the majority decision."
+          ],
+          "critiques": [],
+          "counterarguments": [],
+          "confidence": 0.95,
+          "transcript_text": "The Supreme Court has affirmed the procedural legitimacy, consolidating records into statute-number 0. Let's proceed to approve this number.",
+          "exhibits": [],
+          "dissent": {
+            "against": "remand",
+            "reason": "Insufficient justification for remanding without a majority rationale."
+          },
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2026-01-18T03:11:26.444541Z"
+          }
+        },
+        {
+          "role": "Minority Leader",
+          "level": "senate",
+          "message_type": "amendment",
+          "proposed_number": null,
+          "vote": {
+            "decision": "override",
+            "rationale": "The Senate must assert its authority to set statute numbers, not merely affirm court decisions."
+          },
+          "claims": [
+            "ANSWER: Override the Supreme Court's procedural legitimacy claim."
+          ],
+          "evidence": [
+            "Senate has the constitutional responsibility to legislate and set statute numbers.",
+            "The Supreme Court's decision lacks a majority rationale for remand."
+          ],
+          "critiques": [
+            "The Supreme Court's decision consolidates without addressing legislative prerogatives.",
+            "The absence of a majority rationale weakens the decision's legitimacy."
+          ],
+          "counterarguments": [
+            "Some may argue the Court's consolidation aids clarity, but legislative authority must not be bypassed."
+          ],
+          "confidence": 0.85,
+          "transcript_text": "The Senate must not passively accept a consolidation lacking rationale; we propose to override and assert the legislative prerogative.",
+          "exhibits": [
+            "Senate procedures",
+            "Constitutional provisions"
+          ],
+          "dissent": {
+            "against": "remand",
+            "reason": "Insufficient justification for remanding without a majority rationale."
+          },
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2024-03-15T12:00:00Z"
+          }
+        },
+        {
+          "role": "Senator 1",
+          "level": "senate",
+          "message_type": "amendment",
+          "proposed_number": 1,
+          "vote": {
+            "decision": "approve",
+            "rationale": "The proposed amendment aligns with the Supreme Court's affirmation of procedural legitimacy and sets a clear statute number for future reference."
+          },
+          "claims": [
+            "ANSWER: Approve amendment to set statute number."
+          ],
+          "evidence": [
+            "The Supreme Court has affirmed procedural legitimacy.",
+            "Consolidation of records supports a unified approach.",
+            "Clear statute numbers enhance legislative clarity."
+          ],
+          "critiques": [
+            "Some may argue for further clarification on numbers.",
+            "Potential for confusion without explicit statutory references.",
+            "Opposition may cite concerns over procedural implications."
+          ],
+          "counterarguments": [
+            "The Supreme Court's opinion validates the number choice.",
+            "A unified number simplifies legislative tracking.",
+            "Stakeholders have expressed support for clarity in statute numbering."
+          ],
+          "confidence": 0.85,
+          "transcript_text": "In light of the Supreme Court's insightful affirmation, I stand in favor of the proposed amendment to establish statute number one as a beacon of clarity in our legislative efforts.",
+          "exhibits": [
+            "Supreme Court Opinion Document",
+            "Previous Legislative Statute References",
+            "Feedback from Constituency on Clarity"
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o-mini",
+            "timestamp": "2026-01-18T03:11:26.444541Z"
+          }
+        }
+      ],
+      "exhibits": [
+        "Senate procedures",
+        "Constitutional provisions",
+        "Supreme Court Opinion Document",
+        "Previous Legislative Statute References",
+        "Feedback from Constituency on Clarity"
+      ]
+    }
+  ],
+  "record_on_appeal": [
+    {
+      "level": "trial",
+      "decision": {
+        "level": "trial",
+        "protocol": "majority vote",
+        "verdict_number": 0,
+        "shortlist": [],
+        "vote_tally": {},
+        "dissents": [
+          {
+            "role": "Bailiff",
+            "proposed_number": null
+          },
+          {
+            "role": "Prosecution Advocate A",
+            "proposed_number": null
+          },
+          {
+            "role": "Defense Advocate A",
+            "proposed_number": null
+          },
+          {
+            "role": "Expert Witness",
+            "proposed_number": null
+          },
+          {
+            "role": "Trial Judge",
+            "proposed_number": null
+          }
+        ],
+        "timestamp": "2026-01-18T03:11:01.486883Z"
+      },
+      "exhibits": [
+        "Recidivism report from the Department of Justice.",
+        "Victim impact statements.",
+        "Sentencing guideline document.",
+        "Crime Report Exhibit A",
+        "Witness Testimony Transcript B",
+        "Forensic Analysis Report C"
+      ]
+    },
+    {
+      "level": "appeals",
+      "decision": {
+        "level": "appeals",
+        "protocol": "critique + panel vote",
+        "holding": "remand",
+        "majority_number": 0,
+        "dissents": [],
+        "timestamp": "2026-01-18T03:11:12.441250Z"
+      },
+      "exhibits": [
+        "Trial verdict record dated 2026-01-18",
+        "Trial record lacking a proposed number.",
+        "Timestamp of record."
+      ]
+    },
+    {
+      "level": "supreme",
+      "decision": {
+        "level": "supreme",
+        "protocol": "consensus + authored opinion",
+        "final_number": 0,
+        "opinion": {
+          "syllabus": "The Court consolidates the record and affirms procedural legitimacy.",
+          "majority": "The majority synthesizes the trial and appellate record into a single number.",
+          "dissents": [
+            {
+              "against": "remand",
+              "reason": "Insufficient justification for remanding without a majority rationale."
+            }
+          ],
+          "writer": "Chief Justice"
+        },
+        "timestamp": "2026-01-18T03:11:26.444541Z"
+      },
+      "exhibits": [
+        "Appeals court decision document",
+        "Panel vote record",
+        "Appeals court holding document",
+        "Majority vote record",
+        "Appeals court holding document",
+        "Case evidence requiring further review"
+      ]
+    },
+    {
+      "level": "senate",
+      "decision": {
+        "level": "senate",
+        "protocol": "political override vote",
+        "statute_number": 0,
+        "amendments": [
+          "ANSWER: Approve the statute-number as 0.",
+          "ANSWER: Override the Supreme Court's procedural legitimacy claim.",
+          "ANSWER: Approve amendment to set statute number."
+        ],
+        "roll_call": [
+          {
+            "senator": "Majority Leader",
+            "decision": "approve",
+            "proposed_number": 0
+          },
+          {
+            "senator": "Minority Leader",
+            "decision": "override",
+            "proposed_number": null
+          },
+          {
+            "senator": "Senator 1",
+            "decision": "approve",
+            "proposed_number": 1
+          }
+        ],
+        "result": "passed",
+        "timestamp": "2026-01-18T03:11:43.479881Z"
+      },
+      "exhibits": [
+        "Senate procedures",
+        "Constitutional provisions",
+        "Supreme Court Opinion Document",
+        "Previous Legislative Statute References",
+        "Feedback from Constituency on Clarity"
+      ]
+    }
+  ],
+  "final_number": 0,
+  "final_answer": "Approve amendment to set statute number."
+}

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { apiUrl, exportRun, getRun, listRuns } from "./api";
+import { exportRun, getRun, listRuns } from "./api";
 import type {
   RunRecord,
   RunSummary,
@@ -115,7 +115,7 @@ export default function App() {
     const params = new URLSearchParams({
       question,
     });
-    const source = new EventSource(apiUrl(`/api/run/stream?${params.toString()}`));
+    const source = new EventSource(`/api/run/stream?${params.toString()}`);
     streamRef.current = source;
 
     source.onmessage = (event) => {
