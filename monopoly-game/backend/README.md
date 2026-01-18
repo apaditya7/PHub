@@ -14,7 +14,7 @@ Getting Started
  - Enable dev tools for deterministic tests: set `DEV_TOOLS=true` in `.env` or environment.
 
 Environment
-- `PORT`: HTTP port (default 4000).
+- `PORT`: HTTP port (default 3001 for Next.js integration).
 
 Project Structure
 - `src/index.ts`: Entry point; bootstraps HTTP + Socket.IO.

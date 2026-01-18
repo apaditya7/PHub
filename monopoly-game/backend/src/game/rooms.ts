@@ -7,6 +7,7 @@ export interface Room {
   hostId: PlayerID | null;
   passcode?: string;
   tokens: Map<string, PlayerID>;
+  boardTheme?: 'main' | 'ntu' | 'nus' | 'smu';
 }
 
 function randomCode(): RoomID {
@@ -17,7 +18,7 @@ function randomCode(): RoomID {
 export class RoomManager {
   private rooms = new Map<RoomID, Room>();
 
-  createRoom(hostId: PlayerID, hostName: string, passcode?: string): Room {
+  createRoom(hostId: PlayerID, hostName: string, passcode?: string, boardTheme: 'main' | 'ntu' | 'nus' | 'smu' = 'main'): Room {
     let id: RoomID;
     do {
       id = randomCode();
@@ -25,7 +26,7 @@ export class RoomManager {
 
     const state = createInitialState();
     addPlayer(state, hostId, hostName);
-    const room: Room = { id, state, hostId, passcode, tokens: new Map() };
+    const room: Room = { id, state, hostId, passcode, tokens: new Map(), boardTheme };
     this.rooms.set(id, room);
     return room;
   }

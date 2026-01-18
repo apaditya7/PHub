@@ -28,6 +28,7 @@ interface GameState {
   increaseScore: (amount: number) => void
   increaseSpeed: (amount: number) => void
   resetGame: () => void
+  setHighScore: (value: number) => void
 }
 
 export const useStore = create<GameState>((set) => ({
@@ -48,7 +49,7 @@ export const useStore = create<GameState>((set) => ({
   gameStarted: false,
   gameOver: false,
   score: 0,
-  highScore: typeof window !== 'undefined' ? parseInt(localStorage.getItem('highScore') || '0') : 0,
+  highScore: 0,
   speed: 25, // Initial speed
 
   startGame: () => set({ gameStarted: true, gameOver: false, score: 0, speed: 25 }),
@@ -66,4 +67,5 @@ export const useStore = create<GameState>((set) => ({
   increaseScore: (amount) => set((state) => ({ score: state.score + amount })),
   increaseSpeed: (amount) => set((state) => ({ speed: state.speed + amount })),
   resetGame: () => set({ gameStarted: false, gameOver: false, score: 0, speed: 25 }),
+  setHighScore: (value: number) => set({ highScore: value }),
 }))

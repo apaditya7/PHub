@@ -233,6 +233,7 @@ function Explosion({ position }: { position: THREE.Vector3 }) {
 function NeonRacerUI() {
     const score = useStore(state => state.score)
     const highScore = useStore(state => state.highScore)
+    const setHighScore = useStore(state => state.setHighScore)
     const gameOver = useStore(state => state.gameOver)
     const gameStarted = useStore(state => state.gameStarted)
     const startGame = useStore(state => state.startGame)
@@ -240,6 +241,11 @@ function NeonRacerUI() {
 
     useEffect(() => {
         resetGame()
+        // Hydrate high score from localStorage after mount to avoid SSR mismatch
+        try {
+            const stored = typeof window !== 'undefined' ? parseInt(localStorage.getItem('highScore') || '0') : 0
+            if (!Number.isNaN(stored) && stored > 0) setHighScore(stored)
+        } catch {}
         return () => {
             audioManager.stopMusic()
         }
@@ -306,7 +312,7 @@ function NeonRacerUI() {
                 fontSize: '1.2rem'
             }}>
                 SCORE: {score}
-                <div style={{ fontSize: '0.8rem', color: '#aaa', marginTop: 5 }}>HI: {highScore}</div>
+                <div style={{ fontSize: '0.8rem', color: '#aaa', marginTop: 5 }} suppressHydrationWarning>HI: {highScore}</div>
             </div>
 
             <div style={{

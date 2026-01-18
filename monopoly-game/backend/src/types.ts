@@ -96,6 +96,11 @@ export interface ClientToServerEvents {
     playerName: string,
     ack: (ok: boolean, message?: string) => void
   ) => void;
+  createRoomWithBoard?: (
+    playerName: string,
+    board: 'main' | 'ntu' | 'nus' | 'smu',
+    ack: (roomId: RoomID) => void
+  ) => void;
   // Session-oriented APIs (recommended)
   createSession: (
     playerName: string,
@@ -138,6 +143,7 @@ export interface ServerToClientEvents {
     currentTurn: PlayerID | null;
     started: boolean;
     hostId: PlayerID | null;
+    boardTheme?: 'main' | 'ntu' | 'nus' | 'smu';
   }) => void;
   gameUpdate: (state: GameState) => void;
   privateCardDrawn?: (payload: { deck: 'chance' | 'community'; cardId: string }) => void;

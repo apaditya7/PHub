@@ -1,166 +1,143 @@
 'use client';
 
 import Link from "next/link";
-import { useState } from "react";
-import { useAuth } from "../components/AuthProvider";
+import { motion } from "framer-motion";
+import Image from "next/image";
 
-export default function Home() {
-  const { user } = useAuth();
-  const [generating, setGenerating] = useState(false);
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
+// Floating card component
+const FloatingCard = ({
+  emoji,
+  text,
+  rotation,
+  position
+}: {
+  emoji: string;
+  text: string;
+  rotation: number;
+  position: { x: string; y: string }
+}) => {
+  return (
+    <motion.div
+      className="absolute bg-white rounded-xl p-4 shadow-xl hover:shadow-2xl transition-shadow cursor-default"
+      style={{
+        left: position.x,
+        top: position.y,
+        rotate: rotation,
+        width: '200px',
+      }}
+      animate={{
+        y: [0, -12, 0],
+        rotate: [rotation, rotation + 3, rotation],
+      }}
+      transition={{
+        duration: 4 + Math.random() * 2,
+        repeat: Infinity,
+        ease: "easeInOut",
+      }}
+      whileHover={{
+        scale: 1.05,
+        rotate: 0,
+        transition: { duration: 0.3 }
+      }}
+    >
+      <div className="flex items-start gap-2">
+        <div className="text-2xl text-orange-500 flex-shrink-0">{emoji}</div>
+        <p className="text-gray-700 text-xs leading-relaxed pt-1">{text}</p>
+      </div>
+    </motion.div>
+  );
+};
 
-  const generateImage = async () => {
-    setGenerating(true);
-    setError(null);
-    setImageUrl(null);
-
-    try {
-      const res = await fetch('/api/generate-image', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' }
-      });
-
-      if (!res.ok) {
-        const text = await res.text();
-        throw new Error(text || `Request failed with ${res.status}`);
-      }
-
-      const data = await res.json();
-      setImageUrl(data.dataUrl);
-    } catch (err: any) {
-      setError(err.message || 'Something went wrong');
-    } finally {
-      setGenerating(false);
-    }
-  };
+export default function LandingPage() {
+  const gameCards = [
+    { emoji: "🧠", text: "Play games using only your head movements", rotation: -8, position: { x: "8%", y: "15%" } },
+    { emoji: "👃", text: "Control everything with your nose - no hands needed", rotation: 5, position: { x: "75%", y: "18%" } },
+    { emoji: "💻", text: "Master the hinge input challenge", rotation: -12, position: { x: "10%", y: "65%" } },
+    { emoji: "🎲", text: "Singapore university-themed Monopoly", rotation: 7, position: { x: "78%", y: "68%" } },
+    { emoji: "🏎️", text: "Race through neon streets with motion controls", rotation: -5, position: { x: "12%", y: "40%" } },
+    { emoji: "🧱", text: "Tetris but make it unnecessarily difficult", rotation: 10, position: { x: "80%", y: "43%" } },
+    { emoji: "🎨", text: "The most frustrating UI you'll ever experience", rotation: -15, position: { x: "5%", y: "85%" } },
+  ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900">
-      <div className="container mx-auto px-4 py-16">
-        <header className="text-center mb-16">
-          <h1 className="text-6xl font-bold text-white mb-4 tracking-tight">
-            PHub Dashboard
-          </h1>
-          <p className="text-xl text-purple-200 max-w-2xl mx-auto">
-            Choose your adventure: Browse terrible UI, play a frustrating game, or... trust us?
-          </p>
-        </header>
+    <div className="h-screen bg-black relative overflow-hidden flex items-center justify-center">
+      {/* Floating game cards */}
+      {gameCards.map((card, index) => (
+        <FloatingCard
+          key={index}
+          emoji={card.emoji}
+          text={card.text}
+          rotation={card.rotation}
+          position={card.position}
+        />
+      ))}
 
-        <div className="space-y-8 max-w-4xl mx-auto">
-          {/* Main Menu Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <Link
-              href="/components"
-              className="group relative bg-gradient-to-br from-purple-500/20 to-blue-500/20 backdrop-blur-lg rounded-2xl p-8 border border-purple-400/30 hover:border-purple-400 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/50"
-            >
-              <div className="text-center space-y-4">
-                <div className="text-6xl">🎨</div>
-                <h2 className="text-3xl font-bold text-white">Bad UI Components</h2>
-                <p className="text-purple-200">
-                  Explore our collection of intentionally terrible, creative, and frustrating user interfaces
-                </p>
-                <div className="text-purple-300 font-semibold">
-                  Browse Gallery →
-                </div>
-              </div>
-            </Link>
+      {/* Main content - centered logo and CTA */}
+      <div className="relative z-10 flex flex-col items-center justify-center px-6">
+        {/* Logo - centered in the middle */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="mb-12"
+        >
+          <Image
+            src="/phub-logo.png"
+            alt="PHub Logo"
+            width={600}
+            height={300}
+            className="max-w-2xl w-full h-auto"
+            priority
+          />
+        </motion.div>
 
-            <Link
-              href="/game"
-              className="group relative bg-gradient-to-br from-pink-500/20 to-red-500/20 backdrop-blur-lg rounded-2xl p-8 border border-pink-400/30 hover:border-pink-400 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-pink-500/50"
-            >
-              <div className="text-center space-y-4">
-                <div className="text-6xl">🎮</div>
-                <h2 className="text-3xl font-bold text-white">UX Nightmares</h2>
-                <p className="text-purple-200">
-                  Complete a registration flow in the world's most frustrating interface. Beat the clock!
-                </p>
-                <div className="text-pink-300 font-semibold">
-                  Play Game →
-                </div>
-              </div>
-            </Link>
+        {/* Tagline */}
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="text-xl md:text-2xl text-gray-400 mb-12 text-center max-w-2xl leading-relaxed"
+        >
+          Lowkey games for university students.
+          <br />
+          <span className="text-orange-400">Procrastinate properly.</span>
+        </motion.p>
 
-            <Link
-              href="/gamehub"
-              className="group relative bg-gradient-to-br from-cyan-500/20 to-blue-600/20 backdrop-blur-lg rounded-2xl p-8 border border-cyan-400/30 hover:border-cyan-400 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/50"
-            >
-              <div className="text-center space-y-4">
-                <div className="text-6xl">🎯</div>
-                <h2 className="text-3xl font-bold text-white">GameHub</h2>
-                <p className="text-purple-200">
-                  Motion-controlled games using webcam tracking. Tilt your head, move your nose, pinch with your hands!
-                </p>
-                <div className="text-cyan-300 font-semibold">
-                  Play Games →
-                </div>
-              </div>
-            </Link>
+        {/* CTA Buttons */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
+          className="flex flex-col gap-4 items-center"
+        >
+          <Link
+            href="/login"
+            className="group relative inline-flex items-center justify-center px-12 py-5 text-2xl font-bold text-black bg-gradient-to-r from-orange-400 to-orange-600 rounded-full overflow-hidden shadow-2xl hover:shadow-orange-500/50 transition-all duration-300 hover:scale-105"
+          >
+            <span className="relative z-10">Enter PHub</span>
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-r from-orange-500 to-orange-700"
+              initial={{ x: "100%" }}
+              whileHover={{ x: 0 }}
+              transition={{ duration: 0.3 }}
+            />
+          </Link>
 
-            <Link
-              href="/monopoly"
-              className="group relative bg-gradient-to-br from-orange-500/20 to-yellow-500/20 backdrop-blur-lg rounded-2xl p-8 border border-orange-400/30 hover:border-orange-400 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-orange-500/50"
-            >
-              <div className="text-center space-y-4">
-                <div className="text-6xl">🎲</div>
-                <h2 className="text-3xl font-bold text-white">Monopoly</h2>
-                <p className="text-purple-200">
-                  Multiplayer Monopoly with a university theme. Create or join rooms and compete with friends online!
-                </p>
-                <div className="text-orange-300 font-semibold">
-                  Play Monopoly →
-                </div>
-              </div>
-            </Link>
-          </div>
-
-          {/* Trust Section */}
-          <div className="bg-gradient-to-br from-green-500/10 to-emerald-500/10 backdrop-blur-lg rounded-2xl p-8 border border-green-400/30">
-            <div className="text-center space-y-6">
-              <h2 className="text-4xl font-bold text-white">Do You Trust Us?</h2>
-              <p className="text-purple-200 max-w-xl mx-auto">
-                Click the button below to generate a totally safe, work-friendly image. What could possibly go wrong?
-              </p>
-
-              <button
-                onClick={generateImage}
-                disabled={generating}
-                className="px-8 py-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white text-xl font-bold rounded-lg shadow-lg hover:from-green-600 hover:to-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 hover:scale-105"
-              >
-                {generating ? 'Generating...' : 'Generate NSFW Image'}
-              </button>
-
-              {imageUrl && (
-                <div className="mt-6 bg-white/10 rounded-lg p-4 border border-white/20">
-                  <img src={imageUrl} alt="Generated" className="max-w-full mx-auto rounded-lg shadow-xl" />
-                </div>
-              )}
-
-              {error && (
-                <div className="mt-4 p-4 bg-red-500/20 border border-red-400 rounded-lg">
-                  <p className="text-red-200 font-semibold">{error}</p>
-                </div>
-              )}
-
-              <p className="text-xs text-purple-300 italic">
-                NSFW = National Servicemen Fulltime Working (obviously)
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <footer className="text-center mt-16 text-purple-300">
-          <p className="text-sm">
-            All components are for educational and entertainment purposes
-          </p>
-          {user && (
-            <p className="text-xs mt-2 text-purple-400">
-              Logged in as {user.email}
-            </p>
-          )}
-        </footer>
+          {/* Hinge Games button */}
+          <motion.button
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.9 }}
+            className="text-gray-500 hover:text-orange-400 text-sm transition-colors italic"
+          >
+            Hinge Games...no not that hinge!!!
+          </motion.button>
+        </motion.div>
       </div>
+
+      {/* Ambient glow effects */}
+      <div className="fixed top-1/4 left-1/4 w-96 h-96 bg-orange-500/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="fixed bottom-1/4 right-1/4 w-96 h-96 bg-orange-600/5 rounded-full blur-3xl pointer-events-none" />
     </div>
   );
 }

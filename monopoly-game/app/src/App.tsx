@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import {
   connectSocket,
   createOrJoinRoom,
+  createRoomWithBoard,
   emitBuy,
   emitEndTurn,
   emitPayJailFine,
@@ -211,6 +212,8 @@ export default function App() {
   const [playerName, setPlayerName] = useState<string>(() => (localStorage.getItem('playerName') || ''));
   const [showFlyCard, setShowFlyCard] = useState<null | { deck: 'chance'|'community'; from: { leftPct: number; topPct: number } }>(null);
   const lastPendingTileRef = useRef<number | null>(null);
+  const [boardTheme, setBoardTheme] = useState<'main'|'ntu'|'nus'|'smu'>(() => (localStorage.getItem('boardTheme') as any) || 'main');
+  const setTheme = (t: 'main'|'ntu'|'nus'|'smu') => { setBoardTheme(t); try { localStorage.setItem('boardTheme', t); } catch {} };
 
   const currentPlayer = players[current];
   const cp = currentPlayer ?? { name: "...", cash: 0, position: 0, color: "#999", id: "-", token: "car" as const };
@@ -287,41 +290,56 @@ export default function App() {
     emitBuy(roomId);
   };
 
+  const [createBoard, setCreateBoard] = useState<'main'|'ntu'|'nus'|'smu'>(() => (localStorage.getItem('boardTheme') as any) || 'main');
+  const [showBoardPicker, setShowBoardPicker] = useState(false);
+
   const handleCreateGame = () => {
-    setIsConnecting(true);
+    // Show board selection screen first
     setShowLanding(false);
+    setShowBoardPicker(true);
+  };
+
+  const confirmCreateGame = () => {
+    setIsConnecting(true);
     const name = (playerName || "").trim() || "Player";
     localStorage.setItem("playerName", name);
-    console.log("Creating room for player:", name);
-
-    // If not connected, try to wait a bit for connection
+    localStorage.setItem('boardTheme', createBoard);
     const attemptCreate = () => {
-      createOrJoinRoom(name).then((rid) => {
-        console.log("Room created:", rid);
+      createRoomWithBoard(name, createBoard).then((rid) => {
         roomIdRef.current = rid;
         setRoomId(rid);
         setIsHost(true);
         setIsConnecting(false);
+        setShowBoardPicker(false);
         setShowLobby(true);
         addLog(`Created room ${rid}`);
       }).catch((err) => {
-        console.error("Failed to create room:", err);
-        addLog("Failed to create room - is backend running?");
-        setIsConnecting(false);
-        setShowLanding(true);
-        setConnectionError("Cannot create room. Make sure backend is running.");
+        console.warn("createRoomWithBoard failed, falling back to createRoom:");
+        createOrJoinRoom(name).then((rid) => {
+          roomIdRef.current = rid;
+          setRoomId(rid);
+          setIsHost(true);
+          setIsConnecting(false);
+          setShowBoardPicker(false);
+          setShowLobby(true);
+          addLog(`Created room ${rid}`);
+        }).catch((e2) => {
+          console.error("Failed to create room:", e2);
+          addLog("Failed to create room - is backend running?");
+          setIsConnecting(false);
+          setShowBoardPicker(false);
+          setShowLanding(true);
+          setConnectionError("Cannot create room. Make sure backend is running.");
+        });
       });
     };
-
     if (!isSocketConnected) {
-      console.log("Socket not connected yet, waiting 2 seconds...");
       addLog("Connecting to server...");
       setTimeout(() => {
-        if (isSocketConnected) {
-          attemptCreate();
-        } else {
-          console.error("Socket still not connected after timeout");
+        if (isSocketConnected) attemptCreate();
+        else {
           setIsConnecting(false);
+          setShowBoardPicker(false);
           setShowLanding(true);
           setConnectionError("Cannot connect to server. Is the backend running on port 4000?");
         }
@@ -474,6 +492,7 @@ export default function App() {
         // Determine host on the client using socket id
         const myId = meRef.current;
         if (myId) setIsHost(r.hostId === myId);
+        if (r.boardTheme) setTheme(r.boardTheme);
       },
       onGameUpdate: (g: GameState) => {
         console.log("Received gameUpdate:", g);
@@ -875,7 +894,7 @@ export default function App() {
 
           {/* Board */}
           <section className="board-panel">
-            <div className="board">
+            <div className={`board board-${boardTheme}`}>
               <div className="token-layer">
               {/* Center deck placeholders */}
               {(['chance','community'] as const).map((deck) => {
@@ -1066,6 +1085,7 @@ export default function App() {
                         maxLength={24}
                       />
                     </div>
+                    {/* Board selection moved to the next modal after Create is clicked */}
                   </div>
                   <div className="flex flex-col gap-3">
                     <Button
@@ -1126,6 +1146,36 @@ export default function App() {
                 >
                   {isConnecting ? "Joining..." : "Join Game"}
                 </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
+      {/* Board Picker after Create pressed */}
+      {showBoardPicker && !isConnecting && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+          <Card className="w-full max-w-md">
+            <CardHeader className="text-center">
+              <CardTitle>Select Board</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <label className="block text-sm text-muted-foreground mb-1">Choose which board to play</label>
+                <select
+                  value={createBoard}
+                  onChange={(e) => setCreateBoard(e.target.value as any)}
+                  className="w-full rounded-md border border-border bg-card px-3 py-2 text-sm"
+                >
+                  <option value="main">Main Board (Mixed)</option>
+                  <option value="ntu">NTU</option>
+                  <option value="nus">NUS</option>
+                  <option value="smu">SMU</option>
+                </select>
+              </div>
+              <div className="flex gap-3">
+                <Button variant="outline" className="flex-1" onClick={() => { setShowBoardPicker(false); setShowLanding(true); }}>Back</Button>
+                <Button className="flex-1" onClick={confirmCreateGame} disabled={!playerName.trim()}>Create Game</Button>
               </div>
             </CardContent>
           </Card>

@@ -27,7 +27,7 @@ export default function LandingPage() {
   };
 
   const handleRealNavigation = () => {
-    router.push('/screen-a');
+    router.push('/game/screen-a');
   };
 
   return (

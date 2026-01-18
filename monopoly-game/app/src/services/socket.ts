@@ -109,6 +109,7 @@ export type RoomUpdatePayload = {
   players: Array<Pick<PlayerInfo, "id" | "name" | "cash" | "position" | "bankrupt" | "inJail">>;
   currentTurn: PlayerID | null;
   started: boolean;
+  boardTheme?: 'main' | 'ntu' | 'nus' | 'smu';
   hostId: PlayerID | null;
 };
 
@@ -148,6 +149,17 @@ export function createOrJoinRoom(playerName: string) {
       } else {
         reject(new Error("Failed to create room"));
       }
+    });
+  });
+}
+
+export function createRoomWithBoard(playerName: string, board: 'main'|'ntu'|'nus'|'smu') {
+  const s = getSocket();
+  return new Promise<RoomID>((resolve, reject) => {
+    const timer = setTimeout(() => reject(new Error("CREATE_ROOM_WITH_BOARD_TIMEOUT")), 5000);
+    s.emit("createRoomWithBoard", playerName, board, (roomId: RoomID) => {
+      clearTimeout(timer);
+      if (roomId) resolve(roomId); else reject(new Error("Failed to create room"));
     });
   });
 }

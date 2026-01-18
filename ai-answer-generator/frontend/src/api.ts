@@ -1,5 +1,10 @@
 import { RunRecord, RunSummary } from "./types";
 
+const API_BASE = (import.meta.env.VITE_API_BASE_URL as string | undefined) ?? "";
+const API_BASE_CLEAN = API_BASE.replace(/\/+$/, "");
+
+export const apiUrl = (path: string) => `${API_BASE_CLEAN}${path}`;
+
 export interface RunRequest {
   seed?: number;
   deterministic?: boolean;
@@ -7,7 +12,7 @@ export interface RunRequest {
 }
 
 export async function runTrial(payload: RunRequest): Promise<RunRecord> {
-  const response = await fetch("/api/run", {
+  const response = await fetch(apiUrl("/api/run"), {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
@@ -26,7 +31,7 @@ export async function runTrial(payload: RunRequest): Promise<RunRecord> {
 }
 
 export async function listRuns(): Promise<RunSummary[]> {
-  const response = await fetch("/api/runs");
+  const response = await fetch(apiUrl("/api/runs"));
   if (!response.ok) {
     return [];
   }
@@ -35,7 +40,7 @@ export async function listRuns(): Promise<RunSummary[]> {
 }
 
 export async function getRun(runId: string): Promise<RunRecord> {
-  const response = await fetch(`/api/runs/${runId}`);
+  const response = await fetch(apiUrl(`/api/runs/${runId}`));
   if (!response.ok) {
     throw new Error("run_not_found");
   }
@@ -44,7 +49,7 @@ export async function getRun(runId: string): Promise<RunRecord> {
 }
 
 export async function exportRun(runId: string): Promise<RunRecord> {
-  const response = await fetch(`/api/runs/${runId}/export`);
+  const response = await fetch(apiUrl(`/api/runs/${runId}/export`));
   if (!response.ok) {
     throw new Error("export_failed");
   }

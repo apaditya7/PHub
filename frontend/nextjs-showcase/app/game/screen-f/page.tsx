@@ -57,7 +57,7 @@ export default function ScreenF() {
       setError(`You must select exactly 5 options. Currently selected: ${selected.size}`);
       return;
     }
-    router.push('/screen-g');
+    router.push('/game/screen-g');
   };
 
   return (

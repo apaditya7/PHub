@@ -6,6 +6,7 @@ interface TimerContextType {
   startTime: number | null;
   elapsed: number;
   startTimer: () => void;
+  stopTimer: () => void;
   resetTimer: () => void;
   misclicks: number;
   addMisclick: () => void;
@@ -37,6 +38,14 @@ export function TimerProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const stopTimer = () => {
+    if (startTime) {
+      // Freeze the elapsed time at current value
+      setElapsed(performance.now() - startTime);
+      setStartTime(null);
+    }
+  };
+
   const resetTimer = () => {
     setStartTime(performance.now());
     setElapsed(0);
@@ -56,6 +65,7 @@ export function TimerProvider({ children }: { children: ReactNode }) {
       startTime,
       elapsed,
       startTimer,
+      stopTimer,
       resetTimer,
       misclicks,
       addMisclick,

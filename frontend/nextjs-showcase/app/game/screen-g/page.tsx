@@ -45,14 +45,14 @@ export default function ScreenG() {
       [...selected].every(i => correctAnswers.has(i));
 
     if (isCorrect) {
-      router.push('/results');
+      router.push('/game/results');
     } else {
       addMisclick();
       setAttempts(prev => prev + 1);
 
       if (attempts >= 2) {
         // After 3 attempts, just let them through
-        router.push('/results');
+        router.push('/game/results');
       } else {
         setError('Incorrect selection. Please try again.');
       }

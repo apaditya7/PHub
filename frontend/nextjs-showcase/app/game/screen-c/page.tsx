@@ -9,7 +9,7 @@ export default function ScreenC() {
   const { addMisclick } = useTimer();
 
   const handleThisOption = () => {
-    router.push('/screen-d');
+    router.push('/game/screen-d');
   };
 
   const handleContinueButton = () => {
