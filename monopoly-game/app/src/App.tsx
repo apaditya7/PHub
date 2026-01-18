@@ -90,7 +90,7 @@ const createSpaces = (): Space[] => [
   makeProperty("ML004 / CC Mods (NTU)", "#8b5a33", 60),
   makeTax("School Fees", 150),
   makeProperty("Hall Points System", "#8b5a33", 200),
-  makeProperty("Yunnan Library (NTU)", "#7cc6de", 100),
+  makeProperty("Yunnan Garden (NTU)", "#7cc6de", 100),
   { name: "Chance", type: "chance" },
   makeProperty("Central Library (NUS)", "#7cc6de", 100),
   makeProperty("Campus Green (SMU)", "#7cc6de", 120),

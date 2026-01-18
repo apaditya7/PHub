@@ -5,7 +5,7 @@
   { "id": "ML004_NTU", "name": "ML004 / CC Mods (NTU)", "type": "PROPERTY", "price": 60, "rent": 4 },
   { "id": "SCHOOL_FEES", "name": "School Fees", "type": "TAX", "tax": 150 },
   { "id": "HALL_POINTS", "name": "Hall Points System", "type": "PROPERTY", "price": 200, "rent": 25 },
-  { "id": "YUNNAN_LIBRARY", "name": "Yunnan Library (NTU)", "type": "PROPERTY", "price": 100, "rent": 6 },
+  { "id": "YUNNAN_LIBRARY", "name": "Yunnan Garden (NTU)", "type": "PROPERTY", "price": 100, "rent": 6 },
   { "id": "CHANCE_1", "name": "Chance", "type": "CHANCE" },
   { "id": "CENTRAL_LIBRARY", "name": "Central Library (NUS)", "type": "PROPERTY", "price": 100, "rent": 6 },
   { "id": "CAMPUS_GREEN", "name": "Campus Green (SMU)", "type": "PROPERTY", "price": 120, "rent": 8 },
