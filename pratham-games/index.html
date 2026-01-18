@@ -1,0 +1,253 @@
+
+<html>
+
+<header>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</header>
+
+<body>
+
+
+    <div id="hellzone">
+        <div id="formContainer">Username: <span id="name"></span><span id="cursor">_</span></div>
+        <div id="appearHole" class="hole"></div>
+
+
+        <div id="useHoleContainer" class="holeContainer">
+            Use
+            <div id="useHole" class="hole"></div>
+        </div>
+
+        <div id="discardHoleContainer" class="holeContainer">
+            Discard
+            <div id="discardHole" class="hole"></div>
+        </div>
+
+
+        <span id="letter"></span>
+    </div>
+
+    <style>
+        #hellzone {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .holeContainer {
+            position: absolute;
+            transition: all .2s ease-in-out;
+            text-align: center;
+        }
+
+        #cursor {
+            animation: blink-animation 1s steps(2, start) infinite;
+
+        }
+
+        @keyframes blink-animation {
+            to {
+                visibility: hidden;
+            }
+        }
+
+        @-webkit-keyframes blink-animation {
+            to {
+                visibility: hidden;
+            }
+        }
+
+
+        #formContainer,
+        #name {
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        #name {
+            font-family: monospace;
+        }
+
+        #letter {
+            position: absolute;
+            color: red;
+            font-weight: bold;
+            opacity: 0;
+            font-size: 60px;
+            transition: opacity .25s ease-in-out;
+            font-family: Verdana, Geneva, Tahoma, sans-serif
+        }
+
+        #letter.show {
+            opacity: 1;
+        }
+
+
+        .hole {
+            height: 60px;
+            width: 60px;
+            /* background-color: black; */
+            /* background-color: radial-gradient(circle, rgba(0, 0, 0, 1) 0%, rgba(17, 17, 17, 1) 49%, rgba(62, 62, 62, 1) 92%); */
+            background: rgb(0, 0, 0);
+            background: radial-gradient(circle, rgba(0, 0, 0, 1) 0%, rgb(40 40 40) 49%, rgb(118 118 118) 82%);
+            border-radius: 100%;
+            position: absolute;
+            background-size: 60px;
+        }
+
+        #appearHole {
+            transform: scale(0);
+            top: 46vh;
+            left: 46vw;
+            transition: all .2s ease-in-out;
+        }
+
+        #appearHole.open {
+            transform: scale(1);
+        }
+    </style>
+
+
+    <script>
+
+        // Elements
+        const hellzoneElmt = document.getElementById("hellzone");
+        const appearHoleElmt = document.getElementById("appearHole");
+        const nameElmt = document.getElementById("name")
+        const letterElmt = document.getElementById("letter")
+        const useHoleContainerElmt = document.getElementById("useHoleContainer")
+        const useHoleElmt = document.getElementById("useHole")
+        const discardHoleContainerElmt = document.getElementById("discardHoleContainer")
+        const discardHoleElmt = document.getElementById("discardHole")
+
+
+        moveAllHoles()
+
+        let transitionLock = false;
+
+        // init
+        let currentChar = null
+        let name = "";
+        let speedX = 0, speedY = 0;
+        let letterPosX = 0, letterPosY = 0;
+        const screenCenterX = window.innerWidth / 2;
+        const screenCenterY = window.innerHeight / 2;
+        window.addEventListener('deviceorientation', setSpeed)
+
+
+        // Set the speed of letters depending on gyroscope values
+        // Callback for deviceorientation
+        function setSpeed(e) {
+            speedX = e.gamma / 3
+            speedY = e.beta / 3
+        }
+
+        function createLetter() {
+            currentChar = String.fromCharCode(65 + Math.floor(Math.random() * 26))
+
+            const randModifier = Math.floor(Math.random() * 5)
+            if (randModifier == 1) {
+                currentChar = "&#x1F197;" // OK
+            } else if (randModifier == 2) {
+                currentChar = "&#x1F519;" // back
+            }
+
+            appearHoleElmt.classList.toggle("open");
+            setTimeout(function () {
+                letterElmt.innerHTML = currentChar;
+                letterElmt.classList.toggle("show");
+                // Init letter position
+                letterPosX = screenCenterX;
+                letterPosY = screenCenterY;
+
+                letterElmt.style.left = letterPosX + 'px';
+                letterElmt.style.top = letterPosY + 'px';
+                setTimeout(function () {
+                    appearHoleElmt.classList.toggle("open");
+                    transitionLock = false;
+                }, 400)
+            }, 300)
+        }
+
+        function moveAllHoles() {
+            _moveHole(useHoleContainerElmt)
+            _moveHole(discardHoleContainerElmt)
+        }
+
+        function _moveHole(elmt) {
+            const holeX = Math.floor((window.innerWidth - 60) * Math.random())
+            const holeY = 40 + Math.floor((window.innerHeight - 100) * Math.random())
+            elmt.style.left = holeX;
+            elmt.style.top = holeY;
+        }
+
+
+        function hasHoleCollision(holeElmt) {
+            const holeDimensions = holeElmt.getBoundingClientRect()
+            return (holeDimensions.left <= letterPosX + 10) && (letterPosX + 20 <= holeDimensions.right) && (holeDimensions.top <= letterPosY + 10) && (letterPosY + 50 <= holeDimensions.bottom)
+
+        }
+
+        // Main loop
+        function loop() {
+
+            if (!transitionLock) {
+
+                // Move letter
+                if (letterPosX + speedX < window.innerWidth - 60 && letterPosX + speedX > 0) {
+                    letterPosX += speedX;
+                    letterElmt.style.left = `${letterPosX}px`;
+                }
+                if (letterPosY + speedY < window.innerHeight - 70 && letterPosY + speedY > 0) {
+                    letterPosY += speedY;
+                    letterElmt.style.top = `${letterPosY}px`;
+                }
+
+
+                if (hasHoleCollision(useHoleElmt)) {
+                    transitionLock = true;
+
+                    if (currentChar == "&#x1F197;") { // OK
+                        alert(`Welcome, ${name}`)
+                        name = ""
+                        nameElmt.innerText = name;
+                    } else if (currentChar == "&#x1F519;") { // back
+                        name = name.slice(0, -1);
+                        nameElmt.innerText = name;
+                    } else {
+                        name += currentChar
+                    }
+
+                    nameElmt.innerText = name;
+                    letterElmt.classList.toggle("show");
+                    createLetter();
+                    moveAllHoles()
+
+                }
+
+                if (hasHoleCollision(discardHoleElmt)) {
+                    transitionLock = true;
+                    letterElmt.classList.toggle("show");
+                    createLetter();
+                    moveAllHoles()
+                }
+
+
+
+            }
+
+            window.requestAnimationFrame(loop);
+        }
+
+        setTimeout(function () {
+            createLetter();
+            loop()
+        }, 200);
+
+    </script>
+
+
+</body>
+
+
+</html>
