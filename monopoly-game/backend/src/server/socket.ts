@@ -28,7 +28,8 @@ export function registerSocket(io: IOServer, rooms: RoomManager) {
         })),
         currentTurn: state.turnOrder.length ? state.turnOrder[state.currentTurn] : null,
         started: state.started,
-        hostId: room.hostId
+        hostId: room.hostId,
+        boardTheme: room.boardTheme || 'main'
       });
       io.to(roomId).emit("gameUpdate", state);
     };
@@ -78,6 +79,14 @@ export function registerSocket(io: IOServer, rooms: RoomManager) {
     });
 
     // Session-oriented APIs
+    socket.on("createRoomWithBoard", (playerName, board, ack) => {
+      const theme = (board === 'ntu' || board === 'nus' || board === 'smu') ? board : 'main';
+      const room = rooms.createRoom(sid, playerName || "Player", undefined, theme);
+      (socket.data as any).playerId = sid;
+      socket.join(room.id);
+      ack(room.id);
+      broadcastRoom(room.id);
+    });
     socket.on("createSession", (playerName, passcode, ack) => {
       const { room, playerId, token } = rooms.createSession(playerName || "Player", passcode);
       (socket.data as any).playerId = playerId;

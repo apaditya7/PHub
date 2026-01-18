@@ -62,6 +62,12 @@ h1, h2, h3, h4, h5, h6 {
   overflow: hidden;
 }
 
+/* Board themes (use same image for now; replace per theme later) */
+.board.board-main { background: url("/Board.png") center/contain no-repeat; }
+.board.board-ntu { background: url("/Board-NTU.png") center/contain no-repeat; }
+.board.board-nus { background: url("/Board-NUS.png") center/contain no-repeat; }
+.board.board-smu { background: url("/Board-SMU.png") center/contain no-repeat; }
+
 .board-panel {
   display: flex;
   align-items: flex-start;
