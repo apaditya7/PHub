@@ -18,4 +18,3 @@ Controls
 - Mobile: On-screen controls
 
 Notes
-- This project is customized and rebranded for personal use.

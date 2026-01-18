@@ -1,0 +1,775 @@
+{
+  "run_id": "96f4aba9ea4940a6907a90d0cfc1346b",
+  "started_at": "2026-01-18T03:33:33.594031Z",
+  "finished_at": "2026-01-18T03:34:31.324154Z",
+  "status": "complete",
+  "config": {
+    "mock_mode": false,
+    "deterministic": false,
+    "seed": null,
+    "question": "What should I wear today?"
+  },
+  "stages": [
+    {
+      "level": "trial",
+      "decision": {
+        "level": "trial",
+        "protocol": "majority vote",
+        "verdict_number": 0,
+        "shortlist": [],
+        "vote_tally": {},
+        "dissents": [
+          {
+            "role": "Bailiff",
+            "proposed_number": null
+          },
+          {
+            "role": "Prosecution Advocate A",
+            "proposed_number": null
+          },
+          {
+            "role": "Defense Advocate A",
+            "proposed_number": null
+          },
+          {
+            "role": "Expert Witness",
+            "proposed_number": null
+          },
+          {
+            "role": "Trial Judge",
+            "proposed_number": null
+          }
+        ],
+        "timestamp": "2026-01-18T03:33:59.426474Z"
+      },
+      "transcripts": [
+        {
+          "role": "Bailiff",
+          "level": "trial",
+          "message_type": "opening",
+          "proposed_number": null,
+          "vote": null,
+          "claims": [
+            "ANSWER: Dress in business casual attire."
+          ],
+          "evidence": [
+            "Business casual is widely accepted in professional settings.",
+            "Public artifacts such as workplace dress codes support this choice.",
+            "Social norms favor a polished appearance for daily engagements."
+          ],
+          "critiques": [
+            "Some may argue for more formal attire.",
+            "Casual wear may be deemed inappropriate in certain contexts.",
+            "Weather conditions could influence clothing choices."
+          ],
+          "counterarguments": [
+            "Business casual strikes a balance between comfort and professionalism.",
+            "Flexibility in dress allows for personal expression.",
+            "Most environments accommodate business casual as suitable."
+          ],
+          "confidence": 0.9,
+          "transcript_text": "The court recommends that the individual attire themselves in business casual clothing, adhering to common standards of professionalism.",
+          "exhibits": [
+            "Dress code policies from various workplaces.",
+            "Examples of acceptable business casual outfits.",
+            "Photographs of typical business casual settings."
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o-mini",
+            "timestamp": "2023-10-05T12:00:00Z"
+          }
+        },
+        {
+          "role": "Prosecution Advocate A",
+          "level": "trial",
+          "message_type": "opening",
+          "proposed_number": null,
+          "vote": null,
+          "claims": [
+            "ANSWER: Wear a bold red suit."
+          ],
+          "evidence": [
+            "Red signifies confidence and authority.",
+            "Studies show that red attire can enhance perceptions of power.",
+            "Public figures often wear red to command attention."
+          ],
+          "critiques": [
+            "Some may argue it's too loud for casual settings.",
+            "Concerns about appropriateness for specific occasions.",
+            "Potential for overshadowing others in a group."
+          ],
+          "counterarguments": [
+            "However, confidence is key to success in any interaction.",
+            "A bold choice can break the monotony of typical attire.",
+            "Red can also set a positive tone for the day."
+          ],
+          "confidence": 1.0,
+          "transcript_text": "Ladies and gentlemen, the evidence is clear: a bold red suit is not merely clothing; it is a statement of intent, a declaration of your readiness to seize the day. Let us not waver in our choice but embrace the power of red!",
+          "exhibits": [
+            "Fashion studies on color psychology.",
+            "Images of influential figures in red attire.",
+            "Public opinion polls on color perceptions."
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o-mini",
+            "timestamp": "2023-10-10T10:00:00Z"
+          }
+        },
+        {
+          "role": "Defense Advocate A",
+          "level": "trial",
+          "message_type": "opening",
+          "proposed_number": null,
+          "vote": null,
+          "claims": [
+            "ANSWER: Choose attire that is both professional and appropriate for the occasion."
+          ],
+          "evidence": [
+            "Professional attire is often associated with competence and respect in many settings.",
+            "Weather forecasts suggest comfort is key today, impacting clothing choice.",
+            "Social norms dictate that specific events may require specific attire."
+          ],
+          "critiques": [
+            "A casual approach may undermine professional perception.",
+            "Ignoring weather conditions could lead to discomfort throughout the day.",
+            "Outfits must fit the context of the day's activities."
+          ],
+          "counterarguments": [
+            "Some may argue that personal expression should take precedence over professional norms.",
+            "Certain environments allow for more casual attire without repercussions."
+          ],
+          "confidence": 0.85,
+          "transcript_text": "In considering appropriate attire for today, it is imperative to evaluate both professionalism and comfort based on the day's requirements.",
+          "exhibits": [
+            "Weather report for today",
+            "Dress code policy for workplace",
+            "Survey on professional attire impact"
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o-mini",
+            "timestamp": "2023-10-06T12:00:00Z"
+          }
+        },
+        {
+          "role": "Expert Witness",
+          "level": "trial",
+          "message_type": "opening",
+          "proposed_number": null,
+          "vote": null,
+          "claims": [
+            "ANSWER: Wear business casual attire."
+          ],
+          "evidence": [
+            "Public office standards typically recommend business casual for professional settings.",
+            "Studies indicate that attire can influence perceptions of competence and authority.",
+            "Dress codes are often aligned with cultural expectations in professional environments."
+          ],
+          "critiques": [
+            "Casual attire may undermine perceived professionalism.",
+            "Overly formal attire could be seen as out of place in a relaxed environment.",
+            "Inconsistent attire choices may lead to confusion in social contexts."
+          ],
+          "counterarguments": [
+            "Comfort can enhance performance and confidence.",
+            "Personal expression through clothing may foster authenticity.",
+            "Weather conditions should be considered for practicality."
+          ],
+          "confidence": 0.85,
+          "transcript_text": "In consideration of societal norms and the importance of first impressions, it is prudent to select business casual attire today.",
+          "exhibits": [
+            "Dressing for Success by John T. Molloy",
+            "Harvard Business Review articles on attire and professional perception",
+            "Local dress code guidelines from workplace environments."
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o-mini",
+            "timestamp": "2023-10-01T12:00:00Z"
+          }
+        },
+        {
+          "role": "Trial Judge",
+          "level": "trial",
+          "message_type": "opening",
+          "proposed_number": null,
+          "vote": null,
+          "claims": [
+            "ANSWER: Check the weather forecast to decide what to wear today."
+          ],
+          "evidence": [
+            "Local weather report for current day",
+            "Seasonal clothing guidelines"
+          ],
+          "critiques": [
+            "Personal style preferences not considered",
+            "No specific event details provided"
+          ],
+          "counterarguments": [
+            "Weather is the most practical initial consideration"
+          ],
+          "confidence": 0.9,
+          "transcript_text": "Opening the floor, determining what to wear begins with understanding today's weather conditions.",
+          "exhibits": [
+            "Weather app screenshot",
+            "Calendar showing today's date"
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2023-10-21T10:00:00Z"
+          }
+        }
+      ],
+      "exhibits": [
+        "Dress code policies from various workplaces.",
+        "Examples of acceptable business casual outfits.",
+        "Photographs of typical business casual settings.",
+        "Fashion studies on color psychology.",
+        "Images of influential figures in red attire.",
+        "Public opinion polls on color perceptions.",
+        "Weather report for today",
+        "Dress code policy for workplace",
+        "Survey on professional attire impact",
+        "Dressing for Success by John T. Molloy",
+        "Harvard Business Review articles on attire and professional perception",
+        "Local dress code guidelines from workplace environments.",
+        "Weather app screenshot",
+        "Calendar showing today's date"
+      ]
+    },
+    {
+      "level": "appeals",
+      "decision": {
+        "level": "appeals",
+        "protocol": "critique + panel vote",
+        "holding": "remand",
+        "majority_number": 0,
+        "dissents": [],
+        "timestamp": "2026-01-18T03:34:08.846205Z"
+      },
+      "transcripts": [
+        {
+          "role": "Appellate Judge A",
+          "level": "appeals",
+          "message_type": "ruling",
+          "proposed_number": null,
+          "vote": {
+            "decision": "remand",
+            "rationale": "The trial record lacks a clear verdict number and all parties dissented without proposing a number."
+          },
+          "claims": [
+            "ANSWER: The trial verdict lacks clarity and requires further deliberation."
+          ],
+          "evidence": [
+            "Absence of a proposed verdict number.",
+            "Universal dissent by trial participants.",
+            "No majority or minority position established."
+          ],
+          "critiques": [
+            "Failure to reach a consensus or proposed number.",
+            "Inadequate resolution of trial issues."
+          ],
+          "counterarguments": [
+            "Possible need for additional evidence or clarification."
+          ],
+          "confidence": 0.9,
+          "transcript_text": "The trial record is indecisive with no proposed number, necessitating remand.",
+          "exhibits": [],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2026-01-18T03:33:59.426474Z"
+          }
+        },
+        {
+          "role": "Appellate Judge B",
+          "level": "appeals",
+          "message_type": "critique",
+          "proposed_number": 0,
+          "vote": {
+            "decision": "remand",
+            "rationale": "The trial record lacks a definitive proposed number and consensus."
+          },
+          "claims": [
+            "ANSWER: Remand for further deliberation."
+          ],
+          "evidence": [
+            "The trial verdict contains no proposed number.",
+            "All roles dissented without a proposed number."
+          ],
+          "critiques": [
+            "The trial failed to reach a consensus on a number.",
+            "The absence of a vote tally indicates procedural ambiguity."
+          ],
+          "counterarguments": [
+            "The trial may have lacked sufficient evidence to propose a number."
+          ],
+          "confidence": 0.85,
+          "transcript_text": "Due to the absence of a proposed number in the trial verdict, remand is necessary.",
+          "exhibits": [],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2026-01-18T03:33:59.426474Z"
+          }
+        },
+        {
+          "role": "Judge C",
+          "level": "appeals",
+          "message_type": "opinion",
+          "proposed_number": null,
+          "vote": {
+            "decision": "remand",
+            "rationale": "The trial failed to propose any number or guidance, rendering the verdict incomplete."
+          },
+          "claims": [
+            "ANSWER: Remand for further deliberation."
+          ],
+          "evidence": [
+            "Trial verdict number is 0, indicating no decision.",
+            "Shortlist and vote tally are empty, showing lack of consensus."
+          ],
+          "critiques": [
+            "The trial record reflects no substantive discussion on the question.",
+            "All roles dissented without proposing a number, suggesting procedural oversight."
+          ],
+          "counterarguments": [
+            "One might argue that attire choices are subjective and not within judicial purview."
+          ],
+          "confidence": 0.5,
+          "transcript_text": "The trial court's indecision mandates a remand to address the absence of a proposed number.",
+          "exhibits": [],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2026-01-18T03:35:59.426474Z"
+          }
+        }
+      ],
+      "exhibits": []
+    },
+    {
+      "level": "supreme",
+      "decision": {
+        "level": "supreme",
+        "protocol": "consensus + authored opinion",
+        "final_number": 0,
+        "opinion": {
+          "syllabus": "The Court consolidates the record and affirms procedural legitimacy.",
+          "majority": "The majority synthesizes the trial and appellate record into a single number.",
+          "dissents": [
+            {
+              "against": "remand",
+              "reason": "Decision could have been made based on general guidelines."
+            }
+          ],
+          "writer": "Chief Justice"
+        },
+        "timestamp": "2026-01-18T03:34:20.725294Z"
+      },
+      "transcripts": [
+        {
+          "role": "Chief Justice",
+          "level": "supreme",
+          "message_type": "opinion",
+          "proposed_number": null,
+          "vote": {
+            "decision": "remand",
+            "rationale": "The appeals court decision to remand suggests further examination is necessary."
+          },
+          "claims": [
+            "ANSWER: The question is not suitable for judicial determination."
+          ],
+          "evidence": [
+            "The nature of the question lacks legal relevance.",
+            "No legal statutes or precedents address personal attire decisions.",
+            "Judicial resources are better allocated to matters of legal significance."
+          ],
+          "critiques": [
+            "The appeals court should have dismissed rather than remanded.",
+            "This question does not fit within the judicial purview."
+          ],
+          "counterarguments": [
+            "Some may argue that attire could be relevant in a court setting.",
+            "Dress codes could have legal implications in specific contexts."
+          ],
+          "confidence": 0.85,
+          "transcript_text": "In this matter, the court finds the inquiry about attire lacks legal substance and is not within the jurisdiction of judicial review.",
+          "exhibits": [],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2026-01-18T03:37:45.123456Z"
+          }
+        },
+        {
+          "role": "Justice Originalist",
+          "level": "supreme",
+          "message_type": "opinion",
+          "proposed_number": null,
+          "vote": {
+            "decision": "remand",
+            "rationale": "The question of attire lacks the constitutional gravity for Supreme deliberation."
+          },
+          "claims": [
+            "ANSWER: The matter of daily attire does not warrant Supreme Court intervention."
+          ],
+          "evidence": [
+            "The question lacks legal significance.",
+            "It pertains to personal rather than judicial or legislative matters."
+          ],
+          "critiques": [
+            "The lower court's handling of this non-legal issue is appropriate."
+          ],
+          "counterarguments": [
+            "Some might argue for a cultural or symbolic examination, yet this is extrajudicial."
+          ],
+          "confidence": 1.0,
+          "transcript_text": "The Supreme Court's role is not to dictate personal attire but to interpret laws and precedents.",
+          "exhibits": [
+            "Cultural norms on attire are not codified in law."
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2026-01-18T03:34:08.846205Z"
+          }
+        },
+        {
+          "role": "Justice Utilitarian",
+          "level": "supreme",
+          "message_type": "holding",
+          "proposed_number": null,
+          "vote": {
+            "decision": "remand",
+            "rationale": "The question lacks specific criteria for determining the optimal choice."
+          },
+          "claims": [
+            "ANSWER: Remand for further clarification."
+          ],
+          "evidence": [
+            "The appeals decision remanded due to insufficient context.",
+            "The decision must consider factors like weather, occasion, and comfort."
+          ],
+          "critiques": [
+            "The query is too vague for a definitive Supreme Court ruling."
+          ],
+          "counterarguments": [
+            "Additional context could lead to a more informed decision."
+          ],
+          "confidence": 0.85,
+          "transcript_text": "The matter is remanded for further clarification on criteria influencing attire selection.",
+          "exhibits": [
+            "Appeals holding document dated 2026-01-18."
+          ],
+          "dissent": {
+            "against": "remand",
+            "reason": "Decision could have been made based on general guidelines."
+          },
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2026-01-18T03:37:08.846205Z"
+          }
+        },
+        {
+          "role": "Justice Empiricist",
+          "level": "supreme",
+          "message_type": "holding",
+          "proposed_number": null,
+          "vote": {
+            "decision": "remand",
+            "rationale": "The appeals court holding indicates a need for further examination."
+          },
+          "claims": [
+            "ANSWER: A definitive number for attire selection requires additional context and preferences."
+          ],
+          "evidence": [
+            "Previous holding remanded the decision for further input.",
+            "No specific attire-related number or guidelines provided."
+          ],
+          "critiques": [
+            "Lack of criteria for determining suitable attire.",
+            "No context on weather or occasion."
+          ],
+          "counterarguments": [
+            "Personal style preferences may influence choice.",
+            "General guidelines for attire selection could be referenced."
+          ],
+          "confidence": 0.7,
+          "transcript_text": "The matter of attire is remanded for further evidence on context and preferences.",
+          "exhibits": [],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2026-01-18T03:34:08.846205Z"
+          }
+        }
+      ],
+      "exhibits": [
+        "Cultural norms on attire are not codified in law.",
+        "Appeals holding document dated 2026-01-18."
+      ]
+    },
+    {
+      "level": "senate",
+      "decision": {
+        "level": "senate",
+        "protocol": "political override vote",
+        "statute_number": 0,
+        "amendments": [
+          "ANSWER: The question of attire is not pertinent to the legislative process.",
+          "ANSWER: Conduct roll-call and set statute-number.",
+          "ANSWER: Wear something colorful."
+        ],
+        "roll_call": [
+          {
+            "senator": "Minority Leader",
+            "decision": "approve",
+            "proposed_number": null
+          },
+          {
+            "senator": "Senator 1",
+            "decision": "approve",
+            "proposed_number": 1
+          }
+        ],
+        "result": "passed",
+        "timestamp": "2026-01-18T03:34:31.311515Z"
+      },
+      "transcripts": [
+        {
+          "role": "Majority Leader",
+          "level": "senate",
+          "message_type": "summary",
+          "proposed_number": null,
+          "vote": null,
+          "claims": [
+            "ANSWER: The question of attire is not pertinent to the legislative process."
+          ],
+          "evidence": [],
+          "critiques": [],
+          "counterarguments": [],
+          "confidence": 0.9,
+          "transcript_text": "The attire question is irrelevant to senate proceedings. Focus remains on amendments, roll-call votes, and the statute number.",
+          "exhibits": [],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2026-01-18T03:34:20.725294Z"
+          }
+        },
+        {
+          "role": "Minority Leader",
+          "level": "senate",
+          "message_type": "amendment",
+          "proposed_number": null,
+          "vote": {
+            "decision": "approve",
+            "rationale": "Protocol requires setting a statute-number and conducting a roll-call vote."
+          },
+          "claims": [
+            "ANSWER: Conduct roll-call and set statute-number."
+          ],
+          "evidence": [
+            "Senate protocol mandates proposing amendments.",
+            "Supreme Court decision consolidates procedural legitimacy."
+          ],
+          "critiques": [
+            "Question of attire is irrelevant to senate proceedings.",
+            "Focus should be on legislative procedures."
+          ],
+          "counterarguments": [
+            "Clarity on attire does not affect legislative function."
+          ],
+          "confidence": 0.95,
+          "transcript_text": "The focus remains on executing our legislative duties, setting statute-numbers, and holding votes.",
+          "exhibits": [
+            "Senate protocol documentation.",
+            "Supreme Court decision transcript."
+          ],
+          "dissent": {
+            "against": "remand",
+            "reason": "Decision could have been made based on general guidelines."
+          },
+          "metadata": {
+            "model": "gpt-4o",
+            "timestamp": "2026-01-18T03:34:20.725294Z"
+          }
+        },
+        {
+          "role": "Senator 1",
+          "level": "senate",
+          "message_type": "vote",
+          "proposed_number": 1,
+          "vote": {
+            "decision": "approve",
+            "rationale": "In support of fashion diversity and local culture."
+          },
+          "claims": [
+            "ANSWER: Wear something colorful."
+          ],
+          "evidence": [
+            "Local festivals celebrate vibrant attire.",
+            "Constituents favor creative self-expression.",
+            "Historical data shows a positive impact on morale."
+          ],
+          "critiques": [
+            "Some may argue for conservative choices.",
+            "Concerns about appropriateness for formal settings.",
+            "Weather conditions could be a factor."
+          ],
+          "counterarguments": [
+            "Colorful attire fosters community spirit.",
+            "Encourages inclusivity and personal expression.",
+            "Fashion can be both fun and respectful."
+          ],
+          "confidence": 0.85,
+          "transcript_text": "In consideration of the myriad of options available, I propose we embrace a colorful approach to attire today, reflecting our vibrant constituency's spirit.",
+          "exhibits": [
+            "Fashion survey results from last quarter.",
+            "Local event flyers promoting colorful attire.",
+            "Historical photos of past community gatherings."
+          ],
+          "dissent": null,
+          "metadata": {
+            "model": "gpt-4o-mini",
+            "timestamp": "2026-01-18T03:34:20.725294Z"
+          }
+        }
+      ],
+      "exhibits": [
+        "Senate protocol documentation.",
+        "Supreme Court decision transcript.",
+        "Fashion survey results from last quarter.",
+        "Local event flyers promoting colorful attire.",
+        "Historical photos of past community gatherings."
+      ]
+    }
+  ],
+  "record_on_appeal": [
+    {
+      "level": "trial",
+      "decision": {
+        "level": "trial",
+        "protocol": "majority vote",
+        "verdict_number": 0,
+        "shortlist": [],
+        "vote_tally": {},
+        "dissents": [
+          {
+            "role": "Bailiff",
+            "proposed_number": null
+          },
+          {
+            "role": "Prosecution Advocate A",
+            "proposed_number": null
+          },
+          {
+            "role": "Defense Advocate A",
+            "proposed_number": null
+          },
+          {
+            "role": "Expert Witness",
+            "proposed_number": null
+          },
+          {
+            "role": "Trial Judge",
+            "proposed_number": null
+          }
+        ],
+        "timestamp": "2026-01-18T03:33:59.426474Z"
+      },
+      "exhibits": [
+        "Dress code policies from various workplaces.",
+        "Examples of acceptable business casual outfits.",
+        "Photographs of typical business casual settings.",
+        "Fashion studies on color psychology.",
+        "Images of influential figures in red attire.",
+        "Public opinion polls on color perceptions.",
+        "Weather report for today",
+        "Dress code policy for workplace",
+        "Survey on professional attire impact",
+        "Dressing for Success by John T. Molloy",
+        "Harvard Business Review articles on attire and professional perception",
+        "Local dress code guidelines from workplace environments.",
+        "Weather app screenshot",
+        "Calendar showing today's date"
+      ]
+    },
+    {
+      "level": "appeals",
+      "decision": {
+        "level": "appeals",
+        "protocol": "critique + panel vote",
+        "holding": "remand",
+        "majority_number": 0,
+        "dissents": [],
+        "timestamp": "2026-01-18T03:34:08.846205Z"
+      },
+      "exhibits": []
+    },
+    {
+      "level": "supreme",
+      "decision": {
+        "level": "supreme",
+        "protocol": "consensus + authored opinion",
+        "final_number": 0,
+        "opinion": {
+          "syllabus": "The Court consolidates the record and affirms procedural legitimacy.",
+          "majority": "The majority synthesizes the trial and appellate record into a single number.",
+          "dissents": [
+            {
+              "against": "remand",
+              "reason": "Decision could have been made based on general guidelines."
+            }
+          ],
+          "writer": "Chief Justice"
+        },
+        "timestamp": "2026-01-18T03:34:20.725294Z"
+      },
+      "exhibits": [
+        "Cultural norms on attire are not codified in law.",
+        "Appeals holding document dated 2026-01-18."
+      ]
+    },
+    {
+      "level": "senate",
+      "decision": {
+        "level": "senate",
+        "protocol": "political override vote",
+        "statute_number": 0,
+        "amendments": [
+          "ANSWER: The question of attire is not pertinent to the legislative process.",
+          "ANSWER: Conduct roll-call and set statute-number.",
+          "ANSWER: Wear something colorful."
+        ],
+        "roll_call": [
+          {
+            "senator": "Minority Leader",
+            "decision": "approve",
+            "proposed_number": null
+          },
+          {
+            "senator": "Senator 1",
+            "decision": "approve",
+            "proposed_number": 1
+          }
+        ],
+        "result": "passed",
+        "timestamp": "2026-01-18T03:34:31.311515Z"
+      },
+      "exhibits": [
+        "Senate protocol documentation.",
+        "Supreme Court decision transcript.",
+        "Fashion survey results from last quarter.",
+        "Local event flyers promoting colorful attire.",
+        "Historical photos of past community gatherings."
+      ]
+    }
+  ],
+  "final_number": 0,
+  "final_answer": "Wear something colorful."
+}
