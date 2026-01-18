@@ -4,9 +4,10 @@ import { ClientToServerEvents, ServerToClientEvents, RoomID } from "../types";
 import { handleBuyProperty, handleEndTurn, handleRoll, applyRoll, handlePayJailFine, handleUseGetOutOfJail, handleDrawCard } from "../game/engine";
 
 type IOServer = Server<ClientToServerEvents, ServerToClientEvents>;
+type TypedSocket = Socket<ClientToServerEvents, ServerToClientEvents>;
 
 export function registerSocket(io: IOServer, rooms: RoomManager) {
-  io.on("connection", (socket: Socket) => {
+  io.on("connection", (socket: TypedSocket) => {
     const sid = socket.id;
     // sid -> { roomId, playerId }
     const getPlayerId = (roomId?: string): string | null => {

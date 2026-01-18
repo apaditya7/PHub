@@ -143,4 +143,6 @@ export interface ServerToClientEvents {
   privateCardDrawn?: (payload: { deck: 'chance' | 'community'; cardId: string }) => void;
   privateTaxCharged?: (payload: { amount: number; tileIndex: number }) => void;
   privateJail?: (payload: { reason: 'tile' | 'card' }) => void;
+  privateRentPaid?: (payload: { amount: number; ownerName: string; propertyName: string }) => void;
+  privateRentReceived?: (payload: { amount: number; payerName: string; propertyName: string }) => void;
 }
