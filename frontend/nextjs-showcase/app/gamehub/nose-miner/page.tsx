@@ -169,6 +169,7 @@ export default function NoseMiner() {
 
   useEffect(() => {
     let stream: MediaStream | null = null
+    let animationFrameId: number
 
     const init = async () => {
       try {
@@ -207,17 +208,18 @@ export default function NoseMiner() {
     init()
 
     return () => {
-      if (stream) {
-        stream.getTracks().forEach(t => t.stop())
-      }
-      if (videoRef.current && videoRef.current.srcObject) {
-         const tracks = (videoRef.current.srcObject as MediaStream).getTracks()
-         tracks.forEach(track => track.stop())
-      }
-      if (faceLandmarkerRef.current) {
-        faceLandmarkerRef.current.close()
-      }
-      cancelAnimationFrame(animationRef.current)
+        if (stream) {
+            stream.getTracks().forEach(track => track.stop())
+        }
+        if (videoRef.current && videoRef.current.srcObject) {
+            const tracks = (videoRef.current.srcObject as MediaStream).getTracks()
+            tracks.forEach(track => track.stop())
+        }
+        if (faceLandmarkerRef.current) {
+            faceLandmarkerRef.current.close()
+            faceLandmarkerRef.current = null
+        }
+        cancelAnimationFrame(animationRef.current)
     }
   }, [])
 

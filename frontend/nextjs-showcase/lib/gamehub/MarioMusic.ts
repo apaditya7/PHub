@@ -8,10 +8,14 @@ class MarioMusicPlayer {
     private timeoutId: number | null = null;
 
     init() {
-      if (!this.ctx) {
-        this.ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
+    if (typeof window === 'undefined') return;
+    if (!this.ctx) {
+      const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+      if (AudioContext) {
+        this.ctx = new AudioContext();
       }
     }
+  }
 
     playNote(frequency: number, duration: number, startTime: number, type: OscillatorType = 'square') {
       if (!this.ctx) return;

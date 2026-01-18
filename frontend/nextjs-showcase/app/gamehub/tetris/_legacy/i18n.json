@@ -1,0 +1,45 @@
+{
+  "lan": ["en"],
+  "default": "en",
+  "data": {
+    "title": {
+      "en": "PHub Tetris"
+    },
+    "github": {
+      "cn": "GitHub",
+      "en": "GitHub",
+      "fr": "GitHub",
+      "fa": "گیت‌هاب"
+    },
+    "linkTitle": {
+      "cn": "查看源代码",
+      "en": "View data source",
+      "fr": "Afficher la source des données",
+      "fa": "مشاهده سورس پروژه"
+    },
+    "QRCode":{
+      "cn": "二维码",
+      "en": "QR code",
+      "fr": "QR code",
+      "fa": "کیوآر کد"
+    },
+    "titleCenter": {
+      "en": "PHub Tetris"
+    },
+    "point": { "en": "Point" },
+    "highestScore": { "en": "Max" },
+    "lastRound": { "en": "Last Round" },
+    "cleans": { "en": "Cleans" },
+    "level": { "en": "Level" },
+    "startLine": { "en": "Start Line" },
+    "next": { "en": "Next" },
+    "pause": { "en": "Pause" },
+    "sound": { "en": "Sound" },
+    "reset": { "en": "Reset" },
+    "rotation": { "en": "Up / Rotate" },
+    "left": { "en": "Left" },
+    "right": { "en": "Right" },
+    "down": { "en": "Down" },
+    "drop": { "en": "Drop" }
+  }
+}

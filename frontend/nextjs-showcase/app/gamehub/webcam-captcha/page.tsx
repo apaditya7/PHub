@@ -26,6 +26,8 @@ export default function WebcamCaptcha() {
 
   // Initialize
   useEffect(() => {
+    let stream: MediaStream | null = null
+
     // 1. Initialize Tiles
     const solved = Array.from({ length: TILE_COUNT }, (_, i) => i)
     // Shuffle
@@ -52,7 +54,7 @@ export default function WebcamCaptcha() {
         })
 
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-                const stream = await navigator.mediaDevices.getUserMedia({
+                stream = await navigator.mediaDevices.getUserMedia({
                     video: { width: 640, height: 480 }
                 })
                 if (videoRef.current) {
@@ -76,6 +78,9 @@ export default function WebcamCaptcha() {
 
     return () => {
       // Cleanup
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop())
+      }
       if (videoRef.current && videoRef.current.srcObject) {
         const tracks = (videoRef.current.srcObject as MediaStream).getTracks()
         tracks.forEach(track => track.stop())
