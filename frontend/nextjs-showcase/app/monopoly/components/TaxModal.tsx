@@ -3,10 +3,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 
 interface TaxModalProps {
-  taxInfo: { amount: number; tileIndex: number };
+  amount: number;
 }
 
-export function TaxModal({ taxInfo }: TaxModalProps) {
+export function TaxModal({ amount }: TaxModalProps) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
       <Card className="w-full max-w-sm pointer-events-auto">
@@ -14,7 +14,7 @@ export function TaxModal({ taxInfo }: TaxModalProps) {
           <CardTitle>💰 TAX</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-center text-lg">You paid ${taxInfo.amount}.</p>
+          <p className="text-center text-lg">You paid ${amount}.</p>
         </CardContent>
       </Card>
     </div>

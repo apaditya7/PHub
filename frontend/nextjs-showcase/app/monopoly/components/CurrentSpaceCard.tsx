@@ -5,16 +5,16 @@ import { Button } from "./ui/button";
 import type { UIPlayer, Space } from "../lib/types";
 
 interface CurrentSpaceCardProps {
-  currentSpace: Space;
-  players: UIPlayer[];
-  canBuyCurrent: boolean;
+  space: Space;
+  players?: UIPlayer[];
+  canBuy: boolean;
   onBuy: () => void;
 }
 
 export function CurrentSpaceCard({
-  currentSpace,
-  players,
-  canBuyCurrent,
+  space,
+  players = [],
+  canBuy,
   onBuy,
 }: CurrentSpaceCardProps) {
   return (
@@ -24,27 +24,27 @@ export function CurrentSpaceCard({
       </CardHeader>
       <CardContent className="space-y-3">
         <div>
-          <p className="font-medium">{currentSpace.name}</p>
+          <p className="font-medium">{space.name}</p>
           <p className="text-xs uppercase tracking-wide text-muted-foreground">
-            {currentSpace.type}
+            {space.type}
           </p>
         </div>
-        {currentSpace.price && (
+        {space.price && (
           <p className="text-xs text-muted-foreground">
-            Price: ${currentSpace.price} · Rent: ${currentSpace.rent ?? 0}
+            Price: ${space.price} · Rent: ${space.rent ?? 0}
           </p>
         )}
-        {currentSpace.tax && (
-          <p className="text-xs text-muted-foreground">Fee: ${currentSpace.tax}</p>
+        {space.tax && (
+          <p className="text-xs text-muted-foreground">Fee: ${space.tax}</p>
         )}
-        {currentSpace.ownerId != null && (
+        {space.ownerId != null && (
           <p className="text-xs text-muted-foreground">
             Owner:{" "}
-            {players.find((p) => p.id === currentSpace.ownerId)?.name ?? "Unknown"}
+            {players.find((p) => p.id === space.ownerId)?.name ?? "Unknown"}
           </p>
         )}
         <div className="flex flex-col gap-2">
-          {canBuyCurrent && (
+          {canBuy && (
             <Button size="sm" onClick={onBuy}>
               Buy property
             </Button>

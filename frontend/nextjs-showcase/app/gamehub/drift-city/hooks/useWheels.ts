@@ -1,9 +1,9 @@
 'use client';
 
 import { useCompoundBody, WheelInfoOptions } from "@react-three/cannon";
-import { useRef } from "react";
+import { useRef, RefObject } from "react";
 
-export const useWheels = (width: number, height: number, front: number, radius: number) => {
+export const useWheels = (width: number, height: number, front: number, radius: number): [RefObject<any>[], WheelInfoOptions[]] => {
   const wheels = [useRef(null), useRef(null), useRef(null), useRef(null)];
 
   const wheelInfo: WheelInfoOptions = {
@@ -25,22 +25,22 @@ export const useWheels = (width: number, height: number, front: number, radius: 
   const wheelInfos = [
     {
       ...wheelInfo,
-      chassisConnectionPointLocal: [-width * 0.65, height * 0.4, front],
+      chassisConnectionPointLocal: [-width * 0.65, height * 0.4, front] as [number, number, number],
       isFrontWheel: true,
     },
     {
       ...wheelInfo,
-      chassisConnectionPointLocal: [width * 0.65, height * 0.4, front],
+      chassisConnectionPointLocal: [width * 0.65, height * 0.4, front] as [number, number, number],
       isFrontWheel: true,
     },
     {
       ...wheelInfo,
-      chassisConnectionPointLocal: [-width * 0.65, height * 0.4, -front],
+      chassisConnectionPointLocal: [-width * 0.65, height * 0.4, -front] as [number, number, number],
       isFrontWheel: false,
     },
     {
       ...wheelInfo,
-      chassisConnectionPointLocal: [width * 0.65, height * 0.4, -front],
+      chassisConnectionPointLocal: [width * 0.65, height * 0.4, -front] as [number, number, number],
       isFrontWheel: false,
     },
   ];

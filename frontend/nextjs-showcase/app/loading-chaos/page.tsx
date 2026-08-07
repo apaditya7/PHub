@@ -20,7 +20,9 @@ export default function LoadingChaos() {
       timerRef.current = window.setTimeout(tick, 300 + Math.random() * 1000);
     };
     tick();
-    return () => timerRef.current && clearTimeout(timerRef.current);
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
   }, []);
 
   return (

@@ -39,9 +39,11 @@ export default function TranscriptionWidget() {
     setIsSupported(hasMedia);
     return () => {
       // Cleanup any active stream on unmount
-      if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
-        try { mediaRecorderRef.current.stop(); } catch {}
-      }
+      try {
+        processorRef.current?.disconnect();
+        sourceRef.current?.disconnect();
+        audioCtxRef.current?.close();
+      } catch {}
       mediaStreamRef.current?.getTracks().forEach(t => t.stop());
     };
   }, []);

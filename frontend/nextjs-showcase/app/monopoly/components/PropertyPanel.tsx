@@ -5,10 +5,19 @@ import type { UIPlayer, Space } from "../lib/types";
 
 interface PropertyPanelProps {
   players: UIPlayer[];
-  ownedByPlayer: Map<string, Space[]>;
+  spaces: Space[];
 }
 
-export function PropertyPanel({ players, ownedByPlayer }: PropertyPanelProps) {
+export function PropertyPanel({ players, spaces }: PropertyPanelProps) {
+  const ownedByPlayer = new Map<string, Space[]>();
+  spaces.forEach(space => {
+    if (space.ownerId) {
+      const list = ownedByPlayer.get(space.ownerId) || [];
+      list.push(space);
+      ownedByPlayer.set(space.ownerId, list);
+    }
+  });
+
   return (
     <Card>
       <CardHeader>

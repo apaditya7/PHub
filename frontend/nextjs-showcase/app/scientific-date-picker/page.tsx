@@ -15,7 +15,7 @@ export default function ScientificDatePicker() {
     const earth = document.getElementById("earth") as HTMLImageElement;
     const dateButton = document.getElementById("date") as HTMLButtonElement;
     const datePicker = document.getElementById("datePicker") as HTMLDivElement;
-    const ellipse = document.getElementById("ellipse") as SVGEllipseElement;
+    const ellipse = document.getElementById("ellipse") as unknown as SVGEllipseElement;
 
     let isPressing = false;
 

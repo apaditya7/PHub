@@ -29,6 +29,7 @@ export type GameState = {
   players: Record<PlayerID, PlayerInfo>;
   turnOrder: PlayerID[];
   currentTurn: number;
+  phase: string;
   started: boolean;
   ended?: boolean;
   winnerId?: PlayerID | null;

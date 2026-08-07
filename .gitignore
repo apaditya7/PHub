@@ -35,3 +35,7 @@ __pycache__/
 *.pyo
 *.pyd
 *.egg-info/
+
+# Files with hardcoded Firebase API keys
+frontend/nextjs-showcase/lib/firebase.ts
+frontend/2026-01-18-read-this-usersprathamranjanphubfrontendreact.txt

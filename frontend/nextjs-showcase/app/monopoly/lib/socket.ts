@@ -87,7 +87,7 @@ export function connectSocket(
 }
 
 // Create a new room
-export function createOrJoinRoom(playerName: string) {
+export function createRoom(playerName: string) {
   const s = getSocket();
   return new Promise<RoomID>((resolve, reject) => {
     s.emit("createRoom", playerName, (roomId: RoomID) => {
@@ -96,6 +96,21 @@ export function createOrJoinRoom(playerName: string) {
         resolve(roomId);
       } else {
         reject(new Error("Failed to create room"));
+      }
+    });
+  });
+}
+
+// Join an existing room
+export function joinRoom(playerName: string, roomId: RoomID) {
+  const s = getSocket();
+  return new Promise<RoomID>((resolve, reject) => {
+    s.emit("joinRoom", { playerName, roomId }, (response: any) => {
+      if (response && response.success) {
+        console.log("[Monopoly] Joined room:", roomId);
+        resolve(roomId);
+      } else {
+        reject(new Error(response?.message || "Failed to join room"));
       }
     });
   });

@@ -313,8 +313,10 @@ function TextHateMouse({
     return () => clearTimeout(timer);
   }, [evasionRadius, pauseUpdate, createCursorBody, resumeUpdate]);
 
+  const Component = Tag as any;
+
   return (
-    <Tag
+    <Component
       ref={containerRef}
       aria-label={ariaLabel}
       className="relative whitespace-pre-wrap"
@@ -340,7 +342,7 @@ function TextHateMouse({
           className="pointer-events-none absolute inset-0 bg-transparent"
         />
       )}
-    </Tag>
+    </Component>
   );
 }
 

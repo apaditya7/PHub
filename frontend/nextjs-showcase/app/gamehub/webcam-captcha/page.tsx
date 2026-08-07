@@ -12,6 +12,7 @@ const TILE_SIZE = CANVAS_SIZE / GRID_SIZE
 
 export default function WebcamCaptcha() {
   const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   const [isSolved, setIsSolved] = useState(false)
 
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -41,13 +42,13 @@ export default function WebcamCaptcha() {
 
       try {
         const vision = await FilesetResolver.forVisionTasks(
-          'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0/wasm'
+          'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.9/wasm'
         )
 
         handLandmarkerRef.current = await HandLandmarker.createFromOptions(vision, {
           baseOptions: {
-            modelAssetPath: `https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task`,
-            delegate: "GPU"
+            modelAssetPath: 'https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task',
+            delegate: "CPU"
           },
           runningMode: "VIDEO",
           numHands: 1

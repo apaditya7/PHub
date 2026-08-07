@@ -5,15 +5,18 @@ import { Button } from "./ui/button";
 import { cardById } from "../lib/cards-data";
 
 interface CardModalProps {
-  drawnCard: { deck: 'chance' | 'community'; cardId: string };
+  cardId: string;
   onClose: () => void;
 }
 
-export function CardModal({ drawnCard, onClose }: CardModalProps) {
-  const cardData = cardById(drawnCard.cardId);
+export function CardModal({ cardId, onClose }: CardModalProps) {
+  const cardData = cardById(cardId);
   const drawnMeta = cardData
     ? { title: cardData.name, description: cardData.description }
     : { title: "Card", description: "..." };
+
+  // Infer deck or default
+  const deck = cardId.startsWith("chance") ? "chance" : "community";
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
@@ -21,10 +24,10 @@ export function CardModal({ drawnCard, onClose }: CardModalProps) {
         <CardHeader className="text-center">
           <CardTitle
             className={
-              drawnCard.deck === "chance" ? "text-orange-600" : "text-blue-600"
+              deck === "chance" ? "text-orange-600" : "text-blue-600"
             }
           >
-            {drawnCard.deck === "chance" ? "🎲 CHANCE" : "📦 COMMUNITY CHEST"}
+            {deck === "chance" ? "🎲 CHANCE" : "📦 COMMUNITY CHEST"}
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">

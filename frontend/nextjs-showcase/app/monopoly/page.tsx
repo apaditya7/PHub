@@ -4,7 +4,9 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   connectSocket,
-  createOrJoinRoom,
+  createRoom,
+  joinRoom,
+  disconnectSocket,
   emitBuy,
   emitEndTurn,
   emitRoll,
@@ -102,7 +104,7 @@ export default function MonopolyGame() {
   // ─────────────────────────────────────────────────────────────────────────
   // Derived values
   // ─────────────────────────────────────────────────────────────────────────
-  const currentPlayerId = state?.turnOrder[state.currentTurnIndex] || "";
+  const currentPlayerId = state?.turnOrder[state.currentTurn] || "";
   const currentPlayer = players.find((p) => p.id === currentPlayerId) || players[0];
   const canRoll = state?.phase === "ROLL" && currentPlayerId === meId && !rolling && !moving;
   const canEnd = state?.phase === "RESOLVE" && currentPlayerId === meId && !moving;
@@ -151,7 +153,7 @@ export default function MonopolyGame() {
       localStorage.setItem("monopolyPlayerName", playerName.trim());
     }
     setIsConnecting(true);
-    createOrJoinRoom(socketRef.current, "create", playerName.trim(), undefined);
+    createRoom(playerName.trim());
   };
 
   const handleJoinGame = () => {
@@ -160,17 +162,17 @@ export default function MonopolyGame() {
       localStorage.setItem("monopolyPlayerName", playerName.trim());
     }
     setIsConnecting(true);
-    createOrJoinRoom(socketRef.current, "join", playerName.trim(), joinRoomCode.toUpperCase());
+    joinRoom(playerName.trim(), joinRoomCode.toUpperCase());
   };
 
   const handleStartGame = () => {
     if (!roomId || !socketRef.current) return;
-    emitStartGame(socketRef.current, roomId);
+    emitStartGame(roomId);
   };
 
   const handleLeaveGame = () => {
     if (!roomId || !meId || !socketRef.current) return;
-    emitLeaveGame(socketRef.current, roomId, meId);
+    emitLeaveGame(roomId);
     if (typeof window !== "undefined") {
       sessionStorage.removeItem("monopolyRoomId");
     }
@@ -179,7 +181,7 @@ export default function MonopolyGame() {
 
   const handleEndGame = () => {
     if (!roomId || !socketRef.current) return;
-    emitEndGame(socketRef.current, roomId);
+    emitEndGame(roomId);
   };
 
   // ─────────────────────────────────────────────────────────────────────────
@@ -188,12 +190,12 @@ export default function MonopolyGame() {
   const handleRollDice = () => {
     if (!canRoll || !roomId || !socketRef.current) return;
     setRolling(true);
-    emitRoll(socketRef.current, roomId);
+    emitRoll(roomId);
   };
 
   const handleEndTurn = () => {
     if (!canEnd || !roomId || !socketRef.current) return;
-    emitEndTurn(socketRef.current, roomId);
+    emitEndTurn(roomId);
   };
 
   const handleBuyProperty = () => {
@@ -201,12 +203,12 @@ export default function MonopolyGame() {
     const myPos = state?.players[meId]?.position ?? 0;
     const tile = state?.board[myPos];
     if (!tile || tile.ownerId) return;
-    emitBuy(socketRef.current, roomId, meId, myPos);
+    emitBuy(roomId);
   };
 
   const handleDrawCard = (deck: "chance" | "community") => {
     if (!roomId || !meId || !socketRef.current) return;
-    emitDrawCard(socketRef.current, roomId, meId, deck);
+    emitDrawCard(roomId, deck);
   };
 
   // ─────────────────────────────────────────────────────────────────────────
@@ -394,7 +396,8 @@ export default function MonopolyGame() {
               <div className="mt-6">
                 <CurrentSpaceCard
                   space={currentSpace}
-                  canBuy={state?.phase === "RESOLVE" && currentPlayerId === meId && !currentSpace.owner}
+                  players={players}
+                  canBuy={state?.phase === "RESOLVE" && currentPlayerId === meId && !currentSpace.ownerId}
                   onBuy={handleBuyProperty}
                 />
               </div>
